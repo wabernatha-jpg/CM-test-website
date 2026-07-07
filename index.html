@@ -336,7 +336,6 @@
   <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-between">
     <nav class="flex items-center gap-5" aria-label="Utility">
       <span class="hidden sm:inline text-cream/40">Alton, IL</span>
-      <a href="#insights" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Insights</a>
       <a href="#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
       <a href="#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
     </nav>
@@ -363,15 +362,22 @@
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         </button>
         <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
-          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-2 w-56">
-            <a href="#services" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Change Management</a>
-            <a href="#services" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Strategy &amp; Planning</a>
-            <a href="#services" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Training &amp; Adoption</a>
+          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-3 w-[440px] grid grid-cols-2 gap-1">
+            <div>
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Strategy</p>
+              <a href="services/executive-interventions.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive Interventions</a>
+              <a href="services/organizational-alignment.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Organizational Alignment</a>
+              <a href="services/targeted-education.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Targeted Education</a>
+            </div>
+            <div class="border-l border-navy/10">
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Execution</p>
+              <a href="services/technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
+              <a href="services/change-management-integration.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Change Mgmt Integration</a>
+              <a href="services/methodological-standards.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Methodological Standards</a>
+            </div>
           </div>
         </div>
       </div>
-      <a href="#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Industries We Serve</a>
-      <a href="#insights" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Insights</a>
       <a href="#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
       <a href="#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
     </nav>
@@ -389,8 +395,6 @@
   </div>
   <nav id="mobileNav" class="hidden lg:hidden flex-col bg-cream border-t border-navy/10 px-5 py-4 gap-1" aria-label="Mobile">
     <a href="#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
-    <a href="#about" class="py-2.5 border-b border-navy/10 text-navy">Industries We Serve</a>
-    <a href="#insights" class="py-2.5 border-b border-navy/10 text-navy">Insights</a>
     <a href="#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
     <a href="#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
     <a href="#contact" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm">Start a Conversation</a>
@@ -428,32 +432,6 @@
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="bg-cream border-b border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-14">
-      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-7">Our Experience</p>
-      <div class="grid sm:grid-cols-3 gap-10">
-        <div>
-          <p class="font-display font-bold text-navy text-4xl sm:text-5xl">60+</p>
-          <p class="mt-2 text-slate text-[0.95rem] max-w-[220px]">projects guided across the Midwest and beyond</p>
-        </div>
-        <div>
-          <p class="font-display font-bold text-navy text-4xl sm:text-5xl">9 in 10</p>
-          <p class="mt-2 text-slate text-[0.95rem] max-w-[220px]">clients say their own team owns the change after we leave</p>
-        </div>
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <p class="font-display font-bold text-navy text-4xl sm:text-5xl">100%</p>
-            <p class="mt-2 text-slate text-[0.95rem] max-w-[220px]">engagements grounded in your people, not just the plan</p>
-          </div>
-          <span class="hidden sm:flex shrink-0 w-11 h-11 rounded-full bg-gold/12 items-center justify-center mt-1" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.5 8.5L21 9.3L16 13.9L17.5 21L12 17.3L6.5 21L8 13.9L3 9.3L9.5 8.5L12 2Z" fill="#C9982A"/></svg>
-          </span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Intro -->
   <section class="bg-cream">
     <div class="max-w-[860px] mx-auto px-5 sm:px-8 py-16 lg:py-20 text-center">
@@ -479,229 +457,88 @@
     </div>
   </section>
 
-  <!-- Two-col CTA band -->
-  <section class="bg-cream">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <div class="border border-navy/15 grid lg:grid-cols-2">
-        <div class="px-7 sm:px-10 py-10 sm:py-12 flex flex-col justify-center">
-          <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl leading-tight max-w-md">Change that actually sticks</h2>
-          <p class="mt-4 text-slate max-w-md text-[0.95rem] leading-relaxed">Most transformations don't fail at launch — they fail six months later, when the old habits creep back in. We build the structure to keep your change standing: clear ownership, steady coaching, and a plan your team can follow once we're gone.</p>
-          <a href="#approach" class="mt-7 inline-block w-fit bg-gold text-navy font-semibold text-[0.82rem] tracking-[0.06em] uppercase px-8 py-4 hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200">Learn More</a>
-        </div>
-        <div class="hairline-panel-light grain min-h-[260px] lg:min-h-0"></div>
-      </div>
-    </div>
-  </section>
-
   <!-- How We Can Help -->
   <section id="services" class="bg-cream">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">How We Can Help</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/0D1B2A/E8B84B?text=Change" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Change Management</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/16283C/F7F4EF?text=Strategy" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Strategy &amp; Planning</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/4A5568/F7F4EF?text=Training" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Training &amp; Adoption</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/C9982A/0D1B2A?text=Stakeholders" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Stakeholder Alignment</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/0D1B2A/E8B84B?text=Culture" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Culture &amp; Communication</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/16283C/F7F4EF?text=Leadership" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Program Leadership</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
-        <article class="reveal help-card group relative overflow-hidden rounded-sm border border-navy/15 min-h-[260px] flex flex-col justify-end hover:border-gold hover:shadow-card-hover transition-[border-color,box-shadow] duration-300">
-          <img src="https://placehold.co/600x600/4A5568/F7F4EF?text=Sustainment" alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-          <div class="help-card-scrim absolute inset-0"></div>
-          <div class="relative p-6 pt-7 pb-6 flex flex-col">
-            <h3 class="font-display font-bold text-cream text-lg leading-snug">Sustainment &amp; Measurement</h3>
-            <a href="#contact" class="mt-3 inline-flex items-center gap-1 text-gold-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200">Read More <span aria-hidden="true">›</span></a>
-          </div>
-        </article>
+      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase text-center mb-4">How We Can Help</p>
+      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center">The Dual-Pyramid Model</h2>
+      <p class="mt-5 max-w-[640px] mx-auto text-center text-slate text-[0.98rem] leading-relaxed">Most consultants pick a lane: strategy or execution. Change Maven works both, at the same time — one pyramid for how you decide, one for how it gets done, both built on the same diagnostic spine.</p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.72rem] sm:text-[0.78rem] font-semibold tracking-[0.08em] uppercase text-navy/60">
+        <span>CEO / Vision</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span>Departments</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span>Management</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span>Frontline Workers</span>
       </div>
+
+      <div class="mt-14 grid lg:grid-cols-2 gap-x-14 gap-y-12">
+        <div>
+          <h3 class="text-center font-display font-bold text-navy text-[0.8rem] tracking-[0.14em] uppercase mb-7">Strategy Pyramid</h3>
+          <div class="flex flex-col items-stretch gap-3">
+            <a href="services/executive-interventions.html" class="pyramid-tier group block mx-auto w-full sm:w-[62%] rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Executive Interventions</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Executive coaching and strategic plan updates for leadership.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+            <a href="services/organizational-alignment.html" class="pyramid-tier group block mx-auto w-full sm:w-[81%] rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Organizational Alignment</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Org-wide transformation initiatives and department-level workshops &amp; seminars.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+            <a href="services/targeted-education.html" class="pyramid-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Targeted Education</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Leadership development, Six Sigma (Green &amp; Black Belt), change management concepts, and continuous process improvement.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-center font-display font-bold text-navy text-[0.8rem] tracking-[0.14em] uppercase mb-7">Execution Pyramid</h3>
+          <div class="flex flex-col items-stretch gap-3">
+            <a href="services/technical-automation.html" class="pyramid-tier group block mx-auto w-full sm:w-[62%] rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Technical Automation</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">AI automation, process mapping, project management, and IV&amp;V for system implementations.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+            <a href="services/change-management-integration.html" class="pyramid-tier group block mx-auto w-full sm:w-[81%] rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Change Management Integration</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Stakeholder analyses, system audits, and pay-scale audits.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+            <a href="services/methodological-standards.html" class="pyramid-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
+              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Methodological Standards</h4>
+              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Built on PMP, CCMP, and Six Sigma certified methodology.</p>
+              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 flex items-center justify-center gap-4">
+        <span class="h-px w-16 sm:w-28 bg-navy/15" aria-hidden="true"></span>
+        <span class="font-display font-bold text-navy text-sm sm:text-base tracking-[0.06em] uppercase">Strategy <span class="text-gold px-1" aria-hidden="true">→</span> Execution</span>
+        <span class="h-px w-16 sm:w-28 bg-navy/15" aria-hidden="true"></span>
+      </div>
+      <p class="mt-8 max-w-[640px] mx-auto text-center italic font-display text-navy/80 text-base sm:text-lg leading-relaxed">"We match your organization's needs to globally recognized standards, driving real people and culture adoption at every level."</p>
     </div>
   </section>
 
-  <!-- Client Results -->
-  <section class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Our Client Results</h2>
-      <div class="grid md:grid-cols-2 gap-8">
-        <article class="group flex gap-5">
-          <div class="relative overflow-hidden shrink-0 w-[42%]">
-            <img src="https://placehold.co/420x420/0D1B2A/E8B84B?text=Case+Study" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/0 to-navy/0"></div>
-          </div>
-          <div class="flex flex-col flex-1 border-b border-navy/10 pb-5">
-            <p class="text-gold text-[0.76rem] font-semibold tracking-[0.1em] uppercase">Transformation</p>
-            <h3 class="mt-2 font-display font-bold text-navy text-lg leading-snug">A County Agency Modernizes Without Losing Its People</h3>
-            <p class="mt-2 text-slate text-[0.88rem] leading-relaxed">A 200-person department moved to new case-management software without a missed deadline — because the rollout started with the caseworkers, not the software.</p>
-            <button class="mt-auto self-end pt-3 text-navy/50 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Save this result">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18l-6-4.5L6 21V3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </article>
-        <article class="group flex gap-5">
-          <div class="relative overflow-hidden shrink-0 w-[42%]">
-            <img src="https://placehold.co/420x420/16283C/F7F4EF?text=Case+Study" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/0 to-navy/0"></div>
-          </div>
-          <div class="flex flex-col flex-1 border-b border-navy/10 pb-5">
-            <p class="text-gold text-[0.76rem] font-semibold tracking-[0.1em] uppercase">Change Management</p>
-            <h3 class="mt-2 font-display font-bold text-navy text-lg leading-snug">Turning Around a Stalled ERP Rollout</h3>
-            <p class="mt-2 text-slate text-[0.88rem] leading-relaxed">Six months behind and losing trust, a manufacturer brought us in to rebuild the change plan around the floor teams who'd actually use the system.</p>
-            <button class="mt-auto self-end pt-3 text-navy/50 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Save this result">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18l-6-4.5L6 21V3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </article>
-      </div>
-      <div class="text-center mt-12">
-        <a href="#contact" class="inline-block border border-gold text-gold font-semibold text-sm px-7 py-3 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">See More</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Insights -->
-  <section id="insights" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Our Change Management Insights</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <article class="group">
-          <div class="relative overflow-hidden rounded-sm">
-            <img src="https://placehold.co/480x320/0D1B2A/F7F4EF?text=Field+Notes" alt="" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/65 via-navy/0 to-navy/0"></div>
-          </div>
-          <p class="mt-4 text-gold text-[0.74rem] font-semibold tracking-[0.1em] uppercase">Change Management</p>
-          <h3 class="mt-2 font-display font-bold text-navy text-base leading-snug">Change Is Changing</h3>
-          <p class="mt-2 text-slate text-[0.86rem] leading-relaxed">Why the old once-and-done transformation playbook doesn't work anymore.</p>
-        </article>
-        <article class="group">
-          <div class="relative overflow-hidden rounded-sm">
-            <img src="https://placehold.co/480x320/16283C/F7F4EF?text=Field+Notes" alt="" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/65 via-navy/0 to-navy/0"></div>
-          </div>
-          <p class="mt-4 text-gold text-[0.74rem] font-semibold tracking-[0.1em] uppercase">Change Management</p>
-          <h3 class="mt-2 font-display font-bold text-navy text-base leading-snug">How to Manage the Waves of Change</h3>
-          <p class="mt-2 text-slate text-[0.86rem] leading-relaxed">Lessons from teams who've learned to ride disruption instead of getting flattened by it.</p>
-        </article>
-        <article class="group">
-          <div class="relative overflow-hidden rounded-sm">
-            <img src="https://placehold.co/480x320/4A5568/F7F4EF?text=Field+Notes" alt="" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/65 via-navy/0 to-navy/0"></div>
-          </div>
-          <p class="mt-4 text-gold text-[0.74rem] font-semibold tracking-[0.1em] uppercase">Change Management</p>
-          <h3 class="mt-2 font-display font-bold text-navy text-base leading-snug">The What, Who, and How of Delivering Results</h3>
-          <p class="mt-2 text-slate text-[0.86rem] leading-relaxed">A few key questions worth asking before you change your rollout plan.</p>
-        </article>
-        <article class="group">
-          <div class="relative overflow-hidden rounded-sm">
-            <img src="https://placehold.co/480x320/C9982A/0D1B2A?text=Field+Notes" alt="" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105" style="mix-blend-mode: multiply;">
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/55 via-navy/0 to-navy/0"></div>
-          </div>
-          <p class="mt-4 text-gold text-[0.74rem] font-semibold tracking-[0.1em] uppercase">Change Management</p>
-          <h3 class="mt-2 font-display font-bold text-navy text-base leading-snug">Busting Three Common Myths of Change Management</h3>
-          <p class="mt-2 text-slate text-[0.86rem] leading-relaxed">Five leadership truths that practitioners know — and most leaders don't.</p>
-        </article>
-      </div>
-      <div class="text-center mt-12">
-        <a href="#contact" class="inline-block border border-gold text-gold font-semibold text-sm px-7 py-3 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">See More</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Consultants -->
+  <!-- About Change Maven -->
   <section id="about" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Our Change Management Consultants</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
-        <article>
-          <img src="https://placehold.co/400x400/16283C/E8B84B?text=J.B." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Jordan Bennett</h3>
-          <p class="text-slate text-[0.86rem]">Founder &amp; Principal Consultant</p>
-          <p class="text-slate/70 text-[0.8rem]">Alton, IL</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/0D1B2A/E8B84B?text=M.A." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Maria Alvarez</h3>
-          <p class="text-slate text-[0.86rem]">Senior Change Strategist</p>
-          <p class="text-slate/70 text-[0.8rem]">St. Louis, MO</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/4A5568/F7F4EF?text=T.W." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Tom Whitfield</h3>
-          <p class="text-slate text-[0.86rem]">Training &amp; Adoption Lead</p>
-          <p class="text-slate/70 text-[0.8rem]">Springfield, IL</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/16283C/F7F4EF?text=P.N." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Priya Nair</h3>
-          <p class="text-slate text-[0.86rem]">Program Director</p>
-          <p class="text-slate/70 text-[0.8rem]">Chicago, IL</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/0D1B2A/F7F4EF?text=D.C." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Derek Coleman</h3>
-          <p class="text-slate text-[0.86rem]">Stakeholder Engagement Lead</p>
-          <p class="text-slate/70 text-[0.8rem]">Indianapolis, IN</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/4A5568/E8B84B?text=S.K." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Sarah Kim</h3>
-          <p class="text-slate text-[0.86rem]">Senior Consultant</p>
-          <p class="text-slate/70 text-[0.8rem]">Columbus, OH</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/16283C/E8B84B?text=A.B." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Allen Brooks</h3>
-          <p class="text-slate text-[0.86rem]">Culture &amp; Communications Lead</p>
-          <p class="text-slate/70 text-[0.8rem]">Peoria, IL</p>
-        </article>
-        <article>
-          <img src="https://placehold.co/400x400/0D1B2A/F7F4EF?text=N.F." alt="" class="w-full aspect-square object-cover rounded-sm" style="mix-blend-mode: multiply;">
-          <h3 class="mt-4 font-display font-bold text-navy text-base">Nicole Foster</h3>
-          <p class="text-slate text-[0.86rem]">Senior Consultant</p>
-          <p class="text-slate/70 text-[0.8rem]">Kansas City, MO</p>
-        </article>
+    <div class="max-w-[860px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
+      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-8">About Change Maven</h2>
+      <p class="font-display text-navy text-lg sm:text-xl leading-[1.7] text-center reveal">Change Maven exists to guide organizations through change — aligning people, process, and technology so transformation sticks. We're built to be the most trusted change management partner for mid-market companies, government agencies, and nonprofits across the Midwest and beyond.</p>
+      <div class="mt-6 space-y-5 text-slate leading-relaxed text-center max-w-[680px] mx-auto reveal">
+        <p>We're approachable, meeting clients where they are and speaking plainly. We're collaborative — coaching and guiding rather than imposing, so the client's team owns the outcome. We're grounded, rooted in Alton, Illinois, with a Midwestern work ethic. And we're transformative, helping organizations become meaningfully better, not just different.</p>
+        <p class="italic">From where you are, to where you need to be.</p>
       </div>
-      <div class="text-center mt-12">
-        <a href="#contact" class="inline-block border border-gold text-gold font-semibold text-sm px-7 py-3 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">See More</a>
+      <div class="mt-8 flex flex-wrap justify-center gap-2 reveal">
+        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">PMP</span>
+        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">CCMP</span>
+        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">Six Sigma Black Belt</span>
       </div>
     </div>
   </section>
@@ -710,26 +547,18 @@
   <section id="approach" class="bg-cream border-t border-navy/10">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
       <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Where We Help</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10">
+      <div class="grid sm:grid-cols-2 gap-x-10">
         <div class="border-t border-navy/10 lg:col-span-1">
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Change Management <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategy &amp; Planning <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Stakeholder Alignment <span class="text-gold" aria-hidden="true">›</span></a>
+          <p class="pt-4 text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Strategy Pyramid</p>
+          <a href="services/executive-interventions.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Executive Interventions <span class="text-gold" aria-hidden="true">›</span></a>
+          <a href="services/organizational-alignment.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Organizational Alignment <span class="text-gold" aria-hidden="true">›</span></a>
+          <a href="services/targeted-education.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Targeted Education <span class="text-gold" aria-hidden="true">›</span></a>
         </div>
         <div class="border-t border-navy/10 lg:col-span-1">
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Training &amp; Adoption <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Culture &amp; Communication <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Program Leadership <span class="text-gold" aria-hidden="true">›</span></a>
-        </div>
-        <div class="border-t border-navy/10 lg:col-span-1">
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Process Redesign <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Technology Adoption <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Leadership Coaching <span class="text-gold" aria-hidden="true">›</span></a>
-        </div>
-        <div class="border-t border-navy/10 lg:col-span-1">
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Risk &amp; Readiness <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Sustainment <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="#services" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Measurement &amp; ROI <span class="text-gold" aria-hidden="true">›</span></a>
+          <p class="pt-4 text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Execution Pyramid</p>
+          <a href="services/technical-automation.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Technical Automation <span class="text-gold" aria-hidden="true">›</span></a>
+          <a href="services/change-management-integration.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Change Management Integration <span class="text-gold" aria-hidden="true">›</span></a>
+          <a href="services/methodological-standards.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Methodological Standards <span class="text-gold" aria-hidden="true">›</span></a>
         </div>
       </div>
     </div>
@@ -768,7 +597,7 @@
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20 grid lg:grid-cols-[1fr_1fr] gap-10 items-center">
       <div>
         <h2 class="font-display font-bold text-cream text-2xl sm:text-3xl mb-3">Stay ahead of the next change.</h2>
-        <p class="text-cream/65">Practical notes on change management, sent occasionally — no fluff.</p>
+        <p class="text-cream/65">Practical notes on change management, sent occasionally.</p>
       </div>
       <form class="space-y-3" onsubmit="return false;">
         <div class="flex flex-col sm:flex-row gap-3">

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizational Alignment | Change Maven LLC</title>
+<meta name="description" content="Org-wide transformation initiatives and department-level workshops & seminars — the middle tier of Change Maven's Strategy Pyramid.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230D1B2A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23C9982A' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23C9982A' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23C9982A' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23C9982A'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23C9982A'/%3E%3Cg stroke='%23C9982A' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="alternate icon" href="../Change_Maven_Logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#0D1B2A',
+          'navy-deep': '#081420',
+          'navy-light': '#16283C',
+          gold: '#C9982A',
+          'gold-light': '#E8B84B',
+          cream: '#F7F4EF',
+          slate: '#4A5568',
+        },
+        fontFamily: {
+          display: ['"Libre Baskerville"', 'Georgia', 'Times New Roman', 'serif'],
+          body: ['Inter', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        },
+        boxShadow: {
+          'gold-sm': '0 6px 16px -6px rgba(201,152,42,0.4)',
+          'card': '0 2px 6px -2px rgba(13,27,42,0.06), 0 12px 28px -12px rgba(13,27,42,0.12)',
+          'card-hover': '0 4px 10px -2px rgba(13,27,42,0.08), 0 20px 40px -14px rgba(13,27,42,0.18)',
+          'navy-lg': '0 30px 60px -20px rgba(8,20,32,0.5)',
+        },
+        transitionTimingFunction: {
+          spring: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  h1, h2, h3, .font-display { font-family: 'Libre Baskerville', Georgia, serif; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .grain { position: relative; }
+  .grain::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="bg-cream text-slate antialiased">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="bridge-icon" viewBox="0 0 140 70">
+      <line x1="6" y1="58" x2="134" y2="58" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="38" y1="32" x2="38" y2="66" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="102" y1="38" x2="102" y2="66" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M38 4 L44 18 L38 32 L32 18 Z" fill="currentColor"/>
+      <path d="M102 10 L108 24 L102 38 L96 24 Z" fill="currentColor"/>
+      <line x1="30" y1="42" x2="46" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="94" y1="48" x2="110" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <g stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.85">
+        <line x1="38" y1="8" x2="6" y2="58"/>
+        <line x1="38" y1="8" x2="20" y2="58"/>
+        <line x1="38" y1="8" x2="50" y2="58"/>
+        <line x1="38" y1="8" x2="61" y2="58"/>
+        <line x1="38" y1="8" x2="72" y2="58"/>
+        <line x1="102" y1="14" x2="134" y2="58"/>
+        <line x1="102" y1="14" x2="120" y2="58"/>
+        <line x1="102" y1="14" x2="90" y2="58"/>
+        <line x1="102" y1="14" x2="79" y2="58"/>
+        <line x1="102" y1="14" x2="68" y2="58"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<a href="#main" class="absolute -left-full top-0 focus:left-2 focus:top-2 z-[100] bg-gold text-navy font-semibold px-5 py-3 transition-[left] duration-200">Skip to content</a>
+
+<!-- Utility bar -->
+<div class="bg-navy-deep text-cream/65 text-[0.72rem] tracking-[0.08em] uppercase">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-between">
+    <nav class="flex items-center gap-5" aria-label="Utility">
+      <span class="hidden sm:inline text-cream/40">Alton, IL</span>
+      <a href="../index.html#insights" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Insights</a>
+      <a href="../index.html#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
+      <a href="../index.html#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
+    </nav>
+    <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200" aria-label="Change Maven on LinkedIn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+      <span class="hidden sm:inline">LinkedIn</span>
+    </a>
+  </div>
+</div>
+
+<!-- Main nav -->
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-navy/10" id="site-header">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between gap-6">
+    <a href="../index.html#top" class="flex items-center gap-2.5 shrink-0" aria-label="Change Maven home">
+      <svg width="34" height="17" viewBox="0 0 140 70" class="text-navy shrink-0" aria-hidden="true"><use href="#bridge-icon"></use></svg>
+      <span class="font-display font-bold text-navy text-xl tracking-tight">
+        Change Maven <span class="text-gold">·</span> <span class="font-body font-medium text-[0.65rem] tracking-[0.12em] uppercase text-slate align-middle">LLC</span>
+      </span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-7 text-[0.92rem] font-medium text-navy/85" aria-label="Primary">
+      <div class="relative group">
+        <button class="flex items-center gap-1 py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">
+          Services
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
+          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-3 w-[440px] grid grid-cols-2 gap-1">
+            <div>
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Strategy</p>
+              <a href="executive-interventions.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive Interventions</a>
+              <a href="organizational-alignment.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Organizational Alignment</a>
+              <a href="targeted-education.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Targeted Education</a>
+            </div>
+            <div class="border-l border-navy/10">
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Execution</p>
+              <a href="technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
+              <a href="change-management-integration.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Change Mgmt Integration</a>
+              <a href="methodological-standards.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Methodological Standards</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="../index.html#insights" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Insights</a>
+      <a href="../index.html#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
+      <a href="../index.html#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="../index.html#contact" class="hidden sm:inline-block border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">Start a Conversation</a>
+      <button id="navToggle" class="lg:hidden flex flex-col gap-[5px] p-2" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <span class="w-6 h-[2px] bg-navy transition-transform duration-200"></span>
+        <span class="w-6 h-[2px] bg-navy transition-opacity duration-200"></span>
+        <span class="w-6 h-[2px] bg-navy transition-transform duration-200"></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mobileNav" class="hidden lg:hidden flex-col bg-cream border-t border-navy/10 px-5 py-4 gap-1" aria-label="Mobile">
+    <a href="../index.html#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
+    <a href="../index.html#insights" class="py-2.5 border-b border-navy/10 text-navy">Insights</a>
+    <a href="../index.html#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
+    <a href="../index.html#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
+    <a href="../index.html#contact" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm">Start a Conversation</a>
+  </nav>
+</header>
+
+<!-- Breadcrumb -->
+<div class="bg-cream border-b border-navy/10">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-3 text-[0.82rem] text-slate flex items-center gap-2 flex-wrap">
+    <a href="../index.html#top" class="hover:text-gold transition-colors duration-200">Home</a>
+    <span class="text-navy/30">/</span>
+    <a href="../index.html#services" class="hover:text-gold transition-colors duration-200">Services</a>
+    <span class="text-navy/30">/</span>
+    <span class="text-navy font-medium">Organizational Alignment</span>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- Tier hero -->
+  <section class="bg-navy grain">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Strategy Pyramid &middot; Tier 2 of 3</p>
+      <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Organizational Alignment</h1>
+      <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Org-wide transformation initiatives and department-level workshops &amp; seminars.</p>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="bg-cream">
+    <div class="max-w-[760px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <p class="text-navy text-lg sm:text-xl leading-[1.7] font-display">One level down from the executive suite, Organizational Alignment is where strategy meets the org chart. We run the initiatives and workshops that get every department pulling toward the same plan, instead of quietly running its own version of it.</p>
+
+      <div class="mt-12 space-y-10">
+        <div class="border-t border-navy/10 pt-8">
+          <h2 class="font-display font-bold text-navy text-xl sm:text-2xl mb-3">Org-Wide Transformation Initiatives</h2>
+          <p class="text-slate leading-relaxed">Coordinated programs that connect the executive strategy to what each department is actually asked to change, so no group is left guessing what the plan means for them.</p>
+        </div>
+        <div class="border-t border-navy/10 pt-8">
+          <h2 class="font-display font-bold text-navy text-xl sm:text-2xl mb-3">Department-Level Workshops &amp; Seminars</h2>
+          <p class="text-slate leading-relaxed">Working sessions built for a specific department's context, translating the company-wide plan into decisions and habits that make sense on their floor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where this fits -->
+  <section class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl text-center mb-3">Where This Fits</h2>
+      <p class="text-slate text-center max-w-lg mx-auto mb-10">Part of the Dual-Pyramid Model — how Change Maven turns strategy into execution.</p>
+      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-3">
+        <div class="space-y-3">
+          <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">Strategy Pyramid</p>
+          <a href="executive-interventions.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+            <p class="font-display font-bold text-navy text-sm">Executive Interventions</p>
+          </a>
+          <div class="rounded-sm border border-gold bg-gold/10 px-5 py-4">
+            <p class="font-display font-bold text-navy text-sm">Organizational Alignment</p>
+            <p class="text-gold text-[0.68rem] font-semibold uppercase tracking-wide mt-1">You are here</p>
+          </div>
+          <a href="targeted-education.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+            <p class="font-display font-bold text-navy text-sm">Targeted Education</p>
+          </a>
+        </div>
+        <div class="space-y-3">
+          <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">Execution Pyramid</p>
+          <a href="technical-automation.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+            <p class="font-display font-bold text-navy text-sm">Technical Automation</p>
+          </a>
+          <a href="change-management-integration.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+            <p class="font-display font-bold text-navy text-sm">Change Management Integration</p>
+          </a>
+          <a href="methodological-standards.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+            <p class="font-display font-bold text-navy text-sm">Methodological Standards</p>
+          </a>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <a href="../index.html#services" class="inline-block border border-gold text-gold font-semibold text-sm px-7 py-3 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">See the Full Framework</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <div class="bg-white border border-navy/10 shadow-card rounded-sm p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div>
+          <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl mb-2">Ready to talk?</h2>
+          <p class="text-slate max-w-md">Let's talk about getting your departments aligned around one plan.</p>
+        </div>
+        <a href="../index.html#contact" class="shrink-0 bg-gold text-navy font-semibold text-sm px-8 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shadow-gold-sm">Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-navy">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 pt-14 pb-8">
+    <div class="flex flex-wrap justify-between gap-10 pb-8 border-b border-cream/10">
+      <div>
+        <img src="../Change_Maven_Logo.png" alt="Change Maven LLC" class="w-40 sm:w-44 h-auto mb-3">
+        <p class="text-cream/55 text-sm">Change Management &middot; Strategy<br>Alton, Illinois</p>
+      </div>
+      <nav class="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer">
+        <a href="../index.html#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Accessibility</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Terms of Use</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Sitemap</a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">LinkedIn</a>
+      </nav>
+    </div>
+    <p class="text-cream/40 text-[0.8rem] text-center mt-6">&copy; 2026 Change Maven LLC. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  function initMobileNav() {
+    var toggle = document.getElementById("navToggle");
+    var mobileNav = document.getElementById("mobileNav");
+    if (!toggle || !mobileNav) return;
+    toggle.addEventListener("click", function () {
+      var open = mobileNav.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      mobileNav.classList.toggle("flex", !open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        mobileNav.classList.add("hidden");
+        mobileNav.classList.remove("flex");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  function initReveal() {
+    var targets = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window) || targets.length === 0) {
+      targets.forEach(function (el) { el.classList.add("in-view"); });
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    targets.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 0.08 + "s";
+      observer.observe(el);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initMobileNav();
+    initReveal();
+  });
+})();
+</script>
+</body>
+</html>
