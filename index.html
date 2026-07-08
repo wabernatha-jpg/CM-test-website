@@ -460,6 +460,17 @@
     </div>
   </section>
 
+  <!-- Bridge Method video lightbox -->
+  <div id="bridgeVideoModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 sm:p-8">
+    <div id="bridgeModalBackdrop" class="absolute inset-0 bg-navy-deep/90"></div>
+    <div class="relative w-full max-w-[1100px]">
+      <button id="bridgeModalClose" class="absolute -top-11 right-0 sm:-top-12 w-9 h-9 rounded-full bg-cream/10 hover:bg-cream/20 focus-visible:bg-cream/20 text-cream flex items-center justify-center transition-colors duration-200" aria-label="Close video">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"></line><line x1="20" y1="4" x2="4" y2="20"></line></svg>
+      </button>
+      <div id="bridgeModalStage" class="flex items-center justify-center"></div>
+    </div>
+  </div>
+
   <!-- How We Can Help -->
   <section id="services" class="bg-cream">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
@@ -728,19 +739,46 @@
     var video = document.getElementById("bridgeVideo");
     var playBtn = document.getElementById("bridgePlayBtn");
     var headline = document.getElementById("bridgeHeadline");
-    if (!panel || !video || !playBtn || !headline) return;
+    var modal = document.getElementById("bridgeVideoModal");
+    var modalStage = document.getElementById("bridgeModalStage");
+    var modalClose = document.getElementById("bridgeModalClose");
+    var modalBackdrop = document.getElementById("bridgeModalBackdrop");
+    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop) return;
 
-    playBtn.addEventListener("click", function () {
-      video.classList.remove("hidden");
+    var panelClasses = ["hidden", "absolute", "inset-0", "w-full", "h-full", "object-cover"];
+    var modalVideoClasses = ["max-w-full", "max-h-[85vh]", "w-auto", "h-auto", "rounded-sm", "shadow-navy-lg"];
+
+    function openModal() {
+      video.classList.remove.apply(video.classList, panelClasses);
+      video.classList.add.apply(video.classList, modalVideoClasses);
+      modalStage.appendChild(video);
       playBtn.classList.add("hidden");
       headline.classList.add("hidden");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
       video.play();
-    });
+      modalClose.focus();
+    }
 
-    video.addEventListener("ended", function () {
-      video.classList.add("hidden");
+    function closeModal() {
+      video.pause();
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.classList.remove("overflow-hidden");
+      video.classList.remove.apply(video.classList, modalVideoClasses);
+      video.classList.add.apply(video.classList, panelClasses);
+      panel.appendChild(video);
       playBtn.classList.remove("hidden");
       headline.classList.remove("hidden");
+    }
+
+    playBtn.addEventListener("click", openModal);
+    modalClose.addEventListener("click", closeModal);
+    modalBackdrop.addEventListener("click", closeModal);
+    video.addEventListener("ended", closeModal);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
     });
   }
 
