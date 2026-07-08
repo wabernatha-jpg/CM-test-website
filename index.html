@@ -445,12 +445,15 @@
   <section class="bg-cream">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 pb-16 lg:pb-20">
       <div class="bg-white shadow-card rounded-sm p-3 sm:p-5">
-        <div class="bg-navy grain relative rounded-sm overflow-hidden flex items-center justify-center py-20 sm:py-28">
+        <div id="bridgePanel" class="bg-navy grain relative rounded-sm overflow-hidden flex items-center justify-center py-20 sm:py-28">
           <svg viewBox="0 0 1360 700" aria-hidden="true" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[130%] sm:w-[100%] max-w-none opacity-40 pointer-events-none"><use href="#bridge-signature"></use></svg>
-          <button class="absolute z-10 w-16 h-16 rounded-full bg-cream/90 flex items-center justify-center hover:bg-cream focus-visible:bg-cream transition-colors duration-200 hover:scale-105 focus-visible:scale-105" aria-label="Play overview" style="transition-property: background-color, transform;">
+          <video id="bridgeVideo" class="hidden absolute inset-0 w-full h-full object-cover" preload="metadata" playsinline controls>
+            <source src="videos/change-maven-intro.mp4" type="video/mp4">
+          </video>
+          <button id="bridgePlayBtn" class="absolute z-10 w-16 h-16 rounded-full bg-cream/90 flex items-center justify-center hover:bg-cream focus-visible:bg-cream transition-colors duration-200 hover:scale-105 focus-visible:scale-105" aria-label="Play overview" style="transition-property: background-color, transform;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="#0D1B2A"><path d="M8 5L19 12L8 19V5Z"/></svg>
           </button>
-          <p class="relative font-display font-bold text-cream text-[2.6rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[0.95] tracking-[-0.02em] text-center px-6">THE BRIDGE<br>METHOD</p>
+          <p id="bridgeHeadline" class="relative font-display font-bold text-cream text-[2.6rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[0.95] tracking-[-0.02em] text-center px-6">THE BRIDGE<br>METHOD</p>
         </div>
       </div>
       <p class="mt-5 text-center text-slate italic font-display text-base sm:text-lg">How we create the conditions for change that holds.</p>
@@ -720,10 +723,32 @@
     });
   }
 
+  function initBridgeVideo() {
+    var panel = document.getElementById("bridgePanel");
+    var video = document.getElementById("bridgeVideo");
+    var playBtn = document.getElementById("bridgePlayBtn");
+    var headline = document.getElementById("bridgeHeadline");
+    if (!panel || !video || !playBtn || !headline) return;
+
+    playBtn.addEventListener("click", function () {
+      video.classList.remove("hidden");
+      playBtn.classList.add("hidden");
+      headline.classList.add("hidden");
+      video.play();
+    });
+
+    video.addEventListener("ended", function () {
+      video.classList.add("hidden");
+      playBtn.classList.remove("hidden");
+      headline.classList.remove("hidden");
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
     initHeroGradient();
     initReveal();
+    initBridgeVideo();
   });
 })();
 </script>
