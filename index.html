@@ -586,7 +586,7 @@
           <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl mb-3">Ready to talk?</h2>
           <p class="text-slate">We work with mid-market companies, government agencies, and nonprofits who are ready to change — and want it to stick.</p>
         </div>
-        <form class="grid sm:grid-cols-2 gap-4 items-end" onsubmit="return false;">
+        <form id="contactForm" class="grid sm:grid-cols-2 gap-4 items-end">
           <div class="sm:col-span-2">
             <label for="industry" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">I'd like to talk about</label>
             <select id="industry" class="industry-select w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
@@ -597,10 +597,20 @@
             </select>
           </div>
           <div class="sm:col-span-1">
-            <label for="email" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your email</label>
-            <input id="email" type="email" placeholder="you@company.com" class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+            <label for="contactName" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your name</label>
+            <input id="contactName" type="text" placeholder="Jane Smith" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
           </div>
-          <button type="submit" class="sm:col-span-1 bg-gold text-navy font-semibold text-sm py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200">Contact Us</button>
+          <div class="sm:col-span-1">
+            <label for="email" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your email</label>
+            <input id="email" type="email" placeholder="you@company.com" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="contactMessage" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">How can we help?</label>
+            <textarea id="contactMessage" rows="4" placeholder="Tell us a bit about what you're working on." required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2 resize-y"></textarea>
+          </div>
+          <input type="text" id="contactCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="sm:col-span-2 bg-gold text-navy font-semibold text-sm py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed">Contact Us</button>
+          <p id="contactStatus" class="sm:col-span-2 text-sm text-slate" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -613,15 +623,17 @@
         <h2 class="font-display font-bold text-cream text-2xl sm:text-3xl mb-3">Stay ahead of the next change.</h2>
         <p class="text-cream/65">Practical notes on change management, sent occasionally.</p>
       </div>
-      <form class="space-y-3" onsubmit="return false;">
+      <form id="newsletterForm" class="space-y-3">
         <div class="flex flex-col sm:flex-row gap-3">
-          <input type="email" placeholder="Your email address" class="flex-1 border border-cream/25 bg-navy text-cream rounded-sm py-3.5 px-4 placeholder:text-cream/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
-          <button type="submit" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shrink-0">Subscribe</button>
+          <input id="newsletterEmail" type="email" placeholder="Your email address" required class="flex-1 border border-cream/25 bg-navy text-cream rounded-sm py-3.5 px-4 placeholder:text-cream/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+          <input type="text" id="newsletterCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shrink-0 disabled:opacity-60 disabled:cursor-not-allowed">Subscribe</button>
         </div>
         <label class="flex items-start gap-2.5 text-cream/55 text-[0.82rem]">
           <input type="checkbox" class="mt-0.5 accent-gold">
           I have read and understand the <a href="#" class="underline hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>.
         </label>
+        <p id="newsletterStatus" class="text-cream/70 text-sm" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -782,11 +794,100 @@
     });
   }
 
+  function submitForm(endpoint, payload, statusEl, submitBtn, successMessage) {
+    submitBtn.disabled = true;
+    statusEl.textContent = "Sending…";
+    statusEl.classList.remove("text-red-600", "text-red-400");
+
+    return fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(function (res) {
+        return res.json().then(function (body) {
+          return { ok: res.ok && body.ok, error: body.error };
+        });
+      })
+      .then(function (result) {
+        if (result.ok) {
+          statusEl.textContent = successMessage;
+          return true;
+        }
+        statusEl.textContent = result.error || "Something went wrong. Please try again.";
+        statusEl.classList.add("text-red-600", "text-red-400");
+        return false;
+      })
+      .catch(function () {
+        statusEl.textContent = "Something went wrong. Please try again.";
+        statusEl.classList.add("text-red-600", "text-red-400");
+        return false;
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
+  }
+
+  function initContactForm() {
+    var form = document.getElementById("contactForm");
+    var status = document.getElementById("contactStatus");
+    var nameInput = document.getElementById("contactName");
+    var emailInput = document.getElementById("email");
+    var topicInput = document.getElementById("industry");
+    var messageInput = document.getElementById("contactMessage");
+    var honeypot = document.getElementById("contactCompany");
+    if (!form || !status || !nameInput || !emailInput || !topicInput || !messageInput || !honeypot) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var payload = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        topic: topicInput.value,
+        message: messageInput.value.trim(),
+        company: honeypot.value,
+      };
+      submitForm(
+        "/api/contact",
+        payload,
+        status,
+        form.querySelector("button[type=submit]"),
+        "Thanks — we'll be in touch soon."
+      ).then(function (ok) {
+        if (ok) form.reset();
+      });
+    });
+  }
+
+  function initNewsletterForm() {
+    var form = document.getElementById("newsletterForm");
+    var status = document.getElementById("newsletterStatus");
+    var emailInput = document.getElementById("newsletterEmail");
+    var honeypot = document.getElementById("newsletterCompany");
+    if (!form || !status || !emailInput || !honeypot) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var payload = { email: emailInput.value.trim(), company: honeypot.value };
+      submitForm(
+        "/api/subscribe",
+        payload,
+        status,
+        form.querySelector("button[type=submit]"),
+        "You're subscribed — thanks for staying in touch."
+      ).then(function (ok) {
+        if (ok) form.reset();
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
     initHeroGradient();
     initReveal();
     initBridgeVideo();
+    initContactForm();
+    initNewsletterForm();
   });
 })();
 </script>

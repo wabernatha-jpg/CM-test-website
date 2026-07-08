@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "puppeteer-core": "^23.0.0"
+    "puppeteer-core": "^23.0.0",
+    "resend": "^6.17.2"
   }
 }
