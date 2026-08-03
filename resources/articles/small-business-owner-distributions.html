@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The 5-Minute Distribution Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Inter', -apple-system, sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #FAF8F3;
+    --ink: #201E1B;
+    --ink-muted: #6B6459;
+    --accent: #1E7A4C;
+    --accent-soft: rgba(30, 122, 76, 0.12);
+    --rule: rgba(32, 30, 27, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 700; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(32, 30, 27, 0.18), 0 1px 2px rgba(32, 30, 27, 0.12);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(32, 30, 27, 0.25);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  .split-section {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px -40px 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* .cta-box's background is var(--ink), which in this light theme is the
+       dark charcoal tone (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be light, matching --paper
+       (#FAF8F3), not the dark near-black rgba the dark-theme template uses
+       for the same role. Hardcoded here (not a var()) because it must stay
+       in sync by hand with whatever --paper currently resolves to, same
+       gotcha documented in the dark template. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(250, 248, 243, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<p style="max-width:620px;margin:0 auto;padding:18px 8px 0;font-family:var(--font-body);font-size:12.5px;">
+  <a href="../index.html" style="color:var(--ink-muted);text-decoration:none;">&larr; Back to Resources</a>
+</p>
+<div class="wrap">
+
+  <p class="kicker">Distributions</p>
+  <h1 class="title">The 5-Minute Distribution Check</h1>
+  <p class="dek">A step-by-step check for the two most common distribution mistakes small business owners make without knowing it.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>July 16, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>Every time you move money from your business account to your personal one, you&rsquo;re making a decision with tax and legal consequences, whether it feels that way or not. For most small business owners, sole proprietors, single-member LLCs, and partners in multi-member LLCs, that money is called a draw or a distribution. Neither one is a paycheck. Neither one has taxes withheld. And neither one is automatically the same thing as profit, even though the number in your account makes it feel that way.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<p>That gap, between what&rsquo;s sitting in the account and what you actually owe on it, is where most of the trouble starts. Not fraud, not a scheme, just a habit that formed because the money was there and nobody told you otherwise. A national survey of roughly 90,000 small business owners, freelancers, and gig workers found that a third of them didn&rsquo;t know whether they were even supposed to pay estimated taxes.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> If that&rsquo;s you, you&rsquo;re not careless. You&rsquo;re the norm. It&rsquo;s also fixable, in specific, checkable steps.</p>
+<h2>The First Mistake: Spending the Tax Before You&rsquo;ve Set It Aside</h2>
+<p>Here&rsquo;s the part that catches people off guard. Whether you draw the money or leave it in the account, you owe tax on your full share of the business&rsquo;s profit for the year, not just on what you withdrew.<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup> A draw doesn&rsquo;t create the tax bill. It just decides whether you have the cash on hand to pay it when it&rsquo;s due.</p>
+<p>The IRS requires anyone who expects to owe $1,000 or more for the year, including sole proprietors, partners, and S-corp shareholders, to make estimated payments during the year, not just at filing time. You avoid the underpayment penalty by paying at least 90% of what you owe for the current year, or 100% of what you owed last year, whichever is smaller.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> There&rsquo;s no employer here holding that money back for you. You&rsquo;re both the employee and the payroll department.</p>
+<p>Accountants commonly advise setting aside roughly 25 to 30% of net profit for federal income and self-employment tax, plus another few percentage points for state tax depending on where you&rsquo;re located.<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup> That&rsquo;s a rule of thumb, not a law. Your actual number depends on your bracket and your state, but it&rsquo;s a defensible starting point if you don&rsquo;t already have one.</p>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Separate profit from cash</div>
+<div class="process-desc">Pull your profit and loss statement, not your bank balance. Your bank balance includes money you'll owe in taxes, rent, and expenses that haven't cleared yet. Your profit is the number that actually belongs to you.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Open a separate tax reserve account</div>
+<div class="process-desc">Every time you take a distribution, move roughly 25 to 35% of it (adjust for your state and bracket) into a separate account you don't touch. Treat it as already spent.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">If you have partners, check the split</div>
+<div class="process-desc">Pull your operating or partnership agreement and compare it to what each of you has actually taken out this year. A mismatch is a real problem, not just an awkward conversation.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+</div>
+<div class="process-content">
+<div class="process-title">Do this month's check right now</div>
+<div class="process-desc">Look at your last distribution. If you didn't set anything aside from it, move the reserve amount today, before it gets spent on something else.</div>
+</div>
+</div>
+</div>
+
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">1 in 3</div>
+<div class="pull-stat-label">Small Business Owners Don't Know<br>They Owe Estimated Taxes</div>
+</div>
+</div>
+
+<h2>The Second Mistake: Distributions That Don&rsquo;t Match the Agreement</h2>
+<p>If you&rsquo;re the only owner, a sole proprietor or a single-member LLC, this section doesn&rsquo;t apply to you the same way. There&rsquo;s no separate basis mechanic here the way there is for a partnership: you&rsquo;re simply taxed on your full profit regardless of how much you draw, and there&rsquo;s no other owner&rsquo;s share to protect.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> If you have partners or co-members, it does.</p>
+<p>For a partnership or a multi-member LLC, a cash distribution is generally tax-free to you up to your basis, your tax-adjusted stake in the business. Take more than that in a single distribution, and the excess is treated as taxable gain.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> That&rsquo;s the technical version. The practical version: distributions are supposed to track what your operating agreement actually says about ownership and profit shares. If one partner is quietly taking more than their share while another takes less, that&rsquo;s not a favor between friends. It&rsquo;s a discrepancy that can create a real tax problem for both of you, and a real conflict later. Specific allocation rules can get technical fast, so if your split doesn&rsquo;t match the agreement, that&rsquo;s a conversation for your accountant, not a guess you make yourselves.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>There&rsquo;s a second risk here that has nothing to do with the IRS. Courts deciding whether to hold an LLC&rsquo;s owners personally liable for the business&rsquo;s debts look at whether the owners actually treated the LLC as separate from themselves: whether funds were kept apart, records were maintained, and the entity&rsquo;s money was used for entity purposes.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> Casual, undocumented distributions and a shared account with your personal spending are exactly the kind of thing that shows up in that analysis. The specific legal test varies by state, but the underlying question doesn&rsquo;t: did you actually run this like a separate business, or was it just your money with an LLC&rsquo;s name on the account?</p>
+<h2>What to Actually Do About It</h2>
+<p>None of this requires a dramatic fix. It requires a specific one.</p>
+<ul>
+<li>Separate accounts for the business and for yourself, no exceptions, even small ones.</li>
+<li>A tax reserve account you move money into every time you take a distribution, not at year-end.</li>
+<li>If you have partners, a five-minute comparison between what your agreement says and what&rsquo;s actually gone out the door this year.</li>
+</ul>
+<h2>Key Takeaways</h2>
+<p><strong>Objective:</strong> I&rsquo;ll know the real difference between cash in my account and profit I actually owe tax on, and I&rsquo;ll have a concrete number to set aside every time I take money out.</p>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>Estimated tax safe harbor: the IRS threshold and percentage that determines whether you owe an underpayment penalty.</li>
+<li>Basis and disproportionate distributions: why multi-member LLC and partnership distributions need to track the ownership agreement, not just who asks first.</li>
+</ul>
+<p><strong>Try It:</strong> Pull your last distribution or draw. Calculate what 30% of it would have been, and move that amount into a separate account today, even if it&rsquo;s after the fact. Then do the same thing automatically the next time.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>IRS, &ldquo;Estimated Taxes,&rdquo; https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>IRS Publication 541, &ldquo;Partnerships,&rdquo; https://www.irs.gov/publications/p541&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>26 U.S.C. Section 731, Cornell Law School Legal Information Institute, https://www.law.cornell.edu/uscode/text/26/731&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Wolters Kluwer, &ldquo;Piercing the Veil of Small Business: What the Owners of LLCs and Corporations Need to Know,&rdquo; https://www.wolterskluwer.com/en/expert-insights/piercing-the-veil-of-small-business-what-the-owners-of-llcs-and-corporations-need-to-know&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>American University, Small Business Tax Literacy Survey, Caroline Bruckner and Barbara J. Robles, https://www.american.edu/media/news/20230418_carolinebrucknertaxliteracysurvey.cfm&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Insogna CPA, &ldquo;What Is an Owner&rsquo;s Draw and How Is It Taxed for Small Business Owners,&rdquo; https://insognacpa.com/blog/what-is-an-owners-draw-and-how-is-it-taxed-for-small-business-owners&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>KT LLP CPA, &ldquo;Are My Distributions Taxable,&rdquo; https://www.ktllp.cpa/are-my-distributions-taxable/&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+  
+  <div class="cta-box">
+    
+    <div class="cta-monogram">WA</div>
+    
+    <div class="cta-content">
+      <div class="cta-label">Let's Talk</div>
+      <div class="cta-copy"><p>If you&rsquo;re not sure whether your current setup has this gap, that&rsquo;s a normal thing not to know, and it&rsquo;s exactly what a first conversation is for. No judgment about what your books currently look like or how long this has been going on.</p>
+<p><em>This article is educational and general in nature. It isn&rsquo;t a substitute for advice from your own CPA or tax attorney about your specific business and filings.</em></p>
+<p>Let&rsquo;s talk. Fifteen minutes, no pressure, no cost.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+        <span class="dot">&middot;</span><a href="tel:217-691-6138">217-691-6138</a>
+        
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/clarity">mavenshift.co/clarity</a>
+      </div>
+    </div>
+  </div>
+  
+
+  <p class="end-mark">Publications</p>
+
+</div>
+</body>
+</html>

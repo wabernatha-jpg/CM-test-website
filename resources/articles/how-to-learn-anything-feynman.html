@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>You Don't Need to Be a Genius to Learn Anything Fast. You Need a Loop.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px -40px 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<p style="max-width:620px;margin:0 auto;padding:18px 8px 0;font-family:var(--font-body);font-size:12.5px;">
+  <a href="../index.html" style="color:var(--ink-muted);text-decoration:none;">&larr; Back to Resources</a>
+</p>
+<div class="wrap">
+
+  <p class="kicker">Learning</p>
+  <h1 class="title">You Don't Need to Be a Genius to Learn Anything Fast. You Need a Loop.</h1>
+  <p class="dek">How a guy who left the Army without ever touching a computer became a business analyst who had to master Excel just to survive, then an automation expert who's since built entire operating systems out of AI, using the exact same three-step loop the whole way.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>July 15, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>I came out of the Army having never really used a computer. Not exaggerating for effect, actually zero experience. So my first civilian office job started from nothing. I picked up just enough there to get by: enough Excel to move cells around and build a basic formula, enough of a database program called Access to pull a list together when someone asked.</p>
+<p>Then I landed on an accounting team as a business process analyst, and &ldquo;getting by&rdquo; stopped being an option. Part of the job was standing in front of the charts and graphs our data produced and explaining what they showed and why. The first time I actually tried to do that out loud, I hit a wall I hadn&rsquo;t noticed just looking at the chart. I could point at it. I couldn&rsquo;t fully explain it. Trying to explain it, not staring at it, was what exposed the gap.</p>
+<p>So there were two things to actually learn, not one. First the data itself, the real accounting behind the numbers, well enough to say honestly what was happening and why. Then Excel, deeply, because the chart was only ever as honest as the formulas feeding it, and I&rsquo;d been treating half of those formulas as magic boxes instead of understanding them. Closing both gaps, one on the business side and one on the tool side, is what sparked something in me that&rsquo;s never really turned off since: a genuine passion for automating the translation between &ldquo;here&rsquo;s the data&rdquo; and &ldquo;here&rsquo;s what it actually means.&rdquo;</p>
+<h2>The Loop Nobody Taught Me</h2>
+<p>I didn&rsquo;t set out to build a system for learning things. I built it by accident, one broken formula at a time, and it took years, first a much bigger jump from Excel into AI automation, then into the change management work I do with organizations today, before I noticed I&rsquo;d been running the exact same three moves the entire time. Call it the Root-First Loop, because every single time, the move that actually worked was refusing to build on top of something I didn&rsquo;t understand and going back to the root of it instead.</p>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Deconstruct & Micro-Learn</div>
+<div class="process-desc">Break the topic into its smallest working parts, and the instant one part goes fuzzy, stop right there and learn that one part cold. Never skim past a gap hoping it resolves itself later. It won't.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Apply It, Then Teach It Down</div>
+<div class="process-desc">Use the new piece immediately, on something real, more than once. Then explain it out loud in plain language, as if to a child. Wherever the explanation breaks is exactly where the understanding does too.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+</div>
+<div class="process-content">
+<div class="process-title">Extrapolate to the Next Problem</div>
+<div class="process-desc">Whatever shows up next, a scaling project, a cold client, an industry you've never touched, run it through the same first move before anything else: strip it back to its roots.</div>
+</div>
+</div>
+</div>
+
+<p>Three steps. Nothing exotic. The only hard part is actually doing step one instead of nodding along and moving on, which is what almost everyone does, and which is exactly why almost nobody actually gets good at the thing they&rsquo;re &ldquo;learning.&rdquo;</p>
+<h2>Stage One: The VLOOKUP That Wouldn&rsquo;t Leave Me Alone</h2>
+<p>So I went formula-hunting, starting with the one I already half-knew: VLOOKUP. Not memorizing the syntax, but refusing to move on until I understood what every part of it actually meant instead of just where the buttons were.</p>
+<p>Open Excel, type VLOOKUP, and it asks you for a short list of things inside the parentheses. <code>lookup_value</code> is exactly what it sounds like: the one thing you&rsquo;re trying to find. <code>table_array</code> is the block of columns you&rsquo;re searching inside. Buried in there is a <code>column_index_number</code>, which is nothing more than a plain count (one, two, three) of how many columns over your answer sits from the start of that block. That&rsquo;s it. That&rsquo;s the whole formula. Nothing mysterious once you say it out loud: find this value, in this block, and tell me which column over the answer lives.</p>
+<p>Once that one formula actually clicked, I went looking for more, mostly through the daily formula breakdowns Bill Jelen (better known online as MrExcel) has been publishing for decades, and the beginner-to-advanced walkthroughs in his book <em>Slaying Excel Dragons</em>, co-written with Mike Girvin. The pattern was always the same: learn one formula, use it that same day on something real, then explain it out loud, to a coworker, to myself, to no one in particular, until I could get through the whole thing without reaching for jargon I didn&rsquo;t actually understand. If I couldn&rsquo;t do that, I didn&rsquo;t know it yet. I just knew where the button was.</p>
+<p>That last part turned out to be the entire game, and it has an actual name.</p>
+<div class="tidbit-box">
+<p><img class="tidbit-image" src="../assets/images/feynman-chalkboard.png" alt="Illustrative chalkboard-style scene evoking a mid-century physics lecture, warm lamp light, equations mid-erase"></p>
+<div class="tidbit-label">Historical Tidbit</div>
+<div class="tidbit-title">The Physicist Who Never Wrote the Method Down</div>
+<div class="tidbit-text">
+<p>Richard Feynman never published a paper called &ldquo;The Feynman Technique.&rdquo; It isn&rsquo;t a method he sat down and formalized. It comes from how he actually talked about learning: pick one concept, try to explain it in plain language to a genuine beginner, and watch closely for the exact spot where the explanation breaks down. That spot is not a communication problem. It&rsquo;s the edge of your own understanding, found honestly instead of assumed. Feynman&rsquo;s own real edge came from a habit of distinguishing between knowing something and merely knowing the name of it, which he considered one of the most important habits behind his own success.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> Go back, study that one spot, and try again. Nothing more mystical than that, which is probably why it works on a Nobel-winning physicist and a business process analyst equally well.</p>
+<p>Feynman used it on physics. I used it on VLOOKUP. The mechanism doesn&rsquo;t care what the subject is: explain it simply, notice exactly where you stumble, go fix that one spot, try again.</p>
+</div>
+</div>
+<h2>Stage Two: Teaching AI to a Version of Myself</h2>
+<p>Excel led somewhere I didn&rsquo;t expect. Once I was comfortable stacking formulas, I started automating the boring parts of my own job, which pulled me into more advanced scripted workflows, which pulled me into robotic process automation, the industry term for software that clicks and types the way a person would, only faster and without complaining. RPA has a ceiling, though, and once I hit it, it was obvious what came next. AI was the thing I was not going to let pass me by.</p>
+<p>So I planned the jump on purpose instead of dabbling into it. I found a Skool community called <a href="https://www.skool.com/ai-automation-society/about?ref=3c1596de1c2149c4a94f0b10a7950da0">AI Automation Society</a>, run by an instructor named Nate Herk, and started with his video &ldquo;How I&rsquo;d Teach a 10 Year Old to Build AI Agents,&rdquo; a genuinely useful beginner walkthrough that builds a simple, working AI agent using nothing more exotic than a no-code automation platform. From there I went into his structured multi-day challenge. I&rsquo;d recommend that exact order to anyone starting from zero: the beginner explainer first, the structured challenge second.</p>
+<p>(If you want to start exactly where I did: that&rsquo;s the link above, AI Automation Society on Skool. It&rsquo;s the single resource I&rsquo;d point a beginner to first.)</p>
+<p>Here&rsquo;s the part that mattered more than the course itself. I didn&rsquo;t know the terminology. Every time a word came up that I couldn&rsquo;t have defined out loud, I stopped the video right there. I went and researched that one term, sometimes on YouTube, sometimes by asking Claude or Perplexity to walk me through it, until the gray area was gone. Then, and only then, I un-paused and kept going. That&rsquo;s the whole first stage of the loop again, deconstruct and micro-learn, just running on a new subject.</p>
+<p>The payoff compounds in a way that&rsquo;s genuinely fun to watch happen to your own life. I now run a full personal operating system built on exactly this stack: I talk to my phone, it gets transcribed and synced to the cloud, and from there it updates my project plans, drafts my emails, drafts my social posts, and writes my one-pagers and templates, because I kept asking one question after every win: what can I make a little bit better than this? Every time I didn&rsquo;t know the answer, I went and learned the root of it instead of guessing.</p>
+<p>That&rsquo;s the arc, start to finish: a guy who left the Army without knowing how to turn on a computer, to a business analyst who had to master Excel just to survive an explanation, to somebody who has since built complete AI-run operating systems for his own company. Same loop, every single time, just aimed at a bigger target.</p>
+<h2>Stage Three: The Same First Move, Just a Bigger Problem</h2>
+<p>Here&rsquo;s where the loop stops being a personal productivity trick and turns into something you can build a career on: it works exactly the same way on problems that have nothing to do with spreadsheets or software.</p>
+<p>I once had to figure out how to take a project running successfully on one team and scale it across an entire organization, with heavy dependence on systems I didn&rsquo;t control, in well under three months. My honest first reaction was something close to panic. I don&rsquo;t know how to do that. So I did the only thing that had ever actually worked before: I went back to the root. Before touching timelines or tooling, the real first question was who are the stakeholders, actually, by name, and what does each of them need from this to call it a success. Skip that step and you&rsquo;re optimizing a plan nobody with power over it has agreed to. Do it first and the rest of the plan has somewhere solid to stand.</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">&lt;90 Days</div>
+<div class="pull-stat-label">To Scale Org-Wide.<br>Stakeholders First, Not Last.</div>
+</div>
+</div>
+
+<p>That stakeholder-first instinct has a name in the professional world: change management. Any change initiative, a new system, a new process, a reorg, lives or dies on how honestly you&rsquo;ve mapped who&rsquo;s actually affected and what they need, before you ever touch a rollout schedule. It&rsquo;s the exact same root-first move as the VLOOKUP story, just wearing a different suit. These days I don&rsquo;t treat change management and AI automation as two separate specialties I happen to have picked up. I run them together: change management to get an organization&rsquo;s people genuinely ready for a shift, automation to actually build the thing the shift requires. Same loop underneath both, which is exactly why I trust it enough to lead with it on client work.</p>
+<p>The same reflex runs the business-development side of my work too. Say a regulatory change or a new funding program shows up in the news, the kind of thing that quietly reshuffles who has budget and who doesn&rsquo;t. The generic move is a cold pitch: here&rsquo;s what I do, want to talk? The root-first move is slower and works better. Find out exactly what changed and who it actually affects. Go find the specific organizations sitting in that blast radius. Read their mission, their public materials, their actual stated problems, before ever reaching out. By the time I make contact, I&rsquo;m not guessing what a prospective client needs. I know what changed in their world, I know what that does to their day-to-day, and the conversation starts from something true instead of a script. If I can&rsquo;t explain, in plain language, exactly what changed in someone&rsquo;s industry and why it matters to them, I don&rsquo;t know enough yet to be useful to them, and I go do the research instead of the pitch.</p>
+<h2>Why This Loop Doesn&rsquo;t Care What You&rsquo;re Learning</h2>
+<p>Widen the lens and the pattern holds for almost anything you&rsquo;d ever want to get good at. A new instrument, a new sport, a new piece of software at work, a whole new career. The failure mode is always the same one I almost fell into with that first VLOOKUP: skim the surface, memorize where the buttons are, and mistake that for understanding. The fix is always the same three moves too. Break it down until you find the fuzzy part. Use it, then explain it simply enough that the gaps show themselves. Take whatever you just learned about learning that thing, and point it at the next problem, even if the next problem looks nothing like the last one.</p>
+<p>None of this requires talent you don&rsquo;t already have. It requires refusing to move past the part you don&rsquo;t actually understand, which is a decision, not a gift.</p>
+<h2>Key Takeaways</h2>
+<p><strong>Objective:</strong> I&rsquo;ll walk away knowing a simple, repeatable loop for learning any new skill fast, the same one that took me from zero computer experience to running AI-built operating systems, and I&rsquo;ll see exactly how it scales up from a spreadsheet formula to change management and business development.</p>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>The Root-First Loop: deconstruct and micro-learn the fuzzy part, apply it and teach it back down (the Feynman test), then extrapolate the same first move to the next, bigger problem.</li>
+</ul>
+<p><strong>Try It:</strong> Pick one tool or skill you already use daily but couldn&rsquo;t fully explain out loud right now. Find the one specific term, formula, or step in it that&rsquo;s still fuzzy. Today, research just that one piece until the fuzz is gone, then explain the whole thing out loud to an actual child, or to an adult as if they were one.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>The Feynman Technique&rsquo;s origin in Richard Feynman&rsquo;s own approach to learning and his distinction between &ldquo;knowing something&rdquo; and &ldquo;knowing the name of something&rdquo; &ndash; Farnam Street, &ldquo;Feynman Technique: The Ultimate Guide to Learning Anything Faster&rdquo; &ndash; https://fs.blog/feynman-technique/&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+  
+  <div class="cta-box">
+    
+    <div class="cta-monogram">WA</div>
+    
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If you&rsquo;ve got a team or a project that keeps hitting a wall because nobody&rsquo;s gone back to the root of the actual problem, that&rsquo;s exactly the kind of thing I help people work through, whether it&rsquo;s a skill gap, a change initiative that needs its people brought along, or an automation build that needs someone who&rsquo;s actually learned the fundamentals underneath it. Reach out and let&rsquo;s find your root.</p>
+<p>P.S. If you want to start building your own AI fundamentals from zero the way I did, <a href="https://www.skool.com/ai-automation-society/about?ref=3c1596de1c2149c4a94f0b10a7950da0">Nate Herk&rsquo;s AI Automation Society</a> on Skool is exactly where I&rsquo;d point you.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+        
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+  
+
+  <p class="end-mark">Publications</p>
+
+</div>
+</body>
+</html>

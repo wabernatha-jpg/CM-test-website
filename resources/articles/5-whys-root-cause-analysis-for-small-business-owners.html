@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Problem Isn't the Employee. It's Your Fourth "Why."</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Inter', -apple-system, sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #FAF8F3;
+    --ink: #201E1B;
+    --ink-muted: #6B6459;
+    --accent: #1E7A4C;
+    --accent-soft: rgba(30, 122, 76, 0.12);
+    --rule: rgba(32, 30, 27, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 700; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(32, 30, 27, 0.18), 0 1px 2px rgba(32, 30, 27, 0.12);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(32, 30, 27, 0.25);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  .split-section {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px -40px 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* .cta-box's background is var(--ink), which in this light theme is the
+       dark charcoal tone (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be light, matching --paper
+       (#FAF8F3), not the dark near-black rgba the dark-theme template uses
+       for the same role. Hardcoded here (not a var()) because it must stay
+       in sync by hand with whatever --paper currently resolves to, same
+       gotcha documented in the dark template. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(250, 248, 243, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(250, 248, 243, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Skool invite (website-only secondary CTA) ---- */
+  .skool-box {
+    margin: 20px 0 20px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .skool-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .skool-copy {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .skool-link {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+  }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<p style="max-width:620px;margin:0 auto;padding:18px 8px 0;font-family:var(--font-body);font-size:12.5px;">
+  <a href="../index.html" style="color:var(--ink-muted);text-decoration:none;">&larr; Back to Resources</a>
+</p>
+<div class="wrap">
+
+  <p class="kicker">Operations</p>
+  <h1 class="title">The Problem Isn't the Employee. It's Your Fourth "Why."</h1>
+  <p class="dek">A fifteen-minute habit that turns "someone dropped the ball" into a system you can actually fix.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>July 18, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>If a late shipment, a missed deadline, or a customer complaint happened last month, it will probably happen again next month, to a different employee, for the same reason, unless something about how the work gets done actually changes. Most small business owners never get that far. A problem surfaces, someone explains what happened, the explanation sounds reasonable, and everyone moves on. The explanation is almost never the real cause. It&rsquo;s just the first plausible one.</p>
+<p>The fix isn&rsquo;t a new hire, a new tool, or a stern conversation. It&rsquo;s a fifteen-minute habit called the 5 Whys: ask &ldquo;why&rdquo; about the answer you just got, and keep asking until you land on something you can actually redesign.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<h2>Why the First Answer Is Never the Real One</h2>
+<p>Sakichi Toyoda built this into what became the Toyota Production System, and Taiichi Ohno called it the basis of Toyota&rsquo;s entire approach to problem-solving.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> The logic is not complicated: state the problem in one specific sentence, ask why it happened, ask why about that answer, and keep going. There&rsquo;s nothing magic about the number five. You stop when the answer describes a process, a template, or a missing owner, not a person or a one-time accident.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>Here&rsquo;s the practical test, borrowed from federal quality-improvement guidance: if you fixed the thing this answer describes, would the problem still come back? If yes, you&rsquo;re not done. You&rsquo;re still standing on a symptom.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<p>Small business owner and consultant David Jenyns puts a number on it: don&rsquo;t let yourself decide on a fix until you&rsquo;ve asked &ldquo;why&rdquo; at least four times.<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup> The first two answers almost always land on an individual. Push past them and you usually land on one of three things: no documented process, a broken or missing template, or nobody clearly responsible for catching the problem before it reaches the customer.<sup id="fnref4:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">4</div>
+<div class="pull-stat-label">Minimum "Whys" Before<br>You're Allowed to Pick a Fix</div>
+</div>
+</div>
+
+<h2>State the Problem, Not the Frustration</h2>
+<p>A problem is a specific, checkable gap between what&rsquo;s happening and what should be happening. It is not a feeling about what&rsquo;s happening. &ldquo;It takes too long for orders to ship&rdquo; is a complaint, not a problem statement, because there&rsquo;s nothing in it to ask &ldquo;why&rdquo; about yet. Turn it around and make it your first move instead of your finish line: state the fact, then force an actual answer as part of writing it down. &ldquo;Orders are averaging four days to ship. Here&rsquo;s why: the packing list doesn&rsquo;t print until someone manually checks the queue.&rdquo; Now you have a real first why, something specific enough to keep pushing on.</p>
+<p>Strip the emotion out while you&rsquo;re at it. &ldquo;Nobody around here takes shipping seriously&rdquo; and &ldquo;it&rsquo;s always a disaster&rdquo; describe how you feel, not what&rsquo;s happening, and they do two things at once: they point the first why at a person before the session has even started, and they hand the group a feeling to argue about instead of a mechanism to trace. If a word in your problem statement describes how you feel rather than something you could point to on a report, cut it.</p>
+<h2>Run It in Fifteen Minutes</h2>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Write the problem as one specific sentence</div>
+<div class="process-desc">Not "customers are unhappy." Something checkable: "25% of orders shipped late this month." Vague problems produce vague fixes.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Pull in whoever actually touches the work</div>
+<div class="process-desc">You, plus the one or two people closest to the problem. Not a committee. Frame it as fixing the system, not finding who to blame, or the honest answers stop coming.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Ask "why," then ask why about that answer</div>
+<div class="process-desc">Write each answer as a short phrase, not a paragraph. Keep pointing the next question at the answer you just got, not back at the original problem.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Stop when you hit a process, template, or ownership gap</div>
+<div class="process-desc">If the answer is still a name or a one-off event, ask again. You're looking for something you can redesign once and train into how the business runs.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">05</div>
+</div>
+<div class="process-content">
+<div class="process-title">Assign one fix, one owner, one date</div>
+<div class="process-desc">Write down what changes, who's responsible, and when you'll check whether the problem actually stopped. No owner and no date means it doesn't happen.</div>
+</div>
+</div>
+</div>
+
+<p>A typical chain looks like this. Problem: orders are shipped late. Why? We don&rsquo;t start packing until the day after the order comes in. Why? We only check the order queue once a day. Why? No one owns watching it. Why? We never wrote a fulfillment process when we set up online ordering. That last answer is fixable: a documented workflow with a named owner. &ldquo;Staff need to work faster&rdquo; was never going to fix anything, because it wasn&rsquo;t the real cause.<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<h2>Seven Ways to Derail Your Own Session</h2>
+<p>A 5 Whys session can go wrong without anyone noticing, because it still feels productive. Watch for these:</p>
+<ul>
+<li><strong>Listing symptoms instead of following one thread.</strong> If the group starts generating a list of everything wrong with the process, that&rsquo;s a different exercise. Pick one answer, ask why about that specific answer, and follow it all the way down before circling back to anything else.</li>
+<li><strong>Landing on a person&rsquo;s name.</strong> &ldquo;Because Maria forgot&rdquo; or &ldquo;because the new hire didn&rsquo;t know&rdquo; ends the session on someone to blame, not something to fix. If an answer names a person, ask one more why: what let that person&rsquo;s mistake reach the customer with nothing catching it?</li>
+<li><strong>Steering toward the system you already wanted.</strong> If you walked in planning to hire someone or buy new software, it&rsquo;s easy to stop asking &ldquo;why&rdquo; the moment an answer supports that plan. The whys are supposed to find the cause, not build a case for a decision you&rsquo;d already made.</li>
+<li><strong>Treating the original problem as the answer.</strong> &ldquo;Orders are late because orders are late,&rdquo; restated in different words, isn&rsquo;t a first why, it&rsquo;s the group refusing to start. Each why has to add new information, not repeat the problem statement back.</li>
+<li><strong>Using a word instead of an explanation.</strong> &ldquo;We&rsquo;re understaffed.&rdquo; &ldquo;We&rsquo;re too busy.&rdquo; These sound like causes, but they don&rsquo;t point at anything you can change on a Tuesday. Ask why you&rsquo;re understaffed, and you&rsquo;ll usually find a specific hiring delay, a schedule gap, or a process that breaks under load, something you can actually act on.</li>
+<li><strong>Staying vague enough to sound true of anything.</strong> &ldquo;Communication broke down&rdquo; or &ldquo;we need better processes&rdquo; would fit almost any problem in the business, which means it doesn&rsquo;t really explain this one. If the answer would work word-for-word in a different session about a different problem, it&rsquo;s too generic to be the root cause.</li>
+<li><strong>Assuming one chain explains the whole problem.</strong> A former Toyota managing director, Teruyuki Minoura, pointed out that different people running the same session often land on different &ldquo;root causes,&rdquo; and that a single line of questioning can miss causes sitting outside whoever&rsquo;s in the room.<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup> If the team can&rsquo;t agree on the chain, or if fixing the one cause you found doesn&rsquo;t stop the problem, run it again with someone who saw a different angle.</li>
+</ul>
+<p>Pair every root cause you do find, of any of these kinds, with a one-page checklist or SOP, not just a verbal agreement, so the fix survives past the meeting where you found it.<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup> Use this for the problems that keep repeating: late orders, the same billing error, the same kind of customer complaint. It&rsquo;s the wrong tool for a genuinely one-off event or a strategic question like &ldquo;should we open a second location.&rdquo; Save it for the failures your business keeps having, on a schedule (two or three short sessions a month is enough) and immediately after anything that costs you real money or a real client.<sup id="fnref5:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<h2>Key Takeaways</h2>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>5 Whys: repeatedly asking &ldquo;why&rdquo; about the previous answer until you reach a process, template, or ownership gap instead of a person or a one-off.</li>
+<li>The recurrence test: before you commit to a fix, ask whether the problem would still happen again if this particular answer got corrected.</li>
+</ul>
+<p><strong>Try It:</strong> Pick one problem that happened twice in the last month. Write it as one specific sentence, then ask &ldquo;why&rdquo; four times with whoever was closest to it. Write down the one fix, the one owner, and the date you&rsquo;ll check whether it worked.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>David Jenyns, &ldquo;5-Whys Problem Solving for Small Business,&rdquo; https://www.davidjenyns.com/5-whys-problem-solving-small-business/&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>&ldquo;Five whys,&rdquo; Wikipedia, https://en.wikipedia.org/wiki/Five_whys&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>CMS, &ldquo;Five Whys Tool for Root Cause Analysis,&rdquo; https://www.cms.gov/medicare/provider-enrollment-and-certification/qapi/downloads/fivewhys.pdf&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+  
+  <div class="cta-box">
+    
+    <div class="cta-monogram">WA</div>
+    
+    <div class="cta-content">
+      <div class="cta-label">Let's Talk</div>
+      <div class="cta-copy"><p>If you already know which problem in your business keeps repeating but haven&rsquo;t had the fifteen minutes to actually trace it, that&rsquo;s exactly what a first conversation is for. No judgment about how long it&rsquo;s been happening or how it&rsquo;s been handled so far.</p>
+<p>Let&rsquo;s talk. Fifteen minutes, no pressure, no cost.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+        <span class="dot">&middot;</span><a href="tel:217-691-6138">217-691-6138</a>
+        
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/clarity">mavenshift.co/clarity</a>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  <div class="skool-box">
+    <div class="skool-label">Join the Community</div>
+    <div class="skool-copy">Want real-time workshops, more breakdowns like this one, and direct help working through your own numbers? Join Purpose & Progress for live sessions, courses, and group coaching.</div>
+    <a class="skool-link" href="https://www.skool.com/purpose-and-progress/about">https://www.skool.com/purpose-and-progress/about</a>
+  </div>
+  
+
+  <p class="end-mark">Publications</p>
+
+</div>
+</body>
+</html>
