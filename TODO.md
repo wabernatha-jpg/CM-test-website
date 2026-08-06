@@ -15,3 +15,5 @@
 **Not doing:** a real server-side/passcode gate — not worth the engineering for non-sensitive marketing content. Revisit only if this ever needs to keep out more than casual browsing.
 
 **Still open:** exact page copy, the URL slug itself, and who generates/prints the QR code (not decided yet).
+
+**Update (2026-08-06):** `resources/index.html` now carries an intentional header link to Clarity (dual-branding the Resources page with both Change Maven and Clarity). The "don't link from any other page" rule above is superseded for that one page — the QR/pamphlet is no longer the *only* way in, though it remains the primary discovery channel for the target audience. `noindex, nofollow` on `clarity/index.html` is unchanged, so the page still won't show up in search.
