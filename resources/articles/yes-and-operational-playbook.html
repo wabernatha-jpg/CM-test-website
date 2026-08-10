@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>"Yes, And" Isn't an Improv Game. It's a Management System.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<p style="max-width:620px;margin:0 auto;padding:18px 8px 0;font-family:var(--font-body);font-size:12.5px;">
+  <a href="../index.html" style="color:var(--ink-muted);text-decoration:none;">&larr; Back to Resources</a>
+</p>
+<div class="wrap">
+
+  <p class="kicker">Leadership</p>
+  <h1 class="title">"Yes, And" Isn't an Improv Game. It's a Management System.</h1>
+  <p class="dek">The two words that keep an improv scene alive can turn a bad idea into R&D fuel, a quiet teammate into a contributor, and a stalled relationship into a closed deal.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 05, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <div class="figure figure--hero">
+<img src="assets/images/yes-and-improv-scene.png" alt="Two improv performers mid-scene on a small stage under warm amber lighting, one gesturing outward as the other leans in">
+<div class="figure-caption">Every improv scene runs on the same two words. Most management systems could use them too.</div>
+</div>
+
+<p>I learned &ldquo;yes, and&rdquo; during my MBA, in a class that had nothing to do with improv on paper. A classmate had to build a semester project around a business idea, get the room to participate, and make the case for it. His was an improv studio in St. Louis, and what he actually taught wasn&rsquo;t a comedy game. It was a discipline: no matter what the other person just said, however wrong or off-topic or goofy it sounds, you take it. You find the piece of it that&rsquo;s true, and you build on it. You don&rsquo;t block. You don&rsquo;t redirect to your own idea. You add.</p>
+<p>That&rsquo;s the whole rule, and it survives the trip out of the theater intact. Run it inside project management, inside a one-on-one, inside a sales relationship, and it stops being a game and starts being a system for what to do with input you didn&rsquo;t ask for.</p>
+<div class="keep-together">
+<h2>Where the Rule Came From</h2>
+<p>The habit of "yes, and" is older than any single improv teacher's name attached to it now.</p>
+<div class="figure">
+<img src="assets/images/yes-and-compass-players-1950s.png" alt="Black-and-white archival-style photo of a 1950s Chicago storefront theater with performers visible on a bare stage inside" style="max-height:300px;object-fit:cover;object-position:center;">
+<div class="figure-caption">The Compass Players, Chicago, the 1950s: the room where "yes, and" started as an internal rule of thumb, not yet a business principle.</div>
+</div>
+</div>
+
+<p>The instinct traces back to the Compass Players in 1950s Chicago, the troupe that grew out of Viola Spolin&rsquo;s improvisational-games method and later split into Second City.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> Spolin codified the underlying theory first; &ldquo;yes, and&rdquo; itself came into common use afterward, as the players who trained under her, and the generation after them (Del Close, Keith Johnstone, and the teachers at Second City), turned her exercises into a repeatable rule for keeping a scene alive.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> The rule was never really about comedy. It was about what happens to a group&rsquo;s output when nobody in the room is allowed to just say no.</p>
+<h2>Innovation Intake: Don&rsquo;t Kill the Idea, Route It</h2>
+<p>Most idea-intake processes fail at the first sentence someone hears. An employee floats something that sounds impractical, and the fastest, easiest, most natural response is &ldquo;that won&rsquo;t work.&rdquo; Technically true, and it ends the conversation before anyone finds out what was actually usable inside the idea.</p>
+<div class="figure">
+<img src="assets/images/yes-and-idea-whiteboard.png" alt="A whiteboard covered in colorful sticky notes, one idea circled in marker with an arrow pointing toward a separate column" style="max-height:260px;object-fit:cover;object-position:center;">
+<div class="figure-caption">Triage, not verdict: the same idea, routed to whoever's actually positioned to judge the piece that's real.</div>
+</div>
+
+<p>The version of this told to me, secondhand, from Boeing: an employee suggests building the entire airplane out of whatever the black box&rsquo;s crash-resistant material is made of, on the logic that if it survives a crash, the airplane should too. As stated, the idea is absurd. Nobody is going to build a fuselage out of black-box casing. But &ldquo;yes, and&rdquo; doesn&rsquo;t evaluate the idea as stated. It routes it. Engineers get asked whether that material, or something like it, could reinforce specific structural points. Quality specialists get asked whether it changes anything about compound durability. Someone checks whether it has a use case inside the wings, where fuel and structural integrity already intersect. Most of that goes nowhere. Occasionally, a fragment of it doesn&rsquo;t.</p>
+<p>I can&rsquo;t verify that specific exchange happened word for word; it was relayed to me as an example, not something I sat in the room for. What&rsquo;s independently documented is that Boeing runs exactly this kind of intake at scale: a 2018 employee crowdsourcing push, run through an online survey and iPad &ldquo;idea stations&rdquo; placed across its sites, pulled in more than 40,000 employee submissions, which the company says it read in full before shaping a $100 million workforce-development investment around what came back.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> The specific airplane-material anecdote may be apocryphal. The underlying practice, a real channel where a &ldquo;bad&rdquo; idea gets read instead of dismissed, isn&rsquo;t.</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">40,000+</div>
+<div class="pull-stat-label">Employee Ideas Boeing Says It Read, One at a Time</div>
+</div>
+</div>
+
+<p>The mechanism generalizes past aerospace. Triage the idea instead of the verdict: what&rsquo;s the workable kernel, who&rsquo;s positioned to evaluate that kernel, and where else in the business might it apply even if it&rsquo;s wrong for the spot it was suggested for. That&rsquo;s a cheap process to run, and it&rsquo;s the difference between a team that hears &ldquo;bad idea, dismissed&rdquo; and stops raising its hand, and a team that hears &ldquo;here&rsquo;s what we did with it&rdquo; and keeps raising it.</p>
+<div class="figure figure--wide">
+<img src="assets/images/yes-and-scope-board.png" alt="A wall of blank colored index cards, one flagged with a small red marker, a hand adding a written note to it rather than pulling it off the board">
+<div class="figure-caption">Scope creep gets a gate. A good idea that doesn't fit yet deserves a redirect instead.</div>
+</div>
+
+<h2>Scope Management: Facilitation, Not Gatekeeping</h2>
+<p>Project and program leaders live inside a harder version of the same problem. Scope creep is real, and the standard defense against it is a gate: a change-control process, a firm no, a person whose job is to say &ldquo;that&rsquo;s out of scope&rdquo; and mean it. Gates work, right up until they start training people to stop bringing ideas to the table at all, because every idea that gets flatly refused is a small, cumulative lesson that this isn&rsquo;t a room where new thinking is welcome.</p>
+<p>&ldquo;Yes, and&rdquo; run inside scope management doesn&rsquo;t mean approving everything. It means validating the ambition before you constrain it. Someone proposes something that would genuinely blow the budget or the timeline: yes, that&rsquo;s a real gap worth solving, and here&rsquo;s what it actually costs, and here&rsquo;s whether it fits this phase or the next one, and here&rsquo;s the SOP it might belong to instead if it doesn&rsquo;t fit this project at all. The idea gets a real answer instead of a wall. The scope stays intact. And the person who raised it learns that raising things is worth doing, which is the resource every project actually runs out of first.</p>
+<p>The two failure modes worth naming here are opposites, and it&rsquo;s easy to slide into either one without noticing. HBR&rsquo;s own recent reporting on the technique makes the same point from the other direction: &ldquo;yes, and&rdquo; is powerful for running more collaborative, productive conversations, but only &ldquo;when used intentionally,&rdquo; not as a reflexive habit of agreeing with everything that gets said.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> A leader who &ldquo;yes, ands&rdquo; every request without ever landing on a constraint isn&rsquo;t facilitating, they&rsquo;re just deferring the no to a worse moment, later, when it costs more to say. The discipline is in the second half of the phrase as much as the first: you add something real, a constraint, a redirect, a cost, not just enthusiasm.</p>
+<h2>The One-on-One: Where This Actually Builds Trust</h2>
+<p>The clearest place to feel &ldquo;yes, and&rdquo; working is a one-on-one with someone who doesn&rsquo;t talk much. Not the quiet-and-fine employee, the one who&rsquo;s clearly holding something back, showing up right on time and no earlier, giving you just enough and no more. Ask that person a direct question and you&rsquo;ll often get a real answer. What you rarely get, without deliberate work, is their unprompted idea, because somewhere along the way they learned that unprompted ideas get corrected instead of built on.</p>
+<p>&ldquo;Yes, and&rdquo; is the fix, applied one small exchange at a time. They float something half-formed, tangential, or not fully thought through. You don&rsquo;t correct it on the spot. You find the piece that&rsquo;s usable, &ldquo;yes, I like that, what if we pointed it at this SOP instead,&rdquo; and hand it back to them slightly bigger than it arrived. Do that consistently and the behavior changes: people who were guarded start bringing you things before you ask, because the last five things they brought you got taken seriously instead of picked apart.</p>
+<div class="figure">
+<img src="assets/images/yes-and-one-on-one-listening.png" alt="A manager leaning in attentively across a small table toward a colleague, notepad closed, genuine engaged body language" style="max-height:300px;object-fit:cover;object-position:center;">
+<div class="figure-caption">Active listening isn't a soft skill here. It's the mechanism the research below actually measures.</div>
+</div>
+
+<p>This isn&rsquo;t just a management feeling. It&rsquo;s the same variable Amy Edmondson spent a career researching under the name psychological safety, and the finding replicates in places well outside a one-on-one. Edmondson&rsquo;s original 1999 study of hospital nursing teams found something counterintuitive: the better-performing teams reported more errors, not fewer, because they were safe enough to surface mistakes instead of hiding them, and that willingness to surface problems is what let them actually fix things.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> Google&rsquo;s Project Aristotle, running its own multi-year study of what separates high- and low-performing teams internally, landed on the same variable as the single strongest predictor of team performance, ahead of raw talent, tenure, or process maturity.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> &ldquo;Yes, and&rdquo; isn&rsquo;t a personality trait some managers happen to have. It&rsquo;s a repeatable technique for building the exact condition that research keeps finding matters most.</p>
+<p>The part of this worth watching for as a leader isn&rsquo;t just what people say in the room. It&rsquo;s who&rsquo;s gone quiet outside of it. Someone who&rsquo;s normally present and now isn&rsquo;t, who&rsquo;s dragging for a stretch that doesn&rsquo;t match their usual pattern, is telling you something whether or not they&rsquo;ve said a word. The same instinct that makes you build on a half-formed idea should make you notice the absence of ideas from someone who used to have them, and ask what&rsquo;s actually going on before it becomes a performance conversation instead of a support one.</p>
+<div class="figure figure--wide">
+<img src="assets/images/yes-and-coffee-conversation.png" alt="Two people in genuine relaxed conversation at a small coffee shop table, leaning in, warm natural light">
+<div class="figure-caption">The relationship gets built long before the meeting where the deal gets signed.</div>
+</div>
+
+<h2>Relationship-Driven Sales: The Deal Isn&rsquo;t Made in the Meeting</h2>
+<p>The formal meeting is where a deal gets signed. It&rsquo;s rarely where a deal gets made. The actual work, the trust that makes someone comfortable putting their name and budget behind a decision, tends to happen in the parts of the relationship that don&rsquo;t show up on a calendar labeled &ldquo;sales call&rdquo;: a follow-up that wasn&rsquo;t required, a lunch that wasn&rsquo;t strictly necessary, a conversation on a weekend that had nothing to do with the pitch. None of that is a shortcut around doing good work. It&rsquo;s the months, sometimes years, of grooming a relationship that makes the eventual formal ask feel like a formality instead of a cold pitch.</p>
+<p>&ldquo;Yes, and&rdquo; is the operating mode that makes that kind of relationship possible to sustain, because it requires being reachable and responsive in a way that a strict nine-to-five boundary doesn&rsquo;t allow for. That&rsquo;s not a call to be always-on for its own sake. It&rsquo;s a recognition that for people carrying real client relationships, work and the rest of life are genuinely intertwined rather than cleanly separable, and treating every after-hours message as an intrusion instead of part of the job tends to correlate with staying further from where the actual decisions get made. The skill worth building isn&rsquo;t rigid separation. It&rsquo;s the ability to hold both, a family conversation at ten in the morning and a client call at eight at night, without either one crowding the other out, which takes practice the same way any other juggled skill does: you take on a slightly bigger stretch than you&rsquo;re fully ready for, you drop something, you learn what you can actually carry, and you get better at it the more you do it.</p>
+<h2>The Discipline Underneath the Technique</h2>
+<p>None of this works as blanket agreement. A leader who says &ldquo;yes, and&rdquo; to every idea, every scope request, every deal in the pipeline, isn&rsquo;t practicing the technique, they&rsquo;re avoiding the harder job of judgment. The rule was never &ldquo;never say no.&rdquo; It&rsquo;s &ldquo;don&rsquo;t say no before you&rsquo;ve found what&rsquo;s usable,&rdquo; which is a meaningfully smaller, more disciplined ask. Triage the idea before you kill it. Validate the ambition before you constrain it. Take the quiet contribution seriously before you move past it. Build the relationship before you need it to close something. In each case, the &ldquo;and&rdquo; is doing real work, adding a constraint, a redirect, a next step, not just padding a reflexive yes.</p>
+<h2>Key Takeaways</h2>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>&ldquo;Yes, and&rdquo; (improv, via the Compass Players and Second City lineage): accept the workable premise in any input, then extend it with a real next step, rather than evaluating and dismissing it on the spot.</li>
+<li>Psychological safety (Amy Edmondson): a team&rsquo;s shared belief that it&rsquo;s safe to surface errors, half-formed ideas, and concerns, empirically linked to learning behavior and team performance.</li>
+</ul>
+<p><strong>Try It:</strong> In your next one-on-one with the quietest person on your team, don&rsquo;t ask a direct question and wait for a direct answer. Let them bring up something half-formed, and instead of correcting or redirecting it, find the one piece that&rsquo;s usable and hand it back to them bigger than they gave it to you.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Gary Schwartz, &ldquo;The Trouble with &lsquo;Yes, And&hellip;&rsquo;,&rdquo; Spolin Games Online, https://spolingamesonline.org/the-trouble-with-yes-and/&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>&ldquo;Boeing Announces Details of $100 Million Employee Education Investment,&rdquo; Boeing news release, June 4, 2018, https://boeing.mediaroom.com/2018-06-04-Boeing-announces-details-of-100-million-employee-education-investment&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Debra Schifrin, &ldquo;When &lsquo;Yes, and&hellip;&rsquo; Backfires,&rdquo; Harvard Business Review, August 11, 2025, https://hbr.org/2025/08/when-yes-and-backfires&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Amy C. Edmondson, &ldquo;Psychological Safety and Learning Behavior in Work Teams,&rdquo; Administrative Science Quarterly, Vol. 44, No. 2 (1999).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Julia Rozovsky, &ldquo;The Five Keys to a Successful Google Team,&rdquo; re:Work, Google, November 17, 2015.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+
+  <div class="cta-box">
+
+    <div class="cta-monogram">WA</div>
+
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If your team has a scope-creep problem, an idea-intake process nobody trusts, or a quiet contributor you haven&rsquo;t figured out how to draw out, this is the exact kind of operating discipline I help leaders build. Let&rsquo;s talk through what &ldquo;yes, and&rdquo; looks like inside your specific team.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Don't Build the Model. Be the Reason It Works.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px -40px 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<p style="max-width:620px;margin:0 auto;padding:18px 8px 0;font-family:var(--font-body);font-size:12.5px;">
+  <a href="../index.html" style="color:var(--ink-muted);text-decoration:none;">&larr; Back to Resources</a>
+</p>
+<div class="wrap">
+
+  <p class="kicker">Strategy</p>
+  <h1 class="title">Don't Build the Model. Be the Reason It Works.</h1>
+  <p class="dek">A 5C read on why most consulting firms should stop trying to out-build AI vendors, and start becoming the partner those vendors need instead.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 03, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>Every consulting firm with a website has an AI practice page now. Fewer of them have a real answer to the harder question underneath it: build the capability yourself, or plug into someone else&rsquo;s. That choice gets treated like a branding decision. It isn&rsquo;t. It&rsquo;s a strategy decision with a five-part test attached, and most firms are failing at least two of the five parts without realizing it.</p>
+<p>The test is the 5C framework: Company, Customers, Competitors, Collaborators, Context. It was built for exactly this kind of question, the one where &ldquo;everyone else is doing it&rdquo; is doing the thinking that a real strategic read should be doing instead. Run a typical mid-size or boutique consulting firm through all five, and the honest verdict is usually the same: going all-in on building an AI practice is not a sustainable bet. Becoming a services partner to the firms actually building AI is.</p>
+<div class="keep-together">
+<h2>Walking the Five C's</h2>
+<p>Here's what each C actually asks, applied to the build-vs-partner decision specifically.</p>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Company</div>
+<div class="process-desc">What capital, talent, and distinctive assets do you actually have to build with, compared to what building competitively now requires?</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Customers</div>
+<div class="process-desc">Are clients paying for your model, or for the outcome your judgment produces on top of somebody else's model?</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Competitors</div>
+<div class="process-desc">Who else is trying to win this exact fight, and how many years and how many billions of dollars ahead of you are they already?</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Collaborators</div>
+<div class="process-desc">What do the firms with the most resources to build actually choose to do, and what does that choice tell you?</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">05</div>
+</div>
+<div class="process-content">
+<div class="process-title">Context</div>
+<div class="process-desc">Which way is the underlying technology and cost curve moving, and does that favor owning it or renting it?</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<h2>Company: What You&rsquo;d Actually Be Competing With</h2>
+<p>Start with the plainest question: what does &ldquo;building an AI practice&rdquo; cost at a level that&rsquo;s actually competitive, and do you have it? Accenture answered that question with a $3 billion, three-year commitment to its Data &amp; AI practice, aimed at doubling its AI-focused workforce from 40,000 to 80,000 people, roughly a tenth of the entire firm.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> McKinsey&rsquo;s QuantumBlack runs around 5,000 specialists. BCG X runs around 3,000 engineers. Bain equipped its entire eighteen-thousand-person team with AI tooling.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
+<p>That&rsquo;s the entry price at the top of the market. Most consulting firms, including most firms who&rsquo;d describe themselves as serious players in their industry, are not writing $3 billion checks or fielding five-thousand-person AI units. Measured against that Company reality, &ldquo;build our own AI capability&rdquo; usually means entering a fight several years and several orders of magnitude behind, funded out of a budget that was never sized for it.</p>
+<h2>Customers: What They&rsquo;re Actually Buying</h2>
+<p>Clients watching competitors deploy AI want proof and speed, not a briefing on your firm&rsquo;s hiring plan. The argument that still holds up for consulting&rsquo;s relevance, even as the underlying models keep improving, is what one AI-focused consultant calls the &ldquo;last mile&rdquo;: AI vendors sell models and platforms, but turning that capability into a working outcome inside a specific business still requires process redesign, data integration, and change management that a model alone doesn&rsquo;t do.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> That&rsquo;s the layer clients are actually paying for. Whether the model underneath it came from your own lab or from a partner&rsquo;s platform is, to most clients, invisible and beside the point.</p>
+<p>That reframes the whole question. If the client&rsquo;s real purchase is judgment applied to someone else&rsquo;s model, then building your own model is solving a problem the client didn&rsquo;t ask you to solve.</p>
+<h2>Competitors: A Fight You Don&rsquo;t Need to Enter</h2>
+<p>The Competitors read is where &ldquo;build it ourselves&rdquo; stops looking like ambition and starts looking like a bad matchup. The competitive set for a from-scratch AI build isn&rsquo;t just other consulting firms. It&rsquo;s the hyperscalers and frontier labs themselves, who are increasingly selling directly to enterprises, and it&rsquo;s the handful of consulting giants who already have multi-year, multi-billion-dollar heads starts. Trying to out-build both at once, on a fraction of the capital, isn&rsquo;t a strategy. It&rsquo;s a way to lose slowly on two fronts instead of one.</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">$3B</div>
+<div class="pull-stat-label">Accenture's 3-Year AI Bet<br>Doubling Its AI Workforce to 80,000</div>
+</div>
+</div>
+
+<h2>Collaborators: What the Giants Actually Do</h2>
+<p>Here&rsquo;s the detail that should carry the most weight in this whole analysis: even the firms with the capital to build extensively don&rsquo;t rely on building alone. Bain became the first major consulting firm to strike a direct alliance with OpenAI, announced in February 2023 and deepened repeatedly since, including a stake in OpenAI&rsquo;s enterprise deployment venture.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> BCG holds parallel alliances with both OpenAI and Anthropic. Deloitte&rsquo;s delivery ties span Google Cloud, AWS, Anthropic, Nvidia, and ServiceNow. McKinsey lists over a thousand ecosystem partners, including AWS, Google Cloud, Microsoft, and Salesforce.<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
+<p>Every one of those firms is layering partnerships on top of its internal build, not instead of it, and in several cases the vendor alliance is the more visible and more publicized move. If the firms with the deepest pockets in the industry still choose to partner extensively rather than build everything themselves, that&rsquo;s not a footnote. It&rsquo;s the answer. A smaller firm trying to skip straight to &ldquo;we built our own&rdquo; is trying to leapfrog a step the biggest, best-capitalized players in the business haven&rsquo;t chosen to skip.</p>
+<p>Worth naming honestly here too: these alliances create their own bias risk. A firm that both advises on AI strategy and implements a specific vendor&rsquo;s platform has an incentive to recommend the platform it profits from reselling, a tension independent advisors have pointed out directly.<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup><sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> That&rsquo;s a real cost of the partner path, not a reason to avoid it, but a reason to be transparent with clients about where the recommendation is coming from.</p>
+<h2>Context: Which Way the Curve Is Bending</h2>
+<p>Zoom out to the macro forces nobody controls. Frontier model capability keeps getting cheaper and more commoditized on a roughly annual cycle, which means whatever proprietary edge a build effort produces this year is closer to a baseline feature by next year. Model training itself keeps getting more capital-intensive at the frontier, which raises the ante for anyone trying to compete at that layer specifically. Specialized AI talent remains expensive and scarce relative to how consulting firms have traditionally staffed and billed. And the regulatory environment around AI is still forming, which makes committing years of capital to a specific in-house build a bet on rules that haven&rsquo;t been written yet.</p>
+<p>Every one of those forces points the same direction: toward renting capability from whoever is absorbing that capital intensity and regulatory uncertainty, and toward building your differentiation in the layer above it, not in the model itself.</p>
+<h2>The Cost of Getting This Call Wrong</h2>
+<p>Everything above is a strategic argument. The stakes underneath it are also a straightforward cost problem, and the data on that is now specific enough to quantify.</p>
+<p>RAND Corporation interviewed 65 experienced data scientists and engineers across company sizes and industries and found that more than 80 percent of AI projects fail outright, roughly twice the failure rate of non-AI IT projects.<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> Gartner separately predicted that at least 30 percent of generative AI projects would be abandoned after proof-of-concept by the end of 2025, citing poor data quality, inadequate risk controls, escalating costs, and unclear business value as the recurring reasons.<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup> Neither number is about AI failing as a technology. Both are about organizations misjudging what they could actually execute, which is exactly the assessment this article is arguing through.</p>
+<p>The build-versus-partner split inside that failure rate is the number that matters most for this specific decision. MIT&rsquo;s NANDA initiative studied more than 300 enterprise AI deployments in 2025 and found that tools sourced through external partnerships reached deployment about 67 percent of the time, compared to roughly 33 percent for tools built in-house, twice the success rate.<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup> That&rsquo;s not a rounding difference. It&rsquo;s the same 5C conclusion showing up as a hard number: betting on your own build isn&rsquo;t just the more capital-intensive path, it&rsquo;s the statistically worse bet on its own terms.</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat pull-stat--b">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">67% vs 33%</div>
+<div class="pull-stat-label">Deployment Success Rate<br>Partnering vs. Building In-House</div>
+</div>
+</div>
+
+<p>The opportunity cost compounds the direct loss. A survey of 700 senior business leaders found that U.S. organizations lose an average of 2.4 percent of annual revenue on AI initiatives that fail to deliver expected value, and fewer than a third of those organizations treat killing an underperforming AI project as a normal, timely decision. Nearly half only pull the plug after significant time and money are already spent.<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup> Every quarter a firm spends staffing and funding a build that was never going to out-compete the vendors already ahead of it is a quarter not spent on the implementation relationships and delivery capability, the actual partner-side capacity, that the same data says wins twice as often. Misjudging this call doesn&rsquo;t just cost the money sunk into the build. It costs the position the firm could have had if it had assessed correctly from the start.</p>
+<h2>The Actual Strategy: Support the Race, Don&rsquo;t Try to Win It</h2>
+<p>Put the five C&rsquo;s together, cost data included, and the picture is consistent, not just convenient. Company says you likely don&rsquo;t have the capital to build competitively. Customers say they&rsquo;re buying outcomes, not model ownership. Competitors say the build lane is already occupied by players with a multi-year, multi-billion-dollar lead. Collaborators show that even those players choose to partner extensively rather than build alone. Context says the economics of owning frontier AI keep getting worse, not better, for anyone outside the very top of the market.</p>
+<p>None of that is an argument against AI. It&rsquo;s an argument against the specific bet of trying to become an AI vendor when your firm is, and has always been, a services business. The available and genuinely sustainable move is to become the best possible implementation partner to the vendors who are actually racing to build the underlying technology: the process redesign, the change management, the industry-specific judgment, the last mile that turns someone else&rsquo;s model into a working result for a specific client. That&rsquo;s not a consolation prize. It&rsquo;s the same role systems integrators have played in every previous platform wave, and it&rsquo;s a role with real, durable demand precisely because the vendors racing to build frontier models have no interest in doing it themselves.</p>
+<h2>Key Takeaways</h2>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>5C Analysis (Company, Customers, Competitors, Collaborators, Context) &ndash; a strategic lens for deciding whether to build a capability or partner for it, rather than defaulting to whichever one looks more impressive on a slide.</li>
+</ul>
+<p><strong>Try It:</strong> Write one honest sentence for each of the five C&rsquo;s about your own firm&rsquo;s AI position, no hedging. If three or more of those sentences point toward &ldquo;we can&rsquo;t out-build this,&rdquo; that&rsquo;s your answer, and it&rsquo;s time to go looking for the vendor partnership that plays to what your firm actually does well.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Accenture to Invest $3 Billion in AI to Accelerate Clients&rsquo; Reinvention &ndash; https://newsroom.accenture.com/news/2023/accenture-to-invest-3-billion-in-ai-to-accelerate-clients-reinvention&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Accenture to invest $3B in AI and double AI workforce, CIO Dive &ndash; https://www.ciodive.com/news/Accenture-AI-investment-double-workforce-layoffs/652867/&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Bain &amp; Company announces services alliance with OpenAI, Bain press release, February 2023 &ndash; https://www.bain.com/about/media-center/press-releases/2023/bain&ndash;company-announces-services-alliance-with-openai-to-help-enterprise-clients-identify-and-realize-the-full-potential-and-maximum-value-of-ai/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Bain &amp; Company invests in the OpenAI Deployment Company, Bain press release &ndash; https://www.bain.com/about/media-center/press-releases/2026/bain-company-openai-a-new-venture-to-deploy-ai-at-enterprise-scale/&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Big Five Consulting: Betting Billions on AI Partnerships, Virtasant &ndash; https://www.virtasant.com/ai-today/big-five-consulting-betting-billions-on-ai-partnerships&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>How McKinsey, BCG, and Deloitte structure their AI practices, AI Advisory Practice &ndash; https://aiadvisorypractice.com/blog/mckinsey-bcg-deloitte-enterprise-ai-approach&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>AI vendors have the models, consulting firms have the last mile, Erin Hichman &ndash; https://www.linkedin.com/pulse/ai-vendors-have-models-consulting-firms-last-mile-erin-hichman-fiyzc&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Independent AI consulting vs. vendor advisory, thinking.inc &ndash; https://thinking.inc/en/boss-articles/independent-ai-consulting-vs-vendor-advisory/&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>James Ryseff, Brandon de Bruhl, Sydne J. Newberry, &ldquo;The Root Causes of Failure for Artificial Intelligence Projects and How They Can Succeed,&rdquo; RAND Corporation &ndash; https://www.rand.org/pubs/research_reports/RRA2680-1.html&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Gartner Predicts 30% of Generative AI Projects Will Be Abandoned After Proof of Concept By End of 2025 &ndash; https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>MIT NANDA, &ldquo;The GenAI Divide: State of AI in Business 2025,&rdquo; as reported by Fortune &ndash; https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Emergn survey of 700 senior business leaders on AI project revenue loss, as reported by CIO Dive &ndash; https://www.ciodive.com/news/wasted-tech-spend-AI-governance/824275/&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+
+  <div class="cta-box">
+
+    <div class="cta-monogram">WA</div>
+
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If your firm is staring down this exact decision and the internal debate keeps circling without landing, that&rsquo;s precisely the kind of strategic call I help leadership teams make cleanly, with a framework instead of a hunch. Reach out and let&rsquo;s run your firm through it.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
