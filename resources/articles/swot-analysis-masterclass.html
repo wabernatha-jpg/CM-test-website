@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SWOT Analysis: What to Check Before You Commit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Frameworks</p>
+  <h1 class="title">SWOT Analysis: What to Check Before You Commit</h1>
+  <p class="dek">A complete walkthrough of the four-box framework everyone thinks they already know, and almost nobody runs with any real rigor.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 06, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>A twelve-person specialty coffee roaster has spent six years building a loyal following through a single retail location and a modest online subscription business. Then a regional grocery chain reaches out unprompted: forty stores, a standing order, real volume for the first time in the company&rsquo;s history. It&rsquo;s the kind of opportunity that looks like an obvious yes until someone asks two harder questions: can this roaster actually produce and pack that volume without breaking what makes the coffee good, and even if it can, is a forty-store wholesale deal the growth this specific business should be chasing right now? Those two questions, one about internal capability and one about external opportunity, are exactly what SWOT exists to separate and answer cleanly instead of blurring together into a single gut call.</p>
+<p>This piece is not a rehash of the four boxes everyone half-remembers from a syllabus. It&rsquo;s the whole thing: what SWOT actually is, where the model came from, how to work each quadrant with real rigor instead of a five-minute brainstorm, how to run the process end to end, and how to turn four lists into an actual decision instead of a poster on a conference room wall.</p>
+<h2>What SWOT Is, and When to Use It</h2>
+<p>SWOT is a structured way to take stock of a decision from two angles at once: what&rsquo;s true about the business itself (Strengths and Weaknesses), and what&rsquo;s true about the world outside it (Opportunities and Threats). The first two are internal and largely within your control. The last two are external and mostly outside it. Laid out as a 2x2, the model forces a specific discipline: don&rsquo;t let an honest weakness get buried under enthusiasm about an opportunity, and don&rsquo;t let a real external threat get waved away because the internal story feels strong.</p>
+<p>It&rsquo;s a synthesis tool more than a research tool. SWOT doesn&rsquo;t generate the underlying facts about the market, the competition, or the regulatory environment on its own; that&rsquo;s the job of frameworks like PESTLE (external conditions) or Porter&rsquo;s Five Forces (industry structure). What SWOT does is take findings you already have, or go get case by case, and organize them into a shape that&rsquo;s actually usable for a decision: pursue, defend, fix, or walk away.</p>
+<p>Use it whenever a specific, boundaried decision needs a clear-eyed gut check before commitment: a new contract, a new product line, a market entry, a major partnership. Run it with real inputs, not assumptions carried over from the last planning offsite. Skip it, or keep it brief, for open-ended &ldquo;how&rsquo;s the business doing&rdquo; audits with no specific decision attached; without a decision to organize around, the four boxes tend to fill up with generic statements that don&rsquo;t point anywhere.</p>
+<div class="tidbit-box">
+<p><img class="tidbit-image" src="../assets/images/swot-origin.png" alt="Vintage documentary-style photograph of a 1960s corporate research team gathered around a chalkboard sketching a four-quadrant diagram"></p>
+<div class="tidbit-label">Historical Tidbit</div>
+<div class="tidbit-title">The Framework That Was Almost Called SOFT</div>
+<div class="tidbit-text">
+<p>SWOT&rsquo;s origin traces to a Stanford Research Institute team working between 1960 and 1970, Robert Stewart and Albert Humphrey among them, trying to figure out why corporate long-range planning kept failing at Fortune 500 companies despite enormous investment in it. The framework that came out of that research wasn&rsquo;t even called SWOT. It was SOFT: Satisfactory, Opportunity, Fault, Threat, presented at a 1964 seminar in Zurich. Two attendees, Urick and Orr, swapped the F for a W on the spot. Humphrey&rsquo;s own account of the moment, on record decades later: &ldquo;This was later changed to SWOT, don&rsquo;t ask.&rdquo;<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>Even the now-standard 2x2 matrix took another eighteen years to arrive. Heinz Weihrich didn&rsquo;t formalize the familiar grid layout until 1982, and even that credit isn&rsquo;t uncontested; Humphrey later had to push back publicly on Harvard and MIT staking their own claim to the framework&rsquo;s invention.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> A tool taught today as though it arrived fully formed actually took over two decades, several different people, and at least one flatly unexplained rename to reach the version everyone recognizes.</p>
+</div>
+</div>
+<h2>The Four Boxes, in Full</h2>
+<div class="keep-together">
+<h2>The SWOT Grid</h2>
+<p>The four boxes split along two lines: internal versus external, and helpful versus harmful. Strengths and Opportunities are what a business wants to lean into; Weaknesses and Threats are what it needs to manage.</p>
+<div class="quadrant-grid">
+<div class="quadrant-cell q-strength">
+<div class="q-label">Strengths</div>
+<div class="q-item">Internal, controllable, helpful</div>
+<div class="q-item">What do we do better than competitors, with evidence?</div>
+<div class="q-item">What do customers already trust us for?</div>
+</div>
+<div class="quadrant-cell q-weakness">
+<div class="q-label">Weaknesses</div>
+<div class="q-item">Internal, controllable, harmful</div>
+<div class="q-item">Where do we actually underperform, not just feel insecure?</div>
+<div class="q-item">What capability gap would this decision expose?</div>
+</div>
+<div class="quadrant-cell q-opportunity">
+<div class="q-label">Opportunities</div>
+<div class="q-item">External, uncontrollable, helpful</div>
+<div class="q-item">What's changing outside the business that we could exploit?</div>
+<div class="q-item">Where is unmet demand real, not assumed?</div>
+</div>
+<div class="quadrant-cell q-threat">
+<div class="q-label">Threats</div>
+<div class="q-item">External, uncontrollable, harmful</div>
+<div class="q-item">What could a competitor, regulator, or market shift do to us?</div>
+<div class="q-item">What are we currently unprotected against?</div>
+</div>
+</div>
+
+</div>
+
+<p><strong>Strengths.</strong> What it covers: capabilities, assets, or reputation the business genuinely has today, not what it aspires to. Questions to ask: What can we prove with evidence (retention rate, quality scores, repeat-purchase rate, a proprietary process) rather than assert from confidence? What do we do that would be genuinely hard for a new entrant to copy quickly? Where to find it: internal performance data, customer reviews and repeat-purchase records, direct comparison against the two or three competitors closest to your position. Strong vs. weak: a weak strengths list says &ldquo;we have great quality.&rdquo; A strong one says &ldquo;our roast scores rate above the 90th percentile in blind panels run against the three regional roasters most likely to compete for this same shelf space.&rdquo;</p>
+<p><strong>Weaknesses.</strong> What it covers: real internal limitations that would specifically affect this decision, not a generic self-criticism session. Questions to ask: What operational capacity, skill, or system would this specific decision actually stress? Where has a comparable past decision already exposed a gap? What would an honest outsider, a new hire, a departing employee, a supplier, say if asked directly? Where to find it: internal capacity data (production throughput, staffing ratios, current utilization), exit interviews, direct input from people close to the work who have less incentive to protect the company&rsquo;s self-image than leadership does. Strong vs. weak: a weak list says &ldquo;we could improve efficiency.&rdquo; A strong one says &ldquo;current roasting capacity tops out at 1,800 pounds a week at existing staffing, and the proposed volume requires 2,600 pounds a week starting month two.&rdquo;</p>
+<p><strong>Opportunities.</strong> What it covers: real external conditions changing in a way that specifically benefits this business, not general market optimism. Questions to ask: What&rsquo;s shifting in demand, regulation, technology, or the competitive field that opens a door right now, and is the window actually open long enough to matter? Where to find it: market-growth data specific to the actual segment, not the broader category; a genuine unmet need surfaced directly from prospective customers or partners; a documented gap left by a competitor&rsquo;s retreat or failure. Strong vs. weak: a weak list says &ldquo;specialty foods are growing.&rdquo; A strong one says &ldquo;the grocery chain&rsquo;s own private-label specialty coffee line was discontinued four months ago after quality complaints, and the shelf space it occupied is still unfilled.&rdquo;</p>
+<p><strong>Threats.</strong> What it covers: real external risks specific to this decision, not background anxiety about &ldquo;the market&rdquo; in general. Questions to ask: who else could credibly take this same opportunity, and what would they need to do it? What regulatory, supplier, or macro shift could undercut the plan even if execution goes perfectly? Where to find it: competitor capacity and pricing data, supplier concentration and price trends, anything already flagged in a PESTLE or Five Forces pass run on the same decision. Strong vs. weak: a weak list says &ldquo;there&rsquo;s always competition.&rdquo; A strong one says &ldquo;two national roasters already run dedicated co-packing operations for this grocery chain&rsquo;s other private-label lines and could underbid a new contender once this deal signals there&rsquo;s real demand.&rdquo;</p>
+<h2>How to Actually Run It</h2>
+<p>A SWOT is only as good as the discipline brought to filling it in, and that discipline starts before any box gets written. Name the specific decision this analysis is meant to inform, not &ldquo;how are we doing&rdquo; but &ldquo;should we take this contract, launch this product, enter this market,&rdquo; and pull in more than one person to fill it out; a SWOT built solo tends to read like a highlight reel of what leadership already believes. Decide up front where the external inputs are coming from, a prior PESTLE or Five Forces pass if one exists, or a scoped mini-version of one if it doesn&rsquo;t, so the Opportunities and Threats boxes are grounded in something besides gut feel. Once that&rsquo;s settled, the actual work runs in four stages.</p>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Populate Strengths and Weaknesses through an honest internal audit</div>
+<div class="process-desc">Pull real performance data and ask people close to the work directly, not just leadership's self-assessment. The goal is a list you could defend to a skeptical outsider, not a list that feels good in the room.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Populate Opportunities and Threats from real external research</div>
+<div class="process-desc">Feed in findings from PESTLE, Five Forces, or direct market and competitor data rather than assumption. If a claimed opportunity or threat can't be traced to something actually happening outside the business, it doesn't belong in these boxes yet.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Cross-pair the four boxes into a TOWS matrix</div>
+<div class="process-desc">Strength-Opportunity pairs are moves to pursue aggressively. Weakness-Opportunity pairs are gaps to close before chasing the opportunity. Strength-Threat pairs are defenses to shore up. Weakness-Threat pairs are risks to avoid or exit.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+</div>
+<div class="process-content">
+<div class="process-title">Commit to specific actions with owners and a decision</div>
+<div class="process-desc">A SWOT that ends at four lists hasn't produced a decision yet, it's produced the inputs to one. Name what happens next, who owns it, and by when.</div>
+</div>
+</div>
+</div>
+
+<blockquote>
+<p>One thing left before you call it finished: a Strength or an Opportunity has a shelf life, the same way a PESTLE finding does. A key employee who is the actual source of a Strength can leave; a competitor can fill an Opportunity&rsquo;s gap before you do. Revisit the analysis if the decision&rsquo;s timeline stretches out or its underlying assumptions change, not just once at kickoff.</p>
+</blockquote>
+<h2>Worked Example: The Wholesale Offer</h2>
+<p>Two weeks after the grocery chain&rsquo;s outreach in this piece&rsquo;s opening scene, here&rsquo;s how the roaster&rsquo;s actual decision takes shape.</p>
+<p>It starts with Strengths, because the offer means nothing if the product and brand can&rsquo;t hold up at retail. The owner pulls the roastery&rsquo;s blind-panel quality scores from the last three regional cupping competitions and finds real proof: an average score in the top decile against the other roasters likely to compete for the same shelf space, not just a feeling that the coffee is good. A second look at the subscription platform&rsquo;s own numbers shows something else worth having in the room: a 68% renewal rate, evidence the brand earns repeat trust rather than one-time curiosity purchases.</p>
+<p>Weaknesses come next, and this is where the excitement runs into arithmetic. A call to the head roaster to walk the actual production numbers turns up a hard ceiling: current capacity tops out around 1,800 pounds a week without new equipment, and the volume the grocery chain is describing would require roughly 2,600 pounds a week within two months of launch. That&rsquo;s not a vague concern, it&rsquo;s a specific, dated gap, and it reframes the entire decision from &ldquo;should we say yes&rdquo; to &ldquo;what would it cost to actually be able to say yes.&rdquo;</p>
+<p>Opportunities is where the deal&rsquo;s real appeal gets tested instead of assumed. A conversation with the chain&rsquo;s category buyer, arranged specifically to ask this question, reveals that the shelf space on offer opened up because a private-label specialty coffee line was discontinued four months earlier after recurring quality complaints. That&rsquo;s a real, time-limited opening, not general optimism about specialty coffee&rsquo;s growth. It also comes with a deadline: the buyer wants a signed commitment within six weeks, before the space gets reassigned to a national brand already lobbying for it.</p>
+<p>Threats surface the risk that could undo the whole plan even if the roaster executes well. A quick scan of the chain&rsquo;s existing supplier relationships turns up two national roasters already running dedicated co-packing operations for the chain&rsquo;s other private-label lines, either of which could underbid a new contender once this deal signals there&rsquo;s real demand in that shelf space. That single fact changes the negotiating posture going in: any contract needs pricing protection and a minimum term, not just a handshake on volume.</p>
+<p>Weighing all four together, the decision that comes out isn&rsquo;t a clean yes or no. It&rsquo;s a conditional yes: take the deal, but only after financing the equipment upgrade the Weaknesses box surfaced, and only with contract terms that account for the Threats box&rsquo;s national-competitor risk, both negotiated before the six-week window the Opportunities box uncovered runs out.</p>
+<h2>Common Mistakes</h2>
+<p><strong>Running it as a one-person exercise.</strong> A SWOT filled out solely by the person championing the decision tends to produce four boxes that all point toward &ldquo;yes.&rdquo; Cross-functional input isn&rsquo;t a nicety, it&rsquo;s the only thing that reliably catches a Weakness the person proposing the deal has a reason not to see.</p>
+<p><strong>Confusing internal wishes with external facts.</strong> &ldquo;We deserve more market share&rdquo; is not an Opportunity. An Opportunity is something actually changing outside the business, evidenced by data, that creates room the business could occupy. If an item can&rsquo;t be traced to something happening outside your own walls, it belongs in Strengths or Weaknesses instead, or it doesn&rsquo;t belong in the analysis at all.</p>
+<p><strong>Treating all four boxes as equally load-bearing.</strong> Not every decision weighs S, W, O, and T equally. A contract decision like the one above lives or dies on Weaknesses (can we deliver) and Threats (can we defend the deal); a brand-positioning decision might live or die on Strengths and Opportunities instead. Know which boxes actually carry the decision before treating all four as interchangeable inputs.</p>
+<p><strong>Stopping at the grid.</strong> Four filled boxes are a diagnostic, not a decision. Without the TOWS cross-pairing step, a SWOT is a well-organized list of observations that nobody has actually acted on.</p>
+<p><strong>Running it once, at the start, and never again.</strong> The grocery chain&rsquo;s six-week deadline in the example above is itself a fact that could change; contract terms could shift, a competitor could move first. Anything genuinely time-sensitive deserves a check back before the decision actually closes, not just a Day 1 snapshot.</p>
+<h2>Key Takeaways</h2>
+<p>A SWOT earns its keep the moment it becomes a TOWS: pairing Strengths with Opportunities to find the moves worth pursuing aggressively, pairing Weaknesses with Opportunities to find the gaps worth closing before chasing them, pairing Strengths with Threats to find where existing advantages need active defending, and pairing Weaknesses with Threats to find the risks worth avoiding or exiting outright. A grid that stops before this step has produced a list of observations, not a decision.</p>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>SWOT analysis: a four-box audit balancing internal Strengths/Weaknesses against external Opportunities/Threats, used to organize existing findings into a real decision, not to generate the findings itself.</li>
+<li>TOWS matrix: the cross-pairing step (Strength-Opportunity, Weakness-Opportunity, Strength-Threat, Weakness-Threat) that turns a completed SWOT into specific strategic moves.</li>
+</ul>
+<p><strong>Try It:</strong> Pick one real decision you&rsquo;re weighing right now, taking on a client, launching an offering, entering a market. Fill in just the Weaknesses box, five minutes, with brutal specificity: not &ldquo;we could be more efficient&rdquo; but a named capacity number, skill gap, or system limitation this exact decision would expose. If you can&rsquo;t name one specifically, you haven&rsquo;t looked hard enough yet.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Origin details (SOFT analysis, the Stanford Research Institute team, the 1964 Zurich seminar rename, Humphrey&rsquo;s own account, and Weihrich&rsquo;s 1982 matrix with its disputed credit) &ndash; History of the SWOT Analysis (RapidBI), https://rapidbi.com/history-of-the-swot-analysis/&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+
+  <div class="cta-box">
+
+    <div class="cta-monogram">WA</div>
+
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If you&rsquo;re weighing a decision that deserves more than a gut call &ndash; a new contract, a partnership, a market you&rsquo;re not sure is worth entering &ndash; that&rsquo;s exactly the kind of analysis I help leaders run with real rigor. Reach out and let&rsquo;s work your SWOT.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

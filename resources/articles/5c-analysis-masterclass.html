@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>5C Analysis: The 5 Blind Spots That Sink Big Moves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Frameworks</p>
+  <h1 class="title">5C Analysis: The 5 Blind Spots That Sink Big Moves</h1>
+  <p class="dek">A complete walkthrough of the five-lens situational scan that precedes a real strategic decision: your own capability, the customer, the competition, the partners you depend on, and the climate around all of it.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 08, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>Not every good offer is a good decision. A modular home manufacturer approaches a nine-person residential architecture firm, a decade into doing custom single-family design work one client and one house at a time, with exactly that kind of offer: a formal design partnership, the firm&rsquo;s name and design sensibility attached to a line of prefabricated homes sold directly to buyers, at a volume no custom practice could ever touch working project by project. It&rsquo;s flattering, and it&rsquo;s also a completely different business than the one this firm actually runs today: different customers, different competitors, a manufacturing partner they&rsquo;d suddenly depend on entirely, and a housing market that behaves nothing like the custom high-end niche they know. Sorting out whether this is a smart move means looking at five separate things at once, not just whether the idea appeals to them, and that&rsquo;s exactly the job 5C Analysis was built to do.</p>
+<p>This piece is not a quick refresher on a mnemonic from a marketing course. It&rsquo;s the whole thing: what 5C actually is, where it came from, how to work each of the five lenses with real evidence, how to run the process end to end, and how to turn five separate pictures into one coherent decision.</p>
+<h2>What 5C Is, and When to Use It</h2>
+<p>5C is a structured situational scan across five lenses: Company, Customers, Competitors, Collaborators, and Climate, also called Context. The first three, Company, Customers, Competitors, come from a much older model; the last two were added later to cover a gap the original three left open: who you actually depend on to deliver value, and what&rsquo;s happening in the wider world that you don&rsquo;t control but have to navigate. Together, the five lenses are meant to answer one question from every relevant angle before a strategic decision gets made, not to make the decision itself.</p>
+<p>That&rsquo;s the framework&rsquo;s most important, and most often misunderstood, feature: it&rsquo;s diagnostic, not prescriptive. One widely used description of it puts this plainly: it doesn&rsquo;t tell you what to do, it tells you what you need to know before you&rsquo;re allowed to have an opinion. 5C doesn&rsquo;t recommend a product launch, a partnership, or a market entry. It forces you to actually look at your own capability, the customer, the competitive field, the partners you&rsquo;d depend on, and the macro conditions around all of it, before you&rsquo;re entitled to a confident answer.</p>
+<p>Use it before a decision that spans more than one of those five areas at once, a new product or service line, a market entry, a partnership or channel decision, exactly the kind of cross-cutting call in this piece&rsquo;s opening scene. It&rsquo;s a natural front-end to more specific tools: the findings feed directly into a positioning statement, a marketing mix, a SWOT, or a Five Forces pass on the competitive piece specifically. Skip it, or keep it brief, for a decision genuinely confined to one of the five lenses already; a straightforward internal capacity question doesn&rsquo;t need a full situational scan built around it.</p>
+<div class="tidbit-box">
+<p><img class="tidbit-image" src="../assets/images/5c-origin.png" alt="Vintage documentary-style photograph of an early-1980s Tokyo management-consulting office, a strategist sketching a three-point triangular diagram on a notepad"></p>
+<div class="tidbit-label">Historical Tidbit</div>
+<div class="tidbit-title">Three Cs, Then Two More Nobody Signed Their Name To</div>
+<div class="tidbit-text">
+<p>5C extends an older, more clearly attributed model. Kenichi Ohmae, a Japanese strategist and former head of McKinsey&rsquo;s Tokyo office, introduced the original three-lens version, Company, Customers, Competitors, as the &ldquo;strategic triangle&rdquo; in his 1982 book <em>The Mind of the Strategist</em>.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> That part of the lineage is well documented and consistently credited.</p>
+<p>What happened next is genuinely murkier, and worth stating honestly rather than smoothing over. Two independent sources describe the extension to five Cs, adding Collaborators and Climate (or Context), as a practitioner evolution with no confirmed single author or date; one puts the 5C framework&rsquo;s origin simply as &ldquo;unknown; in use since at least the 1990s.&rdquo;<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> A separate, lower-confidence source attributes the 5C extension specifically to Philip Kotler in the early 1990s, but that claim isn&rsquo;t corroborated elsewhere and should be treated as a minority attribution, not settled fact.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> What&rsquo;s solid: Ohmae built the three-lens foundation and got the credit for it; the two Cs added on top arrived through general practitioner use, the way a lot of working frameworks actually spread, not through one paper with one named author.</p>
+</div>
+</div>
+<h2>The Five Cs, in Full</h2>
+<p>Each of the following five sections stands on its own. For each one: what it actually covers, the specific questions to ask, where to find real evidence instead of guessing, and what separates a genuine analysis from a bare label.</p>
+<h3>Company</h3>
+<p><strong>What it covers:</strong> Your own capabilities, assets, brand, cost structure, and constraints, honestly assessed relative to the specific decision at hand, not a general capabilities inventory.</p>
+<p><strong>Questions to ask:</strong> What is our actual, provable competitive advantage, and is it valuable, rare, hard to imitate, and something we&rsquo;re organized to actually capture value from, the VRIO test, or is it more fragile than it looks? What does our cost structure and margin profile actually allow us to do here? What do customers currently trust us for, backed by real metrics (retention, NPS, reviews) rather than internal confidence? What real constraints, capacity, funding, regulatory, organizational, bound what&rsquo;s feasible?</p>
+<p><strong>Where to find it:</strong> Internal financials and segment-level profitability, brand and customer-perception metrics (retention, churn, satisfaction scores), and an honest capability audit of the specific skills, systems, or capacity this decision would require.</p>
+<p><strong>Strong vs. weak:</strong> A weak analysis says &ldquo;we have a strong brand.&rdquo; A strong one says &ldquo;our design work has a documented 40% client-referral rate over the last five years, real evidence of reputation, but zero of our current staff has manufacturing or supply-chain experience, a real gap for a decision that depends on exactly that.&rdquo;</p>
+<h3>Customers</h3>
+<p><strong>What it covers:</strong> Who actually buys, why, and how, for this specific decision, which may be an entirely different segment from your existing customer base.</p>
+<p><strong>Questions to ask:</strong> Who is the target segment for this specific decision, and how does it differ from your current customers? What job are they actually trying to get done, and what drives their choice, price, speed, design, trust? How do they find, evaluate, and buy, and what&rsquo;s their realistic willingness to pay? How big is the actual addressable opportunity, not the broadest possible market, but the realistic, reachable slice of it?</p>
+<p><strong>Where to find it:</strong> Direct interviews and surveys with the target segment, not your existing client base, if the decision targets a new one, behavioral and purchase data where available, and market sizing that narrows honestly from the broadest possible market down to what&rsquo;s actually reachable.</p>
+<p><strong>Strong vs. weak:</strong> A weak analysis says &ldquo;there&rsquo;s demand for modern prefab homes.&rdquo; A strong one says &ldquo;buyer interviews show this segment chooses a builder primarily on a viewable design portfolio and a fixed price quoted before signing, two things our firm already does for custom clients but has never packaged for a buyer who&rsquo;s never met us.&rdquo;</p>
+<h3>Competitors</h3>
+<p><strong>What it covers:</strong> Who else is fighting for the same demand, directly or indirectly, and how they&rsquo;re positioned, priced, and likely to respond to your move.</p>
+<p><strong>Questions to ask:</strong> Who are the direct competitors already doing something close to this, and who are the indirect ones solving the same underlying need a different way? How are they positioned and priced, and where are the gaps, the over-served or under-served spots, in how they compete? What&rsquo;s the actual market structure, fragmented or concentrated, and how might the leaders respond if you entered?</p>
+<p><strong>Where to find it:</strong> Competitor websites, pricing pages, and marketing materials, industry reports and concentration data, and direct conversations with prospective customers about why they&rsquo;ve chosen a competitor&rsquo;s product before.</p>
+<p><strong>Strong vs. weak:</strong> A weak analysis says &ldquo;there&rsquo;s a lot of competition in prefab homes.&rdquo; A strong one says &ldquo;the three established design-forward modular brands in this region all price above $350 a square foot and share a fairly narrow architectural style, which leaves a specific gap for a more design-flexible offering at a comparable price.&rdquo;</p>
+<h3>Collaborators</h3>
+<p><strong>What it covers:</strong> The partners, suppliers, distributors, and platforms you depend on to actually deliver value, the C most often skipped or treated superficially in a rushed analysis.</p>
+<p><strong>Questions to ask:</strong> Who are the specific partners this decision would make you dependent on, and what happens to the whole plan if that dependency breaks down? Are incentives actually aligned, margin splits, exclusivity terms, shared data, or does the partner benefit even if you don&rsquo;t? What&rsquo;s their track record on reliability and quality, and how would a customer experience it if something on their end went wrong? Are there other potential collaborators worth evaluating instead of defaulting to the first one who showed up?</p>
+<p><strong>Where to find it:</strong> The actual partner contract and its terms, direct reference checks with the partner&rsquo;s other clients or design partners, and a specific walkthrough of what happens operationally if the partnership underperforms.</p>
+<p><strong>Strong vs. weak:</strong> A weak analysis says &ldquo;the manufacturer seems like a solid partner.&rdquo; A strong one says &ldquo;two of the manufacturer&rsquo;s three other current design partners have quietly ended their agreements in the past eighteen months, and both cited build-quality complaints reaching their own clients as the reason, a track record that matters more than the pitch deck does.&rdquo;</p>
+<h3>Climate (Context)</h3>
+<p><strong>What it covers:</strong> The macro-environmental forces you don&rsquo;t control but have to navigate, effectively a condensed PESTEL scan folded into this fifth lens.</p>
+<p><strong>Questions to ask:</strong> What regulatory or political conditions apply, building codes, zoning, permitting timelines, specific to modular or prefab construction? What&rsquo;s happening with interest rates, construction costs, and housing-market conditions in the target region right now? What cultural or lifestyle trends, sustainability preference, smaller-footprint living, help or hurt demand for this specific offering? Is there a technology shift, new materials, new manufacturing methods, that changes the competitive picture?</p>
+<p><strong>Where to find it:</strong> Local zoning and permitting offices for anything jurisdiction-specific, regional housing-market and interest-rate data, and industry-association or trade-press coverage of prefab-specific regulatory or technology shifts.</p>
+<p><strong>Strong vs. weak:</strong> A weak analysis says &ldquo;the housing market is unpredictable right now.&rdquo; A strong one says &ldquo;the target region&rsquo;s zoning board approved an expedited permitting track for modular construction eighteen months ago specifically to address a housing shortage, which cuts the typical approval timeline nearly in half for exactly this kind of project.&rdquo;</p>
+<h2>How to Actually Run It</h2>
+<p>A 5C is only as sharp as the decision it&rsquo;s built around, and that clarity has to exist before any lens gets worked. Name the specific decision and its scope, a single product line, a specific partnership, a defined market, and draft a handful of explicit hypotheses about where or how the business could actually win with it; those hypotheses focus the research that follows instead of letting it sprawl into researching everything about everything. If the decision touches more than one meaningfully different customer segment, custom clients and cold prefab buyers, for instance, plan on a separate mini-5C for each rather than one blended analysis that serves neither well. One sequencing convention worth adopting deliberately: work the Customers lens before Company. Starting with your own capabilities biases everything that follows toward what you already do, rather than what the market in front of you actually needs.</p>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Collect targeted evidence for each of the five lenses</div>
+<div class="process-desc">Customer interviews and market data, a competitor scan, partner reference checks, and a macro scan, gathered against the specific hypotheses from the setup, not a general fact-finding sweep.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Synthesize each lens into a short, specific output</div>
+<div class="process-desc">Real advantages and constraints for Company, segment economics for Customers, a positioning map for Competitors, a dependency map for Collaborators, tailwinds and headwinds for Climate, not a raw dump of everything gathered.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Cross-check the five outputs against each other</div>
+<div class="process-desc">Does the Collaborator dependency conflict with what Climate says about the regulatory picture? Does the Competitor gap actually match a need Customers confirmed, or just one you'd like them to have? Contradictions here are more valuable than any single lens's finding on its own.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+</div>
+<div class="process-content">
+<div class="process-title">Feed the synthesized picture into a decision tool</div>
+<div class="process-desc">STP for a positioning call, the marketing mix for a launch plan, a SWOT or Five Forces pass for the competitive piece specifically. 5C tells you what's true; it hands the actual decision to whichever tool fits the choice in front of you.</div>
+</div>
+</div>
+</div>
+
+<blockquote>
+<p>One thing left before you call it finished: Collaborators tends to degrade fastest of the five lenses, since partner incentives and channel structures shift quietly, without the kind of visible announcement a new regulation or a competitor&rsquo;s product launch comes with. Revisit the whole analysis on a cadence, quarterly in a fast-moving category, twice a year in a slower one, not just once at the start of the decision.</p>
+</blockquote>
+<h2>Worked Example: The Partnership Offer</h2>
+<p>Three weeks into evaluating the manufacturer&rsquo;s proposal in this piece&rsquo;s opening scene, here&rsquo;s how the architecture firm&rsquo;s actual decision takes shape.</p>
+<p>It starts with Company, because the partnership only makes sense if the firm&rsquo;s own capability can stretch to fit it. A look at the firm&rsquo;s project records turns up a genuine asset: a 40% client-referral rate over the past five years, real evidence of a design reputation worth attaching to a bigger product. But a frank conversation among the partners surfaces the gap sitting right next to that strength: nobody on staff has manufacturing, supply-chain, or direct-to-consumer experience, and none of the firm&rsquo;s existing systems, billing by the custom project, not the unit, would carry over to a packaged product line without real rework.</p>
+<p>Customers comes next, and it&rsquo;s where the firm learns it doesn&rsquo;t actually know the buyer it would be selling to. A round of structured interviews with people who&rsquo;ve bought a modular home in the past two years turns up a clear pattern: this buyer chooses a builder primarily on a viewable design portfolio and a fixed price quoted before signing, two things the firm already delivers for its custom clients but has never packaged for someone who&rsquo;s never met a partner in person.</p>
+<p>Competitors is where the actual gap in the market gets named specifically. A pricing and portfolio review of the three established design-forward modular brands operating in the target region shows all three pricing above $350 a square foot while sharing a fairly narrow, similar architectural style. That leaves a specific, defensible gap: a more design-flexible offering at a comparable price point, not a vague sense that there&rsquo;s room in the market.</p>
+<p>Collaborators is where the momentum stalls, and rightly so. Reference calls to two of the manufacturer&rsquo;s three other current design partners, made specifically to ask about the relationship rather than accept the manufacturer&rsquo;s own pitch, turn up something the deck never mentioned: both partners quietly ended their agreements in the past eighteen months, and both cited build-quality complaints reaching their own clients as the reason. That single finding doesn&rsquo;t kill the deal, but it changes its shape entirely, from signing the partnership to renegotiating quality-control terms and a real exit clause before signing anything.</p>
+<p>Climate closes the loop with an unexpected tailwind. A call to the target region&rsquo;s zoning office confirms an expedited permitting track for modular construction, approved eighteen months earlier specifically to address a local housing shortage, cutting the typical approval timeline nearly in half for exactly this kind of project. That&rsquo;s a real, time-bound advantage working in the deal&rsquo;s favor, one that makes the timing better than the Collaborators finding alone would suggest.</p>
+<p>Taken together, the five lenses don&rsquo;t produce a clean yes or no any more than a SWOT would. They produce a specific, conditional path: there&rsquo;s a real customer gap and a real regulatory tailwind worth pursuing, but the partnership terms need real renegotiation, on quality control and exit rights specifically, before the firm attaches its name to a manufacturer with that track record.</p>
+<p>Laid out at a glance, the five lenses from that walkthrough look like this:</p>
+<div class="lens-wheel-wrap">
+<svg viewBox="0 0 600 600" role="img" aria-label="5C wheel for the modular-home partnership example: three lenses favorable, two needing real fixes before the deal works">
+<circle class="lens-wheel-ring" cx="300" cy="300" r="220"></circle>
+<circle class="lens-wheel-node-circle" cx="300" cy="80" r="78"></circle>
+<text x="300" y="80" text-anchor="middle">
+<tspan x="300" dy="-18" class="lens-wheel-node-label">COMPANY</tspan>
+<tspan x="300" dy="22" class="lens-wheel-node-finding">40% Referral Rate,</tspan>
+<tspan x="300" dy="16" class="lens-wheel-node-finding">No Mfg Experience</tspan>
+</text>
+<circle class="lens-wheel-node-circle" cx="509" cy="232" r="78"></circle>
+<text x="509" y="232" text-anchor="middle">
+<tspan x="509" dy="-18" class="lens-wheel-node-label">CUSTOMERS</tspan>
+<tspan x="509" dy="22" class="lens-wheel-node-finding">Fixed-Price Portfolio</tspan>
+<tspan x="509" dy="16" class="lens-wheel-node-finding">Wins This Buyer</tspan>
+</text>
+<circle class="lens-wheel-node-circle" cx="429" cy="478" r="78"></circle>
+<text x="429" y="478" text-anchor="middle">
+<tspan x="429" dy="-18" class="lens-wheel-node-label">COMPETITORS</tspan>
+<tspan x="429" dy="22" class="lens-wheel-node-finding">Rivals Price Above</tspan>
+<tspan x="429" dy="16" class="lens-wheel-node-finding">$350 a Sq Ft</tspan>
+</text>
+<circle class="lens-wheel-node-circle" cx="171" cy="478" r="78"></circle>
+<text x="171" y="478" text-anchor="middle">
+<tspan x="171" dy="-18" class="lens-wheel-node-label">COLLABORATORS</tspan>
+<tspan x="171" dy="22" class="lens-wheel-node-finding">2 Partners Quit</tspan>
+<tspan x="171" dy="16" class="lens-wheel-node-finding">Over Build Quality</tspan>
+</text>
+<circle class="lens-wheel-node-circle" cx="91" cy="232" r="78"></circle>
+<text x="91" y="232" text-anchor="middle">
+<tspan x="91" dy="-18" class="lens-wheel-node-label">CLIMATE</tspan>
+<tspan x="91" dy="22" class="lens-wheel-node-finding">Permitting Time</tspan>
+<tspan x="91" dy="16" class="lens-wheel-node-finding">Cut Nearly in Half</tspan>
+</text>
+<circle class="lens-wheel-hub" cx="300" cy="300" r="105"></circle>
+<text x="300" y="300" text-anchor="middle">
+<tspan x="300" dy="-38" class="lens-wheel-hub-num">3 / 5</tspan>
+<tspan x="300" dy="20" class="lens-wheel-hub-sub">GREEN LIGHTS</tspan>
+<tspan x="300" dy="34" class="lens-wheel-hub-num">2 / 5</tspan>
+<tspan x="300" dy="20" class="lens-wheel-hub-sub">NEED FIXING FIRST</tspan>
+</text>
+</svg>
+<div class="lens-wheel-caption">Five lenses, a conditional verdict: Customers, Competitors, and Climate all pointed toward yes. Company and Collaborators each needed a fix before the partnership was safe to sign.</div>
+</div>
+
+<h2>Common Mistakes</h2>
+<p><strong>Starting with Company instead of Customers.</strong> Leading with your own capabilities biases the whole analysis toward what you already do well, rather than what the market in front of you actually needs. It&rsquo;s an easy default and a real source of blind spots.</p>
+<p><strong>Skipping or rushing Collaborators.</strong> It&rsquo;s the newest and least standardized of the five lenses, which makes it the one most often reduced to &ldquo;the partner seems solid&rdquo; instead of an actual reference-checked assessment. The example above shows exactly what that shortcut misses.</p>
+<p><strong>Treating 5C as prescriptive instead of diagnostic.</strong> It doesn&rsquo;t tell you what to do, it tells you what you need to know before you&rsquo;re allowed to have an opinion. An analysis that ends with &ldquo;and therefore we should do X&rdquo; without routing through an actual decision tool has skipped a step.</p>
+<p><strong>Running one blended analysis across meaningfully different segments.</strong> A firm&rsquo;s existing custom clients and a cold prefab buyer are different enough that averaging them into one Customers section produces conclusions that fit neither well.</p>
+<p><strong>Going exhaustive on every sub-factor regardless of relevance.</strong> Not every decision needs the same depth on all five lenses. Tailor the depth to what the specific decision actually turns on, not a uniform checklist run the same way every time.</p>
+<h2>Key Takeaways</h2>
+<p>A 5C earns its keep once its five separate pictures get routed somewhere specific. A clear Customer/Competitor gap like the one in the example above feeds directly into a positioning statement and a marketing-mix decision. A Collaborator finding like the manufacturer&rsquo;s quiet partner losses feeds into contract terms, not a philosophical debate about trust. And a Climate tailwind like the expedited permitting track belongs in the timeline, not a footnote. Treated as five separate deliverables instead of five inputs to one decision, a 5C produces five accurate memos and no actual answer.</p>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>5C Analysis: a five-lens situational scan (Company, Customers, Competitors, Collaborators, Climate) used to gather what you need to know before a cross-cutting strategic decision, not to make the decision itself.</li>
+<li>3C strategic triangle: Kenichi Ohmae&rsquo;s original Company/Customers/Competitors model that 5C extends.</li>
+</ul>
+<p><strong>Try It:</strong> Pick a real decision you&rsquo;re weighing that touches more than one part of your business. Spend thirty minutes on just the Collaborators lens: name every partner the decision would make you depend on, and for each one, name the specific thing that would break the plan if that partner underperformed. If you can&rsquo;t name a specific failure mode, you haven&rsquo;t actually vetted the dependency yet.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Kenichi Ohmae&rsquo;s original &ldquo;strategic triangle&rdquo; (Company, Customers, Competitors), introduced in <em>The Mind of the Strategist</em> (1982) &ndash; The 5Cs in Marketing Strategy (StrategyKiln), https://www.strategykiln.com/post/the-5cs-in-marketing-strategy&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Two independent accounts describing the extension to Collaborators and Climate/Context as an unattributed practitioner evolution &ndash; 5Cs Analysis: Company, Customers, Competitors, Collaborators, Context (Umbrex), https://umbrex.com/resources/frameworks/marketing-frameworks/5cs-analysis-company-customers-competitors-collaborators-context/ ; and The 5Cs in Marketing Strategy (StrategyKiln), https://www.strategykiln.com/post/the-5cs-in-marketing-strategy&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Minority, lower-confidence attribution of the 5C extension to Philip Kotler in the early 1990s &ndash; 5 Cs of Marketing (Intellipaat), https://intellipaat.com/blog/5-cs-of-marketing/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+
+  <div class="cta-box">
+
+    <div class="cta-monogram">WA</div>
+
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If you&rsquo;re weighing a decision that cuts across more than one part of your business &ndash; a new offering, a partnership, a market you don&rsquo;t fully know yet &ndash; that&rsquo;s exactly the kind of situational scan I help leaders run before they commit. Reach out and let&rsquo;s work the five lenses.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
