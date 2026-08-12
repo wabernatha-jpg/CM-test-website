@@ -267,9 +267,36 @@
   <!-- Article grid -->
   <section class="bg-cream reveal">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <a href="articles/yes-and-operational-playbook.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-8">
+        <div>
+          <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-3">Browse by Topic</p>
+          <h2 class="font-display font-bold text-navy text-3xl sm:text-[2.15rem] leading-tight tracking-[-0.01em]">Field Notes</h2>
+        </div>
+      </div>
+
+      <div id="category-filter" class="flex flex-wrap gap-2.5 mb-10" role="group" aria-label="Filter articles by topic">
+        <button type="button" data-filter="all" class="category-filter-btn is-active bg-gold text-navy border border-gold font-semibold text-[0.82rem] px-4 py-2 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50" aria-pressed="true">All <span class="opacity-70 font-medium">11</span></button>
+        <button type="button" data-filter="small-business" class="category-filter-btn border border-navy/15 text-slate font-semibold text-[0.82rem] px-4 py-2 rounded-full hover:border-gold hover:text-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50" aria-pressed="false">Small Business <span class="opacity-70 font-medium">2</span></button>
+        <button type="button" data-filter="framework-application" class="category-filter-btn border border-navy/15 text-slate font-semibold text-[0.82rem] px-4 py-2 rounded-full hover:border-gold hover:text-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50" aria-pressed="false">Framework Application <span class="opacity-70 font-medium">6</span></button>
+        <button type="button" data-filter="leadership" class="category-filter-btn border border-navy/15 text-slate font-semibold text-[0.82rem] px-4 py-2 rounded-full hover:border-gold hover:text-gold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50" aria-pressed="false">Leadership <span class="opacity-70 font-medium">3</span></button>
+      </div>
+
+      <p id="filter-empty" class="hidden text-slate text-sm mb-10">No articles in this topic yet &mdash; check back soon.</p>
+
+      <div id="article-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <a href="articles/slow-is-smooth-fundamentals-first.html" data-category="leadership" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Leadership</p>
+          <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">&ldquo;Slow Is Smooth, Smooth Is Fast&rdquo; Isn&rsquo;t a Military Mantra. It&rsquo;s a Scoring System.</h2>
+          <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">A soccer rule that rewarded precision over power, then rewarded getting better once the fundamentals held, and it explains why &ldquo;good, on target&rdquo; beats &ldquo;powerful, nowhere near the net.&rdquo;</p>
+          <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
+            <span class="text-slate/70">August 11, 2026</span>
+            <span class="text-gold font-semibold group-hover:text-gold-light transition-colors duration-200">Read the article &rsaquo;</span>
+          </div>
+        </a>
+
+        <a href="articles/yes-and-operational-playbook.html" data-category="leadership" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
           <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Leadership</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">&ldquo;Yes, And&rdquo; Isn&rsquo;t an Improv Game. It&rsquo;s a Management System.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">The two words that keep an improv scene alive can turn a bad idea into R&amp;D fuel, a quiet teammate into a contributor, and a stalled relationship into a closed deal.</p>
@@ -279,8 +306,8 @@
           </div>
         </a>
 
-        <a href="articles/consulting-ai-build-vs-partner.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Strategy</p>
+        <a href="articles/consulting-ai-build-vs-partner.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">Don&rsquo;t Build the Model. Be the Reason It Works.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">A 5C read on why most consulting firms should stop trying to out-build AI vendors, and start becoming the partner those vendors need instead.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -289,8 +316,8 @@
           </div>
         </a>
 
-        <a href="articles/the-anchor-points.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Resilience</p>
+        <a href="articles/the-anchor-points.html" data-category="leadership" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Leadership</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">Your Situation Can Fall Apart. You Don&rsquo;t Have To.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">How a false accusation nearly cost me my kids, my house, and my career, and the four anchors that kept me from becoming someone I didn&rsquo;t recognize while I fought to keep all three.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -299,8 +326,8 @@
           </div>
         </a>
 
-        <a href="articles/5-whys-root-cause-analysis-for-small-business-owners.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Operations</p>
+        <a href="articles/5-whys-root-cause-analysis-for-small-business-owners.html" data-category="small-business" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Small Business</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">The Problem Isn&rsquo;t the Employee. It&rsquo;s Your Fourth &ldquo;Why.&rdquo;</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">A fifteen-minute habit that turns &ldquo;someone dropped the ball&rdquo; into a system you can actually fix.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -309,8 +336,8 @@
           </div>
         </a>
 
-        <a href="articles/5-whys-root-cause-discipline-for-operators.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Frameworks</p>
+        <a href="articles/5-whys-root-cause-discipline-for-operators.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">The Fifth Why Is the Only One That Matters</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">Most explanations for a repeated failure sound true the moment someone says them out loud. That&rsquo;s exactly the problem.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -319,8 +346,8 @@
           </div>
         </a>
 
-        <a href="articles/smart-goals-practice-before-you-need-it.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Frameworks</p>
+        <a href="articles/smart-goals-practice-before-you-need-it.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">SMART Goals Are a Baseline, Not a Formula</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">The five letters work. They work even better once you&rsquo;ve practiced bending them somewhere the stakes are low.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -329,8 +356,8 @@
           </div>
         </a>
 
-        <a href="articles/small-business-owner-distributions.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Distributions</p>
+        <a href="articles/small-business-owner-distributions.html" data-category="small-business" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Small Business</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">The 5-Minute Distribution Check</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">A step-by-step check for the two most common distribution mistakes small business owners make without knowing it.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -339,8 +366,8 @@
           </div>
         </a>
 
-        <a href="articles/how-to-learn-anything-feynman.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Learning</p>
+        <a href="articles/how-to-learn-anything-feynman.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">You Don&rsquo;t Need to Be a Genius to Learn Anything Fast. You Need a Loop.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">How a guy who left the Army without ever touching a computer became an automation expert, using the same three-step loop the whole way.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -349,8 +376,8 @@
           </div>
         </a>
 
-        <a href="articles/regaining-control-drifting-project.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Frameworks</p>
+        <a href="articles/regaining-control-drifting-project.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">Project Drift Isn&rsquo;t a Failure. It&rsquo;s a Steering Problem.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">A five-step reset for the kind of project that didn&rsquo;t blow up all at once; it just slowly stopped being the project you signed up for.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -359,8 +386,8 @@
           </div>
         </a>
 
-        <a href="articles/swot-networking-frameworks.html" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
-          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Frameworks</p>
+        <a href="articles/swot-networking-frameworks.html" data-category="framework-application" class="article-card group flex flex-col bg-white border border-navy/10 shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm p-7">
+          <p class="text-gold text-[0.68rem] font-semibold tracking-[0.1em] uppercase mb-3">Framework Application</p>
           <h2 class="font-display font-bold text-navy text-lg leading-snug mb-2.5">You Don&rsquo;t Have to Want to Network. You Just Need a Framework.</h2>
           <p class="text-slate text-sm leading-relaxed line-clamp-3 flex-1">The real research behind why structured tools like SWOT make dreaded tasks easier to actually do.</p>
           <div class="mt-5 pt-4 border-t border-navy/10 flex items-center justify-between text-[0.78rem]">
@@ -431,6 +458,38 @@
     });
   }
 
+  function initCategoryFilter() {
+    var buttons = document.querySelectorAll(".category-filter-btn");
+    var cards = document.querySelectorAll("#article-grid .article-card");
+    var empty = document.getElementById("filter-empty");
+    if (!buttons.length || !cards.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var filter = btn.getAttribute("data-filter");
+        var visibleCount = 0;
+
+        buttons.forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle("bg-gold", active);
+          b.classList.toggle("border-gold", active);
+          b.classList.toggle("text-navy", active);
+          b.classList.toggle("border-navy/15", !active);
+          b.classList.toggle("text-slate", !active);
+          b.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        cards.forEach(function (card) {
+          var match = filter === "all" || card.getAttribute("data-category") === filter;
+          card.classList.toggle("hidden", !match);
+          if (match) visibleCount++;
+        });
+
+        if (empty) empty.classList.toggle("hidden", visibleCount !== 0);
+      });
+    });
+  }
+
   function initReveal() {
     var targets = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window) || targets.length === 0) {
@@ -453,6 +512,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
+    initCategoryFilter();
     initReveal();
   });
 })();
