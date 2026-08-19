@@ -834,6 +834,28 @@
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
+<script>
+(function () {
+  "use strict";
+  var slug = location.pathname.split("/").pop().replace(".html", "");
+  var startTime = Date.now();
+  var sent = false;
+
+  window.va("event", { name: "article_view", data: { slug: slug } });
+
+  function sendReadTime() {
+    if (sent) return;
+    sent = true;
+    var seconds = Math.round((Date.now() - startTime) / 1000);
+    window.va("event", { name: "article_read_time", data: { slug: slug, seconds: seconds } });
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") sendReadTime();
+  });
+  window.addEventListener("pagehide", sendReadTime);
+})();
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
