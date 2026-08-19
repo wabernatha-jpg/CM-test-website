@@ -1,6 +1,8 @@
 # Change Maven LLC — Brand Identity Guide
-**Version 1.0 · 2026**
+**Version 2.0 · 2026**
 *Confidential — Internal Use Only*
+
+> **Version note:** v2.0 shifts the palette from Navy/Gold to Warm Graphite/Tangerine (2026-08) — the "Concrete & Tangerine" direction, chosen from three orange/gray options after a side-by-side comparison. Lighter and friendlier than the original Navy/Gold, leaning into the coach/trainer side of the brand rather than pure corporate authority. Inspired by, but deliberately distinct from, the "Chaos to Order" sub-brand's palette. Logo files still show the v1.0 Navy/Gold treatment pending recoloring.
 
 ---
 
@@ -49,10 +51,12 @@ The bridge appears as an angled cable-stay structure in the background, with the
 
 | Variation | Usage |
 |-----------|-------|
-| **Primary (dark)** | Navy background, gold bridge, cream wordmark — proposals, printed materials, dark surfaces |
-| **Reversed (light)** | White/cream background, navy wordmark, gold bridge — letterheads, light digital backgrounds |
+| **Primary (dark)** | Warm Graphite background, tangerine bridge, ivory wordmark — proposals, printed materials, dark surfaces |
+| **Reversed (light)** | White/ivory background, warm graphite wordmark, tangerine bridge — letterheads, light digital backgrounds |
 | **Icon only** | Bridge silhouette alone — social media profiles, favicons, embossed materials |
-| **Wordmark only** | CHANGE MAVEN LLC in navy, no bridge — space-limited contexts |
+| **Wordmark only** | CHANGE MAVEN LLC in warm graphite, no bridge — space-limited contexts |
+
+*Note: logo image files (`Change_Maven_Logo.png` and variants) still carry the v1.0 Navy/Gold treatment as of this guide's update — recoloring them is a tracked follow-up, not yet done.*
 
 ### Clear Space
 Always maintain clear space around the logo equal to the height of the letter **"C"** in CHANGE. No other text, images, or graphic elements should appear within this zone.
@@ -73,28 +77,33 @@ Always maintain clear space around the logo equal to the height of the letter **
 
 ## 04 · Color Palette
 
-The Change Maven palette is rooted in authority, warmth, and trust. Navy anchors the brand in professionalism. Gold conveys confidence and forward momentum. Cream softens the palette and adds approachability.
+The Change Maven palette is rooted in warmth, approachability, and trust. Warm Graphite anchors the brand without the heaviness of a full-black or navy background — grounded, but never imposing. Tangerine conveys energy, optimism, and forward momentum — the color of transformation in progress. Ivory softens the palette and keeps it light and human.
+
+This palette is deliberately related to, but distinct from, the "Chaos to Order" sub-brand's orange/gunmetal look: Change Maven's orange is a warm, friendly tangerine rather than a saturated warning-light orange, and its gray is a light, warm-toned graphite rather than a cool, near-black gunmetal. Chaos to Order is a separate, non-client-facing persona — the two should read as related family members, never as the same brand.
 
 ### Primary Colors
 
 | Color | Hex | RGB | Usage |
 |-------|-----|-----|-------|
-| **Navy** | `#0D1B2A` | 13, 27, 42 | Primary background, dominant brand color |
-| **Gold** | `#C9982A` | 201, 152, 42 | Accent — headings, rules, highlights, CTAs |
-| **Cream** | `#F7F4EF` | 247, 244, 239 | Secondary background, print materials |
-| **Slate** | `#4A5568` | 74, 85, 104 | Body copy on light backgrounds |
-| **Gold Light** | `#E8B84B` | 232, 184, 75 | Hover states, secondary accents |
+| **Warm Graphite** | `#57534A` | 87, 83, 74 | Primary background/anchor, dominant brand color |
+| **Tangerine** | `#E07A34` | 224, 122, 52 | Accent — headings, rules, highlights, CTAs |
+| **Ivory** | `#FAF8F5` | 250, 248, 245 | Secondary background, print materials |
+| **Warm Gray** | `#83807A` | 131, 128, 122 | Body copy on light backgrounds |
+| **Peach Light** | `#F0AD7A` | 240, 173, 122 | Hover states, secondary accents |
+| **Taupe** | `#9C8F7E` | 156, 143, 126 | Structural/muted accent — subheadings, secondary labels |
 
 ### Color Usage Rules
-- **Navy** is the dominant background color for hero sections, proposals, and primary brand materials
-- **Gold** is the accent color — use for headings, rules, callouts, and highlights. Never use as body text on white
-- **Cream** is the primary background for printed materials, proposals, and secondary digital sections
-- **Slate** is used for body copy on light backgrounds
-- **Gold Light** is used for hover states and decorative elements only
+- **Warm Graphite** is the dominant background color for hero sections, proposals, and primary brand materials
+- **Tangerine** is the accent color — use for headings, rules, callouts, and highlights. Never use as body text on white
+- **Ivory** is the primary background for printed materials, proposals, and secondary digital sections
+- **Warm Gray** is used for body copy on light backgrounds
+- **Peach Light** is used for hover states and decorative elements only
+- **Taupe** is used for subheadings and secondary structural labels, sitting between Warm Graphite and Tangerine in weight
 
 ### Accessibility
-- Navy + Cream: WCAG AAA compliant
-- Navy + Gold: WCAG AA compliant
+- Warm Graphite + Ivory: high contrast, verify WCAG AAA before shipping printed/digital materials
+- Warm Graphite + Tangerine: verify WCAG AA contrast for accent text/rules before shipping
+- Warm Gray body copy is a lighter mid-tone by design — check contrast carefully on white/Ivory before setting small print sizes; drop to a darker in-family tone if a specific layout needs stronger contrast
 - Always test contrast ratios before introducing new color combinations
 
 ---
@@ -178,26 +187,26 @@ Change Maven's voice is consistent across all communications — proposals, webs
 
 ### Business Card
 - **Front:** Logo (primary dark version), name, title
-- **Back:** Navy background, tagline in gold, website URL, contact email
+- **Back:** Warm Graphite background, tagline in tangerine, website URL, contact email
 - **Specs:** Standard 3.5" × 2", matte finish preferred
 
 ### Letterhead
-- Logo top-left on cream background
-- Company name, address, and contact info in Slate at 9pt, page bottom
-- Gold rule separating header from body content
+- Logo top-left on ivory background
+- Company name, address, and contact info in Warm Gray at 9pt, page bottom
+- Tangerine rule separating header from body content
 
 ### Proposal Template
-- **Cover page:** Full navy background, logo centered, client name, project title, date in gold
-- **Section dividers:** Gold rule with section number and title in Libre Baskerville Bold
-- **Body:** Cream background, Inter body copy, callout boxes in light navy with gold border
+- **Cover page:** Full warm graphite background, logo centered, client name, project title, date in tangerine
+- **Section dividers:** Tangerine rule with section number and title in Libre Baskerville Bold
+- **Body:** Ivory background, Inter body copy, callout boxes in light graphite with tangerine border
 - **Footer:** Page number centered, website URL right-aligned
 
 ### Email Signature
 ```
-[Name]                         ← Libre Baskerville Bold, 14px, Navy
-[Title]                        ← Inter Medium, 12px, Slate
-Change Maven LLC               ← Inter Regular, 12px, Gold
-[Phone] · [Email] · [Website]  ← Inter Regular, 11px, Slate
+[Name]                         ← Libre Baskerville Bold, 14px, Warm Graphite
+[Title]                        ← Inter Medium, 12px, Warm Gray
+Change Maven LLC               ← Inter Regular, 12px, Tangerine
+[Phone] · [Email] · [Website]  ← Inter Regular, 11px, Warm Gray
 [Logo icon — 48px]
 ```
 
@@ -206,22 +215,22 @@ Change Maven LLC               ← Inter Regular, 12px, Gold
 ## 08 · Digital Guidelines
 
 ### Website
-- **Primary background:** Navy `#0D1B2A` for hero and key sections
-- **Secondary background:** Cream `#F7F4EF` for content sections
-- **CTA buttons:** Gold fill, Navy text, 2px border-radius
-- **Hover states:** Gold Light `#E8B84B`
-- **Body text:** Slate on light backgrounds; 90% white opacity on dark
+- **Primary background:** Warm Graphite `#57534A` for hero and key sections
+- **Secondary background:** Ivory `#FAF8F5` for content sections
+- **CTA buttons:** Tangerine fill, Ivory text, 2px border-radius
+- **Hover states:** Peach Light `#F0AD7A`
+- **Body text:** Warm Gray on light backgrounds; 90% white opacity on dark
 
 ### Social Media
-- **Profile image:** Bridge icon on Navy background
-- **Cover images:** Navy background with Gold rule and brand tagline
+- **Profile image:** Bridge icon on Warm Graphite background
+- **Cover images:** Warm Graphite background with Tangerine rule and brand tagline
 - **Post graphics:** Maintain color palette and typeface — no clip art or stock overlays
 - **Primary platform:** LinkedIn — professional, insight-driven content
 
 ### Presentations
-- **Title slides:** Navy background, white/cream text, Gold accents
-- **Content slides:** Cream or white background, Navy headings, Slate body
-- **Charts & diagrams:** Navy for primary data, Gold for highlights
+- **Title slides:** Warm Graphite background, white/ivory text, Tangerine accents
+- **Content slides:** Ivory or white background, Warm Graphite headings, Warm Gray body
+- **Charts & diagrams:** Warm Graphite for primary data, Tangerine for highlights
 - Never use default PowerPoint or Google Slides color themes
 
 ---
@@ -233,7 +242,7 @@ These are absolute rules — they protect the integrity and consistency of the C
 - Do not use clip art, stock illustrations, or generic icons inconsistent with the brand aesthetic
 - Do not use the logo on backgrounds that reduce legibility
 - Do not mix typefaces outside of the approved pair
-- Do not use brand colors in proportions that reduce Navy as the dominant color
+- Do not use brand colors in proportions that reduce Warm Graphite as the dominant color
 - Do not use the bridge imagery in a way that appears casual or cartoonish
 - Do not create marketing materials without reviewing against this guide
 - Do not use competitor logos or brand materials in Change Maven presentations without explicit permission
