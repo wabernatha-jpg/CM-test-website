@@ -427,6 +427,12 @@
           <a href="#contact" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm">Start a Conversation</a>
           <a href="#approach" class="border border-cream/30 text-cream font-semibold text-sm px-7 py-3.5 rounded-sm hover:border-gold-light hover:text-gold-light focus-visible:border-gold-light focus-visible:text-gold-light transition-colors duration-200">See how we work</a>
         </div>
+        <button type="button" id="heroWatchBtn" class="mt-6 flex items-center gap-2.5 text-cream/80 text-sm font-medium hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">
+          <span class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5L19 12L8 19V5Z"/></svg>
+          </span>
+          Watch: why change sticks (90 sec)
+        </button>
       </div>
       <div class="relative z-10 hero-bridge" aria-hidden="true">
         <svg viewBox="0 0 1360 700" class="w-full h-auto block"><use href="#bridge-signature-hero"></use></svg>
@@ -793,7 +799,8 @@
     var modalStage = document.getElementById("bridgeModalStage");
     var modalClose = document.getElementById("bridgeModalClose");
     var modalBackdrop = document.getElementById("bridgeModalBackdrop");
-    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop) return;
+    var heroWatchBtn = document.getElementById("heroWatchBtn");
+    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop || !heroWatchBtn) return;
 
     var panelClasses = ["hidden", "absolute", "inset-0", "w-full", "h-full", "object-cover"];
     var modalVideoClasses = ["max-w-full", "max-h-[85vh]", "w-auto", "h-auto", "rounded-sm", "shadow-navy-lg"];
@@ -824,6 +831,7 @@
     }
 
     playBtn.addEventListener("click", openModal);
+    heroWatchBtn.addEventListener("click", openModal);
     modalClose.addEventListener("click", closeModal);
     modalBackdrop.addEventListener("click", closeModal);
     video.addEventListener("ended", closeModal);
