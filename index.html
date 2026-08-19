@@ -431,7 +431,7 @@
           <span class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center" aria-hidden="true">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5L19 12L8 19V5Z"/></svg>
           </span>
-          Watch: why change sticks (90 sec)
+          Watch: why change sticks (40 sec)
         </button>
       </div>
       <div class="relative z-10 hero-bridge" aria-hidden="true">
@@ -800,7 +800,7 @@
     var modalClose = document.getElementById("bridgeModalClose");
     var modalBackdrop = document.getElementById("bridgeModalBackdrop");
     var heroWatchBtn = document.getElementById("heroWatchBtn");
-    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop || !heroWatchBtn) return;
+    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop) return;
 
     var panelClasses = ["hidden", "absolute", "inset-0", "w-full", "h-full", "object-cover"];
     var modalVideoClasses = ["max-w-full", "max-h-[85vh]", "w-auto", "h-auto", "rounded-sm", "shadow-navy-lg"];
@@ -831,7 +831,7 @@
     }
 
     playBtn.addEventListener("click", openModal);
-    heroWatchBtn.addEventListener("click", openModal);
+    if (heroWatchBtn) heroWatchBtn.addEventListener("click", openModal);
     modalClose.addEventListener("click", closeModal);
     modalBackdrop.addEventListener("click", closeModal);
     video.addEventListener("ended", closeModal);
