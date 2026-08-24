@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting You Where You Need to Be | Change Maven LLC</title>
+<meta name="description" content="Change Maven guides organizations through strategic planning, building capability and capacity, and sustaining the change once it's made.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2357534A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23E07A34'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23E07A34'/%3E%3Cg stroke='%23E07A34' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="alternate icon" href="Change_Maven_Logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#57534A',
+          'navy-deep': '#3B3832',
+          'navy-light': '#857F71',
+          gold: '#E07A34',
+          'gold-light': '#F0AD7A',
+          cream: '#FAF8F5',
+          slate: '#83807A',
+          predixxa: '#2C4A7C',
+          'predixxa-deep': '#1B3252',
+          'predixxa-light': '#7FA0C9',
+        },
+        fontFamily: {
+          display: ['"Libre Baskerville"', 'Georgia', 'Times New Roman', 'serif'],
+          body: ['Inter', 'system-ui', '-apple-system', 'Arial', 'sans-serif'],
+        },
+        boxShadow: {
+          'gold-sm': '0 6px 16px -6px rgba(224,122,52,0.4)',
+          'card': '0 2px 6px -2px rgba(87,83,74,0.06), 0 12px 28px -12px rgba(87,83,74,0.12)',
+          'card-hover': '0 4px 10px -2px rgba(87,83,74,0.08), 0 20px 40px -14px rgba(87,83,74,0.18)',
+          'navy-lg': '0 30px 60px -20px rgba(59,56,50,0.5)',
+        },
+        transitionTimingFunction: {
+          spring: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  h1, h2, h3, .font-display { font-family: 'Libre Baskerville', Georgia, serif; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  .grain { position: relative; }
+  .grain::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* Interactive image accordion — hover-expand rail, translated from the
+     supplied React component. Width/rotation are driven from plain CSS
+     rather than Tailwind utility classes because Tailwind's CDN build only
+     generates styles for classes present in the initial HTML, not ones
+     toggled later by JS. */
+  .accordion-item {
+    position: relative;
+    display: block;
+    height: 450px;
+    width: 60px;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    animation: gentle-float 5s ease-in-out infinite;
+  }
+  .accordion-item.is-active {
+    width: 340px;
+  }
+  .accordion-item:hover,
+  .accordion-item.is-active,
+  .accordion-item:focus-visible {
+    animation-play-state: paused;
+  }
+  .accordion-item:focus-visible {
+    outline: 2px solid #E07A34;
+    outline-offset: 3px;
+  }
+  .accordion-item:nth-child(1) { animation-delay: 0s; }
+  .accordion-item:nth-child(2) { animation-delay: 0.4s; }
+  .accordion-item:nth-child(3) { animation-delay: 0.8s; }
+  .accordion-item:nth-child(4) { animation-delay: 1.2s; }
+  .accordion-item:nth-child(5) { animation-delay: 1.6s; }
+  @keyframes gentle-float {
+    0%, 100% { transform: translateY(-8px); }
+    50% { transform: translateY(8px); }
+  }
+  .accordion-item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .accordion-item .accordion-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(59,56,50,0.85) 0%, rgba(59,56,50,0.25) 55%, rgba(59,56,50,0.35) 100%);
+  }
+  .accordion-item .accordion-caption-collapsed {
+    position: absolute;
+    left: 50%;
+    bottom: 6rem;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #FAF8F5;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    transform: translateX(-50%) rotate(90deg);
+    transition: opacity 200ms ease;
+    opacity: 1;
+  }
+  .accordion-item.is-active .accordion-caption-collapsed {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .accordion-item .accordion-caption-active {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.5rem 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .accordion-item.is-active .accordion-caption-active {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 150ms;
+  }
+  .accordion-caption-active .accordion-caption-title {
+    display: block;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 700;
+    color: #FAF8F5;
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+  .accordion-caption-active .accordion-caption-desc {
+    display: block;
+    margin-top: 0.35rem;
+    color: rgba(250,248,245,0.8);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .accordion-caption-active .accordion-caption-list {
+    display: block;
+    margin-top: 0.65rem;
+    list-style: none;
+  }
+  .accordion-caption-active .accordion-caption-list li {
+    position: relative;
+    padding-left: 0.9rem;
+    color: rgba(250,248,245,0.68);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+  .accordion-caption-active .accordion-caption-list li + li {
+    margin-top: 0.3rem;
+  }
+  .accordion-caption-active .accordion-caption-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #E07A34;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-item { transition: none; }
+    .accordion-item .accordion-caption-collapsed,
+    .accordion-item .accordion-caption-active { transition: none; }
+  }
+</style>
+</head>
+<body class="bg-cream text-slate antialiased">
+
+<!-- Clark Bridge marks, reused throughout: monochrome icon for nav/footer -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="bridge-icon" viewBox="0 0 140 70">
+      <line x1="6" y1="58" x2="134" y2="58" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="38" y1="32" x2="38" y2="66" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="102" y1="38" x2="102" y2="66" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M38 4 L44 18 L38 32 L32 18 Z" fill="currentColor"/>
+      <path d="M102 10 L108 24 L102 38 L96 24 Z" fill="currentColor"/>
+      <line x1="30" y1="42" x2="46" y2="42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="94" y1="48" x2="110" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <g stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.85">
+        <line x1="38" y1="8" x2="6" y2="58"/>
+        <line x1="38" y1="8" x2="20" y2="58"/>
+        <line x1="38" y1="8" x2="50" y2="58"/>
+        <line x1="38" y1="8" x2="61" y2="58"/>
+        <line x1="38" y1="8" x2="72" y2="58"/>
+        <line x1="102" y1="14" x2="134" y2="58"/>
+        <line x1="102" y1="14" x2="120" y2="58"/>
+        <line x1="102" y1="14" x2="90" y2="58"/>
+        <line x1="102" y1="14" x2="79" y2="58"/>
+        <line x1="102" y1="14" x2="68" y2="58"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<a href="#main" class="absolute -left-full top-0 focus:left-2 focus:top-2 z-[100] bg-gold text-navy font-semibold px-5 py-3 transition-[left] duration-200">Skip to content</a>
+
+<!-- Utility bar -->
+<div class="bg-navy-deep text-cream/65 text-[0.72rem] tracking-[0.08em] uppercase">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-between">
+    <nav class="flex items-center gap-5" aria-label="Utility">
+      <span class="hidden sm:inline text-cream/40">Alton, IL</span>
+      <a href="index.html#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
+      <a href="index.html#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
+    </nav>
+    <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200" aria-label="Change Maven on LinkedIn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+      <span class="hidden sm:inline">LinkedIn</span>
+    </a>
+  </div>
+</div>
+
+<!-- Main nav -->
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-navy/10" id="site-header">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between gap-6">
+    <a href="landing.html" class="flex items-center gap-2.5 shrink-0" aria-label="Change Maven home">
+      <img src="Image_Upload/CMbridgeonly.png" alt="" class="h-4 w-auto" aria-hidden="true">
+      <span class="font-display font-bold text-navy text-xl tracking-tight">
+        Change Maven <span class="text-gold">&middot;</span> <span class="font-body font-medium text-[0.65rem] tracking-[0.12em] uppercase text-slate align-middle">LLC</span>
+      </span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-7 text-[0.92rem] font-medium text-navy/85" aria-label="Primary">
+      <div class="relative group">
+        <button class="flex items-center gap-1 py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">
+          Services
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
+          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-3 w-[440px] grid grid-cols-2 gap-1">
+            <div>
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Define &amp; Build Capacity</p>
+              <a href="services/strategic-management-consulting.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Strategic &amp; Management Consulting</a>
+              <a href="services/operational-change-implementation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Operational Change Implementation</a>
+              <a href="services/workshops-kaizen-tabletop.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Workshops, Kaizen &amp; Tabletop</a>
+              <a href="services/technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
+            </div>
+            <div class="border-l border-navy/10">
+              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Build the Capability</p>
+              <a href="services/training.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Training</a>
+              <a href="services/six-sigma-certification.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Six Sigma Certification</a>
+              <a href="services/executive-leadership-coaching.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive &amp; Leadership Coaching</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="resources/index.html" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Resources</a>
+      <a href="index.html#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
+      <a href="index.html#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button class="hidden sm:flex p-2 text-navy/70 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <a href="index.html#contact" class="hidden sm:inline-block border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">Start a Conversation</a>
+      <button id="navToggle" class="lg:hidden flex flex-col gap-[5px] p-2" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <span class="w-6 h-[2px] bg-navy transition-transform duration-200"></span>
+        <span class="w-6 h-[2px] bg-navy transition-opacity duration-200"></span>
+        <span class="w-6 h-[2px] bg-navy transition-transform duration-200"></span>
+      </button>
+    </div>
+  </div>
+  <nav id="mobileNav" class="hidden lg:hidden flex-col bg-cream border-t border-navy/10 px-5 py-4 gap-1" aria-label="Mobile">
+    <a href="index.html#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
+    <a href="resources/index.html" class="py-2.5 border-b border-navy/10 text-navy">Resources</a>
+    <a href="index.html#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
+    <a href="index.html#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
+    <a href="index.html#contact" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm">Start a Conversation</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero + interactive image accordion -->
+  <section class="relative bg-navy grain overflow-hidden">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-28">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-14">
+
+        <!-- Left: text content -->
+        <div class="w-full lg:w-2/5 text-center lg:text-left">
+          <img src="Image_Upload/CMbridgeonly.png" alt="" class="mx-auto w-full mb-6" aria-hidden="true">
+          <p class="text-gold-light text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Change Maven</p>
+          <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.1] tracking-[-0.01em]">
+            Getting You Where You Need to Be
+          </h1>
+          <div class="mt-9">
+            <a href="index.html#contact" class="inline-block bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm">Contact Us</a>
+          </div>
+        </div>
+
+        <!-- Right: image accordion -->
+        <div class="w-full lg:w-3/5">
+          <div class="flex flex-row items-center justify-center lg:justify-end gap-3 sm:gap-4 overflow-x-auto p-2">
+            <a href="services/strategic-planning.html" class="accordion-item is-active" data-index="0">
+              <img src="Image_Upload/Strategicplan.jpg" alt="Strategic Planning">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Strategic Planning</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Strategic Planning</span>
+                <span class="accordion-caption-desc">Assess where you are, and chart where you're going.</span>
+                <ul class="accordion-caption-list">
+                  <li>Current-state assessment &amp; stakeholder interviews</li>
+                  <li>Organizational assessment</li>
+                  <li>Executive &amp; board-level vision setting</li>
+                </ul>
+              </div>
+            </a>
+            <a href="services/building-capability.html" class="accordion-item" data-index="1">
+              <img src="Image_Upload/Buildthecabability.jpg" alt="Building Capability">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Building Capability</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Building Capability</span>
+                <span class="accordion-caption-desc">Build the ability to get there.</span>
+                <ul class="accordion-caption-list">
+                  <li>Leadership development &amp; executive coaching</li>
+                  <li>Six Sigma training &amp; certification</li>
+                  <li>Skill-building workshops</li>
+                </ul>
+              </div>
+            </a>
+            <a href="services/building-capacity.html" class="accordion-item" data-index="2">
+              <img src="Image_Upload/Buildthecapacity.jpg" alt="Building Capacity">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Building Capacity</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Building Capacity</span>
+                <span class="accordion-caption-desc">Build the platform to cross it.</span>
+                <ul class="accordion-caption-list">
+                  <li>Kaizen events &amp; tabletop exercises</li>
+                  <li>Workshop facilitation</li>
+                  <li>Operational efficiency implementation</li>
+                </ul>
+              </div>
+            </a>
+            <a href="services/sustaining-the-change.html" class="accordion-item" data-index="3">
+              <img src="Image_Upload/Sustain.jpg" alt="Sustaining the Change">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Sustaining the Change</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Sustaining the Change</span>
+                <span class="accordion-caption-desc">Drive continuous success, and get the most from the change.</span>
+                <ul class="accordion-caption-list">
+                  <li>Change management support</li>
+                  <li>Organizational alignment</li>
+                  <li>Succession planning &amp; team engagement</li>
+                </ul>
+              </div>
+            </a>
+            <a href="index.html#about" class="accordion-item" data-index="4">
+              <img src="Image_Upload/Aboutmecover.jpg" alt="About Change Maven">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">About Change Maven</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">About Change Maven</span>
+                <span class="accordion-caption-desc">Meet the maven behind the method.</span>
+                <ul class="accordion-caption-list">
+                  <li>What it's like working with us</li>
+                  <li>About us</li>
+                </ul>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-navy">
+  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 pt-14 pb-8">
+    <div class="flex flex-wrap justify-between gap-10 pb-8 border-b border-cream/10">
+      <div>
+        <img src="Image_Upload/change-maven-logo-2-cropped.png" alt="Change Maven LLC" class="w-40 sm:w-44 h-auto mb-3">
+        <p class="text-cream/55 text-sm">Change Management &middot; Strategy<br>Alton, Illinois</p>
+      </div>
+      <nav class="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer">
+        <a href="index.html#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
+        <a href="resources/index.html" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Resources</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Accessibility</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Terms of Use</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>
+        <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Sitemap</a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">LinkedIn</a>
+      </nav>
+    </div>
+    <p class="text-cream/40 text-[0.8rem] text-center mt-6">&copy; 2026 Change Maven LLC. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  function initMobileNav() {
+    var toggle = document.getElementById("navToggle");
+    var mobileNav = document.getElementById("mobileNav");
+    if (!toggle || !mobileNav) return;
+    toggle.addEventListener("click", function () {
+      var open = mobileNav.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      mobileNav.classList.toggle("flex", !open);
+    });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        mobileNav.classList.add("hidden");
+        mobileNav.classList.remove("flex");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  function initAccordion() {
+    var items = document.querySelectorAll(".accordion-item");
+    if (!items.length) return;
+    items.forEach(function (item) {
+      item.addEventListener("mouseenter", function () {
+        items.forEach(function (other) { other.classList.remove("is-active"); });
+        item.classList.add("is-active");
+      });
+      item.addEventListener("focus", function () {
+        items.forEach(function (other) { other.classList.remove("is-active"); });
+        item.classList.add("is-active");
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initMobileNav();
+    initAccordion();
+  });
+})();
+</script>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Technical Automation | Change Maven LLC</title>
-<meta name="description" content="AI automation, process mapping, project management, and independent verification &amp; validation (IV&V) for system implementations.">
+<title>Working With Predixxa | Change Maven LLC</title>
+<meta name="description" content="Predixxa's Alignment Diagnostic tells you where an organization is misfiring. Change Maven does the human-side work of fixing it. Here's how the two fit together.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2357534A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23E07A34'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23E07A34'/%3E%3Cg stroke='%23E07A34' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="alternate icon" href="../Change_Maven_Logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,6 +23,9 @@
           'gold-light': '#F0AD7A',
           cream: '#FAF8F5',
           slate: '#83807A',
+          predixxa: '#2C4A7C',
+          'predixxa-deep': '#1B3252',
+          'predixxa-light': '#7FA0C9',
         },
         fontFamily: {
           display: ['"Libre Baskerville"', 'Georgia', 'Times New Roman', 'serif'],
@@ -33,6 +36,7 @@
           'card': '0 2px 6px -2px rgba(87,83,74,0.06), 0 12px 28px -12px rgba(87,83,74,0.12)',
           'card-hover': '0 4px 10px -2px rgba(87,83,74,0.08), 0 20px 40px -14px rgba(87,83,74,0.18)',
           'navy-lg': '0 30px 60px -20px rgba(59,56,50,0.5)',
+          'predixxa-lg': '0 30px 60px -20px rgba(27,50,82,0.45)',
         },
         transitionTimingFunction: {
           spring: 'cubic-bezier(0.22, 1, 0.36, 1)',
@@ -67,6 +71,13 @@
 
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Diagnostic readout — the Predixxa panel's signature mark */
+  .readout-bar { transform-origin: left center; animation: readout-grow 1.4s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes readout-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .readout-bar { animation: none; }
+  }
 </style>
 </head>
 <body class="bg-cream text-slate antialiased">
@@ -134,16 +145,16 @@
           <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-3 w-[440px] grid grid-cols-2 gap-1">
             <div>
               <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Define &amp; Build Capacity</p>
-              <a href="strategic-management-consulting.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Strategic &amp; Management Consulting</a>
-              <a href="operational-change-implementation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Operational Change Implementation</a>
-              <a href="workshops-kaizen-tabletop.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Workshops, Kaizen &amp; Tabletop</a>
-              <a href="technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
+              <a href="../services/strategic-management-consulting.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Strategic &amp; Management Consulting</a>
+              <a href="../services/operational-change-implementation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Operational Change Implementation</a>
+              <a href="../services/workshops-kaizen-tabletop.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Workshops, Kaizen &amp; Tabletop</a>
+              <a href="../services/technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
             </div>
             <div class="border-l border-navy/10">
               <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Build the Capability</p>
-              <a href="training.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Training</a>
-              <a href="six-sigma-certification.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Six Sigma Certification</a>
-              <a href="executive-leadership-coaching.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive &amp; Leadership Coaching</a>
+              <a href="../services/training.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Training</a>
+              <a href="../services/six-sigma-certification.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Six Sigma Certification</a>
+              <a href="../services/executive-leadership-coaching.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive &amp; Leadership Coaching</a>
             </div>
           </div>
         </div>
@@ -175,56 +186,126 @@
   <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-3 text-[0.82rem] text-slate flex items-center gap-2 flex-wrap">
     <a href="../index.html#top" class="hover:text-gold transition-colors duration-200">Home</a>
     <span class="text-navy/30">/</span>
-    <a href="../index.html#services" class="hover:text-gold transition-colors duration-200">Services</a>
-    <span class="text-navy/30">/</span>
-    <span class="text-navy font-medium">Technical Automation</span>
+    <span class="text-navy font-medium">Working With Predixxa</span>
   </div>
 </div>
 
 <main id="main">
 
-  <!-- Tier hero -->
+  <!-- Hero -->
   <section class="bg-navy grain">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">How &middot; Build the Capacity</p>
-      <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Technical Automation</h1>
-      <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">AI automation, process mapping, project management, and independent verification &amp; validation (IV&amp;V) for system implementations.</p>
+      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Diagnostic Partner</p>
+      <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em] max-w-2xl">Change Maven <span class="text-gold">+</span> Predixxa</h1>
+      <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Predixxa tells us, in hard numbers, where an organization is misfiring. Change Maven does the work of fixing it — coaching the people, redesigning the process, and making the change stick. Neither half works as well alone.</p>
     </div>
   </section>
 
-  <!-- Body -->
+  <!-- Why Predixxa -->
   <section class="bg-cream">
     <div class="max-w-[760px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <p class="text-navy text-lg sm:text-xl leading-[1.7] font-display">Change doesn't happen only in meetings. Sometimes the fastest way to build capacity is to fix the system underneath the process — so we bring the technical execution alongside the change management, instead of leaving the tools to get bolted on after the fact.</p>
+      <p class="text-navy text-lg sm:text-xl leading-[1.7] font-display">Most change engagements start with a hunch. Ours starts with a diagnostic. Predixxa is an organizational-alignment analytics platform — a data layer we bring in ahead of the work, so the plan is built on what's actually happening inside the organization, not just what leadership assumes is happening.</p>
 
-      <div class="mt-12 grid sm:grid-cols-2 gap-6">
+      <div class="mt-12 grid sm:grid-cols-3 gap-5">
         <div class="rounded-sm border border-navy/10 bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6">
           <div class="w-11 h-11 rounded-full bg-gold/10 flex items-center justify-center mb-4">
-            <svg width="22" height="11" viewBox="0 0 140 70" class="text-gold" aria-hidden="true"><use href="#bridge-icon"></use></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-gold" aria-hidden="true"><path d="M4 19V10M12 19V5M20 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           </div>
-          <h2 class="font-display font-bold text-navy text-lg sm:text-xl mb-2.5">AI Automation &amp; Process Mapping</h2>
-          <p class="text-slate text-[0.92rem] leading-relaxed">Mapping how work actually flows today, then automating the parts that don't need a human in the loop — freeing your team to focus on the decisions that do.</p>
+          <h2 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Alignment Diagnostic</h2>
+          <p class="text-slate text-[0.88rem] leading-relaxed">Analytics that surface misalignment across six operating dimensions — before it shows up as missed targets or stalled initiatives.</p>
         </div>
         <div class="rounded-sm border border-navy/10 bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6">
           <div class="w-11 h-11 rounded-full bg-gold/10 flex items-center justify-center mb-4">
-            <svg width="22" height="11" viewBox="0 0 140 70" class="text-gold" aria-hidden="true"><use href="#bridge-icon"></use></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-gold" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           </div>
-          <h2 class="font-display font-bold text-navy text-lg sm:text-xl mb-2.5">Project Management &amp; IV&amp;V</h2>
-          <p class="text-slate text-[0.92rem] leading-relaxed">Hands-on project management plus independent verification and validation for system implementations, so what gets built actually matches what was needed.</p>
+          <h2 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Certified OAS Coaching</h2>
+          <p class="text-slate text-[0.88rem] leading-relaxed">A certified Organizational Alignment Specialist program that develops managers, not just informs them.</p>
+        </div>
+        <div class="rounded-sm border border-navy/10 bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6">
+          <div class="w-11 h-11 rounded-full bg-gold/10 flex items-center justify-center mb-4">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-gold" aria-hidden="true"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Pulse4&trade; Monitoring</h2>
+          <p class="text-slate text-[0.88rem] leading-relaxed">Ongoing tracking of four key performance indicators, so progress is measured after the engagement ends, not just at kickoff.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Built on certified methodology -->
-  <section class="bg-cream border-t border-navy/10">
-    <div class="max-w-[760px] mx-auto px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
-      <div class="flex gap-2 shrink-0">
-        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.68rem] font-semibold tracking-wide uppercase px-3 py-1">PMP</span>
-        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.68rem] font-semibold tracking-wide uppercase px-3 py-1">CCMP</span>
-        <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.68rem] font-semibold tracking-wide uppercase px-3 py-1">Six Sigma Black Belt</span>
+  <!-- Predixxa brand panel — signature element -->
+  <section class="bg-cream">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 pb-4">
+      <div class="reveal rounded-sm bg-predixxa-deep grain shadow-predixxa-lg overflow-hidden">
+        <div class="grid lg:grid-cols-[1fr_1.3fr]">
+          <div class="p-8 sm:p-10 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-cream/10">
+            <span class="inline-flex items-center gap-2 text-predixxa-light text-[0.7rem] font-semibold tracking-[0.16em] uppercase mb-4">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+              Diagnostic Layer
+            </span>
+            <p class="font-display font-bold text-cream text-3xl sm:text-[2.1rem] tracking-[-0.01em] leading-none">predixxa<span class="text-predixxa-light">.</span></p>
+            <p class="mt-4 text-cream/70 text-[0.92rem] leading-relaxed">The platform behind the numbers. Predixxa builds the diagnostic and monitoring tools Change Maven runs on — independently of us, for organizations across healthcare, government, and the private sector.</p>
+            <a href="https://www.predixxa.com/" target="_blank" rel="noopener" class="mt-6 inline-flex items-center gap-1.5 text-predixxa-light text-sm font-semibold hover:text-cream focus-visible:text-cream transition-colors duration-200 w-fit">
+              Visit predixxa.com <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="p-8 sm:p-10 flex flex-col justify-center gap-5">
+            <p class="text-cream/50 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">Six Operating Dimensions — sample readout</p>
+            <div class="space-y-3.5">
+              <div>
+                <div class="flex items-center justify-between text-[0.78rem] text-cream/70 mb-1.5"><span>Leadership Clarity</span><span class="text-predixxa-light font-semibold">82%</span></div>
+                <div class="h-1.5 rounded-full bg-cream/10 overflow-hidden"><div class="readout-bar h-full rounded-full bg-predixxa-light" style="width:82%"></div></div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-[0.78rem] text-cream/70 mb-1.5"><span>Process Discipline</span><span class="text-predixxa-light font-semibold">64%</span></div>
+                <div class="h-1.5 rounded-full bg-cream/10 overflow-hidden"><div class="readout-bar h-full rounded-full bg-predixxa-light" style="width:64%"></div></div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-[0.78rem] text-cream/70 mb-1.5"><span>Frontline Buy-In</span><span class="text-predixxa-light font-semibold">48%</span></div>
+                <div class="h-1.5 rounded-full bg-cream/10 overflow-hidden"><div class="readout-bar h-full rounded-full bg-predixxa-light" style="width:48%"></div></div>
+              </div>
+            </div>
+            <p class="text-cream/40 text-[0.72rem] leading-relaxed">Illustrative readout. Every engagement gets its own diagnostic — this is what the data looks like before Change Maven builds the plan around it.</p>
+          </div>
+        </div>
       </div>
-      <p class="text-slate text-[0.85rem] leading-snug"><span class="font-semibold text-navy">Built on certified methodology.</span> Every engagement runs on these standards — the same discipline behind all seven offerings, not just this one.</p>
+    </div>
+  </section>
+
+  <!-- How We Work Together -->
+  <section class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl text-center mb-3">How We Work Together</h2>
+      <p class="text-slate text-center max-w-lg mx-auto mb-12">Two firms, one engagement. Here's the handoff.</p>
+
+      <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.72rem] sm:text-[0.78rem] font-semibold tracking-[0.08em] uppercase text-navy/60 mb-14">
+        <span class="text-predixxa">Predixxa Diagnostic</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span>Change Maven Plan</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span>Change Maven Delivery</span>
+        <span class="text-gold" aria-hidden="true">→</span>
+        <span class="text-predixxa">Pulse4 Monitoring</span>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="rounded-sm border border-navy/10 bg-white shadow-card p-6">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-predixxa mb-2">Step 1 · Predixxa</p>
+          <h3 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Diagnose</h3>
+          <p class="text-slate text-[0.88rem] leading-relaxed">The Alignment Diagnostic runs first, so we're planning against real data instead of the loudest opinion in the room.</p>
+        </div>
+        <div class="rounded-sm border border-gold bg-gold/10 p-6">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-gold mb-2">Step 2 · Change Maven</p>
+          <h3 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Deliver</h3>
+          <p class="text-slate text-[0.88rem] leading-relaxed">We build the plan against the diagnostic's findings, then run the coaching, workshops, and process work through the Bridge Method.</p>
+        </div>
+        <div class="rounded-sm border border-navy/10 bg-white shadow-card p-6">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-predixxa mb-2">Step 3 · Predixxa</p>
+          <h3 class="font-display font-bold text-navy text-base sm:text-lg mb-2">Monitor</h3>
+          <p class="text-slate text-[0.88rem] leading-relaxed">Pulse4 keeps tracking the four KPIs that matter after we've left the room, so progress is visible instead of assumed.</p>
+        </div>
+      </div>
+
+      <p class="mt-12 max-w-[640px] mx-auto text-center italic font-display text-navy/80 text-base sm:text-lg leading-relaxed">"Data tells you where to start. It doesn't do the coaching, the workshops, or the hard conversations. That's the part we bring."</p>
     </div>
   </section>
 
@@ -232,36 +313,16 @@
   <section class="bg-cream border-t border-navy/10">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
       <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl text-center mb-3">Where This Fits</h2>
-      <p class="text-slate text-center max-w-lg mx-auto mb-10">Part of the Bridge Method's How — building the capacity to change, including the systems that hold the new way of working.</p>
-      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-3">
-        <div class="space-y-3">
-          <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">Define the Destination &amp; Build the Capacity</p>
-          <a href="strategic-management-consulting.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Strategic &amp; Management Consulting</p>
-          </a>
-          <a href="operational-change-implementation.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Operational Change Implementation</p>
-          </a>
-          <a href="workshops-kaizen-tabletop.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Workshops, Kaizen &amp; Tabletop Exercises</p>
-          </a>
-          <div class="rounded-sm border border-gold bg-gold/10 px-5 py-4">
-            <p class="font-display font-bold text-navy text-sm">Technical Automation</p>
-            <p class="text-gold text-[0.68rem] font-semibold uppercase tracking-wide mt-1">You are here</p>
-          </div>
-        </div>
-        <div class="space-y-3">
-          <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">Build the Capability</p>
-          <a href="training.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Training</p>
-          </a>
-          <a href="six-sigma-certification.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Six Sigma Certification</p>
-          </a>
-          <a href="executive-leadership-coaching.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
-            <p class="font-display font-bold text-navy text-sm">Executive &amp; Leadership Coaching</p>
-          </a>
-        </div>
+      <p class="text-slate text-center max-w-lg mx-auto mb-10">The Predixxa diagnostic feeds most directly into these two offerings in the Bridge Method.</p>
+      <div class="grid sm:grid-cols-2 gap-x-10 gap-y-3 max-w-2xl mx-auto">
+        <a href="../services/strategic-management-consulting.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">Why</p>
+          <p class="font-display font-bold text-navy text-sm">Strategic &amp; Management Consulting</p>
+        </a>
+        <a href="../services/operational-change-implementation.html" class="block rounded-sm border border-navy/15 bg-white px-5 py-4 hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">How</p>
+          <p class="font-display font-bold text-navy text-sm">Operational Change Implementation</p>
+        </a>
       </div>
       <div class="text-center mt-10">
         <a href="../index.html#services" class="inline-block border border-gold text-gold font-semibold text-sm px-7 py-3 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">See the Full Framework</a>
@@ -275,7 +336,7 @@
       <div class="bg-white border border-navy/10 shadow-card rounded-sm p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-8">
         <div>
           <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl mb-2">Ready to talk?</h2>
-          <p class="text-slate max-w-md">Let's talk about the system that's standing in your way.</p>
+          <p class="text-slate max-w-md">Let's start with the diagnostic and see what it turns up.</p>
         </div>
         <a href="../index.html#contact" class="shrink-0 bg-gold text-navy font-semibold text-sm px-8 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shadow-gold-sm">Start a Conversation</a>
       </div>

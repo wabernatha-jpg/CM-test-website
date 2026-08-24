@@ -1,0 +1,1145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>"Slow Is Smooth, Smooth Is Fast" Isn't a Military Mantra. It's a Scoring System.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Leadership</p>
+  <h1 class="title">"Slow Is Smooth, Smooth Is Fast" Isn't a Military Mantra. It's a Scoring System.</h1>
+  <p class="dek">A soccer rule that rewarded precision over power, then rewarded getting better once the fundamentals held, and it explains why "good, on target" beats "powerful, nowhere near the net."</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 11, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <div class="figure figure--hero">
+<img src="assets/images/slow-is-smooth-coaching-hero.png" alt="A father standing in as goalkeeper on a youth soccer practice field, warm late-afternoon light, one boy lining up a shot on a small goal">
+<div class="figure-caption">The boys are at the age where they can finally drive the ball hard off the laces. They love showing off their newfound power. Getting it to actually go in the net, though, is a different skill.</div>
+</div>
+
+<p>I was coaching my boys&rsquo; soccer team, and they&rsquo;re at the age now where they can really drive through the ball. Real leg speed, real power off the laces. What they didn&rsquo;t have yet was the setup underneath it: a plant foot placed next to the ball, a locked ankle, a lean into the shot, a follow-through aimed at the target. They&rsquo;d skip straight to full power and let the rest sort itself out, and I&rsquo;d watch the ball sail three feet wide, or over the bar entirely, while I stood in goal wondering whether to be impressed or to duck.</p>
+<p>So we changed the game. Score and it&rsquo;s 2 points. Get the shot saved or blocked and it&rsquo;s 1 point. Miss the goal altogether, and it&rsquo;s minus 1. Not zero. Minus 1.</p>
+<p>Something shifted almost immediately. They stopped going for maximum power on every shot and started actually looking at the goal before they kicked. The plant foot landed in the right spot next to the ball. The ankle locked instead of staying loose. The follow-through pointed at the target instead of wherever the leg happened to end up. And, counterintuitively, they got faster, not slower, once they weren&rsquo;t wasting motion on shots that were never going in anywhere. Slow is smooth. Smooth is fast.</p>
+<h2>The Rule That Changed What They Were Optimizing For</h2>
+<p>The mechanism wasn&rsquo;t complicated, but it&rsquo;s worth naming precisely, because it&rsquo;s the part that transfers straight into a business context. A flat reward system, points for a goal and nothing else, would have kept them going for maximum power on every shot, because a miss and a near-miss cost exactly the same: nothing. Adding a real, negative cost to missing the net entirely changed the math. Now a wild, ambitious shot that missed wasn&rsquo;t a neutral non-event. It was actively worse than a modest, accurate shot the goalie stopped cold.</p>
+<p>That&rsquo;s the part of the game doing the actual work, and it maps onto a well-documented finding in behavioral economics: people don&rsquo;t weigh a loss and an equivalent gain the same way. Losses are treated as roughly twice as psychologically heavy as a same-sized gain, a finding that traces back to Daniel Kahneman and Amos Tversky&rsquo;s prospect theory research.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> A flat point-for-a-goal system rewards the win. A system that also penalizes the miss makes <em>not missing</em> the thing people actually organize their effort around, and that turns out to be a far stronger lever than the reward alone.</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">~2x</div>
+<div class="pull-stat-label">How Much Heavier a Miss Feels Than an Equivalent Win, Psychologically</div>
+</div>
+</div>
+
+<h2>Where &ldquo;Slow Is Smooth&rdquo; Actually Comes From</h2>
+<div class="keep-together">
+
+<h2>An Old Idea, a New Uniform</h2>
+<p>The phrase gets attached to Navy SEAL training culture almost by default now, and it's easy to see why: it's a core teaching during selection courses where lethal weapons make a rushed, sloppy motion far more costly than a slightly slower, correct one.[^2] But no single person actually coined it. It's collective wisdom, passed down and relabeled by whichever institution needed it most at the time.</p>
+<div class="figure">
+<img src="assets/images/slow-is-smooth-historical-origin.png" alt="A weathered, sepia-toned illustration blending a Roman forum and an old-West street, evoking the phrase's much older lineage than its modern military branding" style="max-height:300px;object-fit:cover;object-position:center;">
+<div class="figure-caption">The uniform changes. The underlying rule doesn't.</div>
+</div>
+</div>
+
+<p>The idea itself is much older than any modern training manual. The Roman historian Suetonius recorded that Augustus Caesar&rsquo;s favorite sayings included <em>festina lente</em>, &ldquo;hasten slowly,&rdquo; and that &ldquo;what has been done well has been done quickly enough.&rdquo; Centuries later and an ocean away, the gunfighter Doc Holliday reportedly gave the same advice in four different words: take your time in a hurry.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> Different eras, same discovery, made independently by people whose mistakes were unusually final: rushing doesn&rsquo;t make you faster. It makes you sloppier, and sloppier is what actually costs you the time you were trying to save.</p>
+<h2>Why the Miss Mattered More Than the Goal</h2>
+<p>There&rsquo;s a second thing happening underneath the incentive shift, and it&rsquo;s about what kind of practice the new rule actually produced. Anders Ericsson spent a career studying what separates experts from everyone else who&rsquo;s put in comparable hours, and his conclusion wasn&rsquo;t that experts have some innate gift. It&rsquo;s that they practice differently: breaking a skill into its specific components, working with continuous, real feedback, and targeting the exact part that&rsquo;s weak.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> Ericsson&rsquo;s own framing is blunt about the alternative: it&rsquo;s entirely possible to log thousands of hours at something without getting meaningfully better at it, if none of those hours were structured around a clear component and real feedback on how it went.<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<p>That&rsquo;s what the scoring rule actually built, without either of us calling it that. Before the rule, every shot was the same undifferentiated rep: full power, no setup, see what happens. After the rule, every shot generated a specific, immediate number that said exactly how it went, and that number was uncomfortable enough on a miss that it demanded attention. The boys weren&rsquo;t practicing &ldquo;soccer&rdquo; anymore in some vague sense. They were practicing the one component that was actually broken, the plant foot, the locked ankle, the follow-through toward the target, because the feedback loop made it impossible to ignore.</p>
+<h2>Where Are Your Team&rsquo;s Last Ten Shots Landing?</h2>
+<div class="spectrum-bar">
+<div class="spectrum-segment sb-1">Miss<br><span style="font-weight:400">(-1)</span></div>
+<div class="spectrum-segment sb-2 sb-active">Save<br><span style="font-weight:400">(1)</span></div>
+<div class="spectrum-segment sb-3">Goal<br><span style="font-weight:400">(2)</span></div>
+</div>
+<div class="spectrum-caption">Most teams' output doesn't cluster at either end. It clusters in the Save zone: safe, on target, technically fine, and never actually scoring.</div>
+
+<p>What would have happened if the boys had just settled for scoring 1 point over and over? We&rsquo;d never have won the games we did win. The same gap shows up in business: an incentive system that only rewards &ldquo;safe and on target&rdquo; caps a team at competent, and competent doesn&rsquo;t win anything on its own.</p>
+<p>Run this same scale over a stack of anything your team has shipped recently, a proposal, a release, a pitch, a client deliverable, and most of it won&rsquo;t land on either extreme. It&rsquo;ll cluster in the middle: competent, on target, nothing anyone would call a failure, and also nothing that moved the business the way a real goal would have. That middle zone is comfortable precisely because it&rsquo;s not penalized under most teams&rsquo; actual incentive structures. Nobody gets in trouble for a save. The problem is that a team that only ever produces saves never gets the compounding benefit of a goal, and never generates the sharp, specific feedback a genuine miss provides either. It just idles.</p>
+<h2>The Business Version of Missing the Net</h2>
+<div class="figure figure--wide">
+<img src="assets/images/slow-is-smooth-product-launch-empty.png" alt="A sleek, polished product launch stage with dramatic lighting and visibly sparse audience seating">
+<div class="figure-caption">Sophisticated and empty are not opposites. They happen at the same time more often than most teams expect.</div>
+</div>
+
+<p>Quibi is the cleanest recent example of a company optimizing for power over aim. It raised $1.75 billion, built a genuinely sophisticated piece of proprietary technology in &ldquo;Turnstyle,&rdquo; which let a video reformat seamlessly between portrait and landscape, and signed real Hollywood talent. What it never did was validate the fundamental it was actually betting on: that people wanted premium, short-form, mobile-only video, in a market where free platforms like TikTok and YouTube already owned that exact behavior. The company launched in April 2020, during a lockdown that erased the on-the-go viewing moments the whole product was built around, and folded roughly six months later.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> Every dollar of that budget went toward polish. None of it went toward confirming the net was actually there before taking the shot.</p>
+<p>Contrast that with two organizations that built their reputations on the opposite discipline. Toyota&rsquo;s production system treats standardized work, the single codified &ldquo;right way&rdquo; to do a task, as the precondition for kaizen, not a competing priority to it. You can&rsquo;t reliably improve a process until the fundamental version of it is stable enough that a deviation from it is even visible.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> And Amazon&rsquo;s founding 1997 shareholder letter, and everything the company has said about staying in &ldquo;Day 1&rdquo; since, isn&rsquo;t a growth story about scale. It&rsquo;s a discipline story: a small, fixed set of fundamentals, obsess over the customer, measure what works, cut what doesn&rsquo;t, applied with enough consistency that scale became something that could compound on top of it.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<div class="pull-stat-wrap">
+<div class="pull-stat pull-stat--b">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">0.05</div>
+<div class="pull-stat-label">Reported Correlation Between "Being Perfect" and Actual Leadership Effectiveness</div>
+</div>
+</div>
+
+<p>Leadership research keeps landing on the same uncomfortable finding from the other direction: chasing &ldquo;perfect&rdquo; barely correlates with actually being effective, and several leadership analysts go further, arguing that perfectionism itself produces the tangible costs, time delays, cost overruns, and missed commitments, that leaders assume they&rsquo;re avoiding by refusing to ship anything less than flawless.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> The teams optimizing for &ldquo;perfect&rdquo; and the teams optimizing for &ldquo;power&rdquo; are making the same mistake in different clothes. Both are aiming at an outcome they haven&rsquo;t actually validated is on target, and calling the size of the effort a substitute for checking.</p>
+<h2>Building Your Own 2-1-Minus-1 Scorecard</h2>
+<div class="process-map">
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">01</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Name the actual net</div>
+<div class="process-desc">Define exactly what counts as a goal for this specific deliverable, not "great work" in the abstract. If you can't say what a 2 looks like in one sentence, nobody on the team can aim at it either.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">02</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Give the miss a real cost</div>
+<div class="process-desc">A miss isn't an imperfect attempt, it's the thing that never engaged the target at all: the deliverable that shipped late enough to be useless, the pitch that solved a problem the client didn't have. Make that outcome visibly worse than a modest, on-target attempt, not equal to it.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">03</div>
+<div class="process-line"></div>
+</div>
+<div class="process-content">
+<div class="process-title">Score every output, every time</div>
+<div class="process-desc">The feedback has to be immediate and specific to change behavior, not an annual review months after the shot was taken. A quick -1/1/2 tag on each piece of work is enough to start showing you where the cluster actually sits.</div>
+</div>
+</div>
+<div class="process-step">
+<div class="process-num-col">
+<div class="process-num">04</div>
+</div>
+<div class="process-content">
+<div class="process-title">Let speed be the reward, not the goal</div>
+<div class="process-desc">Once the fundamentals land consistently, on target, more often than not, ambition and polish compound on top of that base for free. Chasing speed or scale before the fundamentals are solid just means missing faster.</div>
+</div>
+</div>
+</div>
+
+<h2>Back at the Goal</h2>
+<p>The boys learned fast that racking up 1-pointers was easy: keep the shot controlled, get it on target even if it got saved, and the points still added up. That&rsquo;s where the confidence started. Once they trusted the setup, plant foot, locked ankle, follow-through, they noticed something else: the actual goal, not the safe save, was what got them to the win total faster, and by then they had the form to go get it. So the shots got harder on purpose, farther out, more pace behind them, real power layered back on top of a plant foot and a follow-through that no longer broke down under the extra speed. When it clicked, it clicked.</p>
+<p>By the end of that game, the boys weren&rsquo;t taking fewer shots or more cautious ones. They were taking faster, harder shots that went in more often, because the wasted motion, the part of the kick that was never actually contributing to accuracy, had quietly disappeared. Nobody told them to slow down. The scoring did that on its own, by making the one thing that mattered, landing on target, cost something real when they skipped it.</p>
+<p>Most businesses chasing &ldquo;the perfect product&rdquo; are still skipping the setup, optimizing for how much power they can put behind the shot instead of whether it&rsquo;s going to land anywhere near the net. The fix isn&rsquo;t lowering ambition. It&rsquo;s building a scorecard that makes a miss cost more than a modest, accurate attempt earns, and trusting that speed shows up on its own once the aim is real.</p>
+<h2>Key Takeaways</h2>
+<p><strong>Key Frameworks:</strong></p>
+<ul>
+<li>The 2/1/-1 scoring rule (loss-weighted incentive design): a total miss should cost more than a modest, on-target attempt earns, so effort reorganizes around not missing instead of around the biggest possible shot.</li>
+<li>Deliberate practice (Anders Ericsson): expertise comes from targeted, feedback-driven repetition on a specific weak component, not raw hours or ambition.</li>
+</ul>
+<p><strong>Try It:</strong> Pull the last ten instances of one recurring deliverable your team ships, a proposal, a release, a client email. Score each one -1 for a total miss, 1 for a save (landed but unremarkable), 2 for a clean goal. Look at where they cluster before you decide what to fix next.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>&ldquo;Loss aversion,&rdquo; Wikipedia, citing Tversky &amp; Kahneman&rsquo;s prospect theory research (1979), https://en.wikipedia.org/wiki/Loss_aversion&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Taylor Pearson, &ldquo;Slow is Smooth and Smooth is Fast: What It Means and How to Apply It,&rdquo; https://taylorpearson.me/interestingtimes/festina-lente-why-slow-is-smooth-and-smooth-is-fast/&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>&ldquo;The Ultimate Deliberate Practice Guide,&rdquo; Farnam Street, https://fs.blog/deliberate-practice-guide/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>&ldquo;Case Study: Quibi &amp; the Risks of Ignoring User Behavior,&rdquo; Smartware Advisors, https://www.smartwareadvisors.com/pages/case-study-the-rise-and-fall-of-quibi-and-lessons-learned&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>&ldquo;Toyota&rsquo;s 1992 View: Standardized Work and Kaizen Are Two Sides of the Same Coin,&rdquo; Lean Blog, https://www.leanblog.org/2026/07/standardized-work-and-kaizen-toyota/&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Jeff Bezos, &ldquo;Amazon&rsquo;s Original 1997 Letter to Shareholders,&rdquo; https://www.aboutamazon.com/news/company-news/amazons-original-1997-letter-to-shareholders&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>&ldquo;Surfacing: Creative Leadership &ndash; Exploring &lsquo;Perfect&rsquo;,&rdquo; Leadership Circle, https://leadershipcircle.com/blog/surfacing-creative-leadership-exploring-perfect/; &ldquo;The Need for Speed,&rdquo; N2Growth, https://www.n2growth.com/the-need-for-speed/&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+  
+  <div class="cta-box">
+    
+    <div class="cta-monogram">WA</div>
+    
+    <div class="cta-content">
+      <div class="cta-label">Work With Me</div>
+      <div class="cta-copy"><p>If your team is optimizing for the big, ambitious shot and quietly missing the fundamentals that actually move the business, this is the exact kind of operating discipline I help leaders rebuild. Let&rsquo;s talk through what a real scorecard looks like for your team.</p></div>
+      <div class="cta-contact">
+        <span>Wesley Abernatha</span>
+        <span class="dot">&middot;</span>
+        <a href="mailto:change_maven@outlook.com">change_maven@outlook.com</a>
+        
+        <span class="dot">&middot;</span><a href="https://www.mavenshift.co/">mavenshift.co</a>
+      </div>
+    </div>
+  </div>
+  
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script>
+(function () {
+  "use strict";
+  var slug = location.pathname.split("/").pop().replace(".html", "");
+  var startTime = Date.now();
+  var sent = false;
+
+  window.va("event", { name: "article_view", data: { slug: slug } });
+
+  function sendReadTime() {
+    if (sent) return;
+    sent = true;
+    var seconds = Math.round((Date.now() - startTime) / 1000);
+    window.va("event", { name: "article_read_time", data: { slug: slug, seconds: seconds } });
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") sendReadTime();
+  });
+  window.addEventListener("pagehide", sendReadTime);
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
