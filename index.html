@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Change Management &amp; Implementation | Change Maven LLC</title>
-<meta name="description" content="Change Maven guides mid-market companies, government agencies, and nonprofits through change management and implementation that actually sticks — from strategy through adoption.">
+<title>Getting You Where You Need to Be | Change Maven LLC</title>
+<meta name="description" content="Change Maven guides organizations through strategic planning, building capability and capacity, and sustaining the change once it's made.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2357534A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23E07A34'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23E07A34'/%3E%3Cg stroke='%23E07A34' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="alternate icon" href="Change_Maven_Logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,120 +68,138 @@
     pointer-events: none;
   }
 
-  .hairline-panel {
-    background-color: #57534A;
-    background-image: repeating-linear-gradient(
-      55deg,
-      rgba(224,122,52,0.55) 0px,
-      rgba(224,122,52,0.55) 1px,
-      transparent 1px,
-      transparent 14px
-    );
+  /* Interactive image accordion — hover-expand rail, translated from the
+     supplied React component. Width/rotation are driven from plain CSS
+     rather than Tailwind utility classes because Tailwind's CDN build only
+     generates styles for classes present in the initial HTML, not ones
+     toggled later by JS. */
+  .accordion-item {
+    position: relative;
+    display: block;
+    height: 450px;
+    width: 60px;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    animation: gentle-float 5s ease-in-out infinite;
   }
-  .hairline-panel-light {
-    background-color: #E07A34;
-    background-image: repeating-linear-gradient(
-      55deg,
-      rgba(87,83,74,0.16) 0px,
-      rgba(87,83,74,0.16) 1px,
-      transparent 1px,
-      transparent 14px
-    );
+  .accordion-item.is-active {
+    width: 340px;
   }
-
-  .capsule {
-    border: 1.5px solid rgba(224,122,52,0.55);
-    border-radius: 999px;
+  .accordion-item:hover,
+  .accordion-item.is-active,
+  .accordion-item:focus-visible {
+    animation-play-state: paused;
   }
-  .capsule-dot {
-    animation: pulse-dot 3.2s var(--ease, cubic-bezier(.22,1,.36,1)) infinite;
+  .accordion-item:focus-visible {
+    outline: 2px solid #E07A34;
+    outline-offset: 3px;
   }
-  @keyframes pulse-dot {
-    0%, 100% { transform: translateY(0) scale(1); opacity: 0.85; }
-    50% { transform: translateY(-10px) scale(1.08); opacity: 1; }
+  .accordion-item:nth-child(1) { animation-delay: 0s; }
+  .accordion-item:nth-child(2) { animation-delay: 0.4s; }
+  .accordion-item:nth-child(3) { animation-delay: 0.8s; }
+  .accordion-item:nth-child(4) { animation-delay: 1.2s; }
+  .accordion-item:nth-child(5) { animation-delay: 1.6s; }
+  @keyframes gentle-float {
+    0%, 100% { transform: translateY(-8px); }
+    50% { transform: translateY(8px); }
   }
-
-  .scrollcue span { animation: scrollcue 1.8s ease-in-out infinite; }
-  @keyframes scrollcue {
-    0% { transform: translateY(0); opacity: 1; }
-    70% { transform: translateY(14px); opacity: 0; }
-    100% { opacity: 0; }
-  }
-
-  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
-  .reveal.in-view { opacity: 1; transform: translateY(0); }
-
-  select.industry-select {
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23E07A34' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-  }
-
-  .hero-bridge { animation: bridgeIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
-  @keyframes bridgeIn {
-    from { opacity: 0; transform: translateY(22px) scale(1.03); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  /* Hero photo: real bridge photography standing in for the line-art mark — brand-tinted so it reads as one system with the navy/gold palette rather than a dropped-in stock shot */
-  .hero-photo-frame { aspect-ratio: 3 / 4; }
-  .hero-photo-frame img { object-position: 50% 32%; }
-  .hero-photo-tint {
-    position: absolute; inset: 0;
-    background: linear-gradient(155deg, rgba(224,122,52,0.28) 0%, rgba(87,83,74,0.1) 45%, rgba(59,56,50,0.55) 100%);
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-  .hero-photo-vignette {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(59,56,50,0.65) 0%, rgba(59,56,50,0) 38%), linear-gradient(to bottom, rgba(59,56,50,0.35) 0%, rgba(59,56,50,0) 24%);
-    pointer-events: none;
-  }
-  .hero-photo-corner {
-    position: absolute; top: 14px; left: 14px;
-    width: 22px; height: 22px;
-    border-top: 2px solid rgba(240,173,122,0.85);
-    border-left: 2px solid rgba(240,173,122,0.85);
-    pointer-events: none;
-  }
-  @media (min-width: 1024px) {
-    .hero-photo-frame { aspect-ratio: 4 / 5; }
-  }
-
-  .deck-light { animation: lightBreathe 3.8s ease-in-out infinite; }
-  @keyframes lightBreathe {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
-
-  .help-card { background-color: #57534A; }
-  .help-card-scrim {
-    background:
-      linear-gradient(to top, rgba(87,83,74,0.92) 0%, rgba(87,83,74,0.55) 45%, rgba(87,83,74,0.15) 75%, rgba(87,83,74,0.15) 100%);
-  }
-
-  /* Interactive gradient field — drifts toward the cursor, tying the "change in motion" idea into the hero itself */
-  #top { --posX: -40; --posY: -20; }
-  .hero-gradient {
+  .accordion-item img {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .accordion-item .accordion-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(59,56,50,0.85) 0%, rgba(59,56,50,0.25) 55%, rgba(59,56,50,0.35) 100%);
+  }
+  .accordion-item .accordion-caption-collapsed {
+    position: absolute;
+    left: 50%;
+    bottom: 6rem;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #FAF8F5;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    transform: translateX(-50%) rotate(90deg);
+    transition: opacity 200ms ease;
+    opacity: 1;
+  }
+  .accordion-item.is-active .accordion-caption-collapsed {
+    opacity: 0;
     pointer-events: none;
-    background:
-      radial-gradient(60% 80% at calc(22% + var(--posX) * 0.6px) calc(15% + var(--posY) * 0.6px), rgba(240,173,122,0.22), transparent 62%),
-      radial-gradient(70% 90% at calc(80% - var(--posX) * 0.4px) calc(85% - var(--posY) * 0.4px), rgba(133,127,113,0.95), transparent 68%),
-      radial-gradient(90% 110% at calc(50% + var(--posX) * 0.3px) calc(100% + var(--posY) * 0.3px), rgba(224,122,52,0.14), transparent 55%),
-      linear-gradient(135deg, #6A655A 0%, #3B3832 100%);
+  }
+  .accordion-item .accordion-caption-active {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.5rem 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .accordion-item.is-active .accordion-caption-active {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 150ms;
+  }
+  .accordion-caption-active .accordion-caption-title {
+    display: block;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 700;
+    color: #FAF8F5;
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+  .accordion-caption-active .accordion-caption-desc {
+    display: block;
+    margin-top: 0.35rem;
+    color: rgba(250,248,245,0.8);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .accordion-caption-active .accordion-caption-list {
+    display: block;
+    margin-top: 0.65rem;
+    list-style: none;
+  }
+  .accordion-caption-active .accordion-caption-list li {
+    position: relative;
+    padding-left: 0.9rem;
+    color: rgba(250,248,245,0.68);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+  .accordion-caption-active .accordion-caption-list li + li {
+    margin-top: 0.3rem;
+  }
+  .accordion-caption-active .accordion-caption-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #E07A34;
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero-gradient { transition: none; }
+    .accordion-item { transition: none; }
+    .accordion-item .accordion-caption-collapsed,
+    .accordion-item .accordion-caption-active { transition: none; }
   }
 </style>
 </head>
 <body class="bg-cream text-slate antialiased">
 
-<!-- Clark Bridge marks, reused throughout: monochrome icon for nav/footer, two-tone signature for the hero and Bridge Method panel -->
+<!-- Clark Bridge marks, reused throughout: monochrome icon for nav/footer -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="bridge-icon" viewBox="0 0 140 70">
@@ -205,155 +223,6 @@
         <line x1="102" y1="14" x2="68" y2="58"/>
       </g>
     </symbol>
-    <symbol id="bridge-signature" viewBox="0 0 1360 700">
-      <line x1="60" y1="630" x2="1300" y2="560" stroke="#E07A34" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
-      <line x1="60" y1="615" x2="1300" y2="545" stroke="#E07A34" stroke-width="5" stroke-linecap="round"/>
-      <g stroke="#E07A34" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
-        <line x1="390" y1="115" x2="60" y2="615"/>
-        <line x1="390" y1="115" x2="140" y2="611"/>
-        <line x1="390" y1="115" x2="220" y2="606"/>
-        <line x1="390" y1="115" x2="300" y2="602"/>
-        <line x1="390" y1="115" x2="460" y2="592"/>
-        <line x1="390" y1="115" x2="540" y2="588"/>
-        <line x1="390" y1="115" x2="620" y2="583"/>
-        <line x1="390" y1="115" x2="700" y2="579"/>
-        <line x1="960" y1="143" x2="1260" y2="547"/>
-        <line x1="960" y1="143" x2="1180" y2="552"/>
-        <line x1="960" y1="143" x2="1100" y2="556"/>
-        <line x1="960" y1="143" x2="1020" y2="561"/>
-        <line x1="960" y1="143" x2="890" y2="568"/>
-        <line x1="960" y1="143" x2="810" y2="573"/>
-        <line x1="960" y1="143" x2="730" y2="577"/>
-        <line x1="960" y1="143" x2="650" y2="582"/>
-      </g>
-      <line x1="390" y1="186" x2="390" y2="640" stroke="#E07A34" stroke-width="9" stroke-linecap="round"/>
-      <line x1="960" y1="214" x2="960" y2="640" stroke="#E07A34" stroke-width="9" stroke-linecap="round"/>
-      <path d="M390 90 L414 138 L390 186 L366 138 Z" fill="#E07A34"/>
-      <path d="M960 118 L984 166 L960 214 L936 166 Z" fill="#E07A34"/>
-      <line x1="350" y1="255" x2="430" y2="255" stroke="#E07A34" stroke-width="8" stroke-linecap="round"/>
-      <line x1="920" y1="283" x2="1000" y2="283" stroke="#E07A34" stroke-width="8" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="bridge-signature-hero" viewBox="0 0 1360 700">
-      <defs>
-        <linearGradient id="cableGradientHero" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#F0AD7A"/>
-          <stop offset="100%" stop-color="#E07A34"/>
-        </linearGradient>
-        <radialGradient id="groundGlowHero" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#E07A34" stop-opacity="0.16"/>
-          <stop offset="100%" stop-color="#E07A34" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="deckLiftHero" x="-20%" y="-20%" width="140%" height="160%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="blur"/>
-          <feOffset in="blur" dx="0" dy="9" result="offsetBlur"/>
-          <feComponentTransfer in="offsetBlur" result="shadow">
-            <feFuncA type="linear" slope="0.45"/>
-          </feComponentTransfer>
-          <feMerge>
-            <feMergeNode in="shadow"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-        <filter id="lightBlurHero" x="-150%" y="-150%" width="400%" height="400%">
-          <feGaussianBlur stdDeviation="4"/>
-        </filter>
-      </defs>
-
-      <!-- ground glow under towers -->
-      <ellipse cx="390" cy="648" rx="120" ry="34" fill="url(#groundGlowHero)"/>
-      <ellipse cx="960" cy="648" rx="120" ry="34" fill="url(#groundGlowHero)"/>
-
-      <!-- far cable haze (depth) -->
-      <g stroke="#E07A34" stroke-width="1.6" stroke-linecap="round" opacity="0.18">
-        <line x1="390" y1="115" x2="60" y2="615"/>
-        <line x1="390" y1="115" x2="700" y2="579"/>
-        <line x1="960" y1="143" x2="1260" y2="547"/>
-        <line x1="960" y1="143" x2="650" y2="582"/>
-      </g>
-
-      <!-- far cables (existing low tier) -->
-      <line x1="60" y1="630" x2="1300" y2="560" stroke="#E07A34" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
-
-      <!-- deck, lifted, with a top-edge highlight for a beveled-metal look -->
-      <line x1="60" y1="615" x2="1300" y2="545" stroke="#E07A34" stroke-width="5" stroke-linecap="round" filter="url(#deckLiftHero)"/>
-      <line x1="62" y1="611.5" x2="1296" y2="541.5" stroke="#F2B98F" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
-
-      <!-- near cables, gradient-toned -->
-      <g stroke="url(#cableGradientHero)" stroke-width="1.6" stroke-linecap="round" opacity="0.85">
-        <line x1="390" y1="115" x2="60" y2="615"/>
-        <line x1="390" y1="115" x2="140" y2="611"/>
-        <line x1="390" y1="115" x2="220" y2="606"/>
-        <line x1="390" y1="115" x2="300" y2="602"/>
-        <line x1="390" y1="115" x2="460" y2="592"/>
-        <line x1="390" y1="115" x2="540" y2="588"/>
-        <line x1="390" y1="115" x2="620" y2="583"/>
-        <line x1="390" y1="115" x2="700" y2="579"/>
-        <line x1="960" y1="143" x2="1260" y2="547"/>
-        <line x1="960" y1="143" x2="1180" y2="552"/>
-        <line x1="960" y1="143" x2="1100" y2="556"/>
-        <line x1="960" y1="143" x2="1020" y2="561"/>
-        <line x1="960" y1="143" x2="890" y2="568"/>
-        <line x1="960" y1="143" x2="810" y2="573"/>
-        <line x1="960" y1="143" x2="730" y2="577"/>
-        <line x1="960" y1="143" x2="650" y2="582"/>
-      </g>
-
-      <!-- towers with beveled edge: dark shadow side + light catch on the opposite edge -->
-      <line x1="394" y1="186" x2="394" y2="640" stroke="#753F1B" stroke-width="9" stroke-linecap="round"/>
-      <line x1="390" y1="186" x2="390" y2="640" stroke="#E07A34" stroke-width="9" stroke-linecap="round"/>
-      <line x1="386.5" y1="186" x2="386.5" y2="640" stroke="#F2B98F" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="964" y1="214" x2="964" y2="640" stroke="#753F1B" stroke-width="9" stroke-linecap="round"/>
-      <line x1="960" y1="214" x2="960" y2="640" stroke="#E07A34" stroke-width="9" stroke-linecap="round"/>
-      <line x1="956.5" y1="214" x2="956.5" y2="640" stroke="#F2B98F" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M390 90 L414 138 L390 186 L366 138 Z" fill="#E07A34"/>
-      <path d="M390 90 L390 186 L366 138 Z" fill="#F2B98F" opacity="0.5"/>
-      <path d="M960 118 L984 166 L960 214 L936 166 Z" fill="#E07A34"/>
-      <path d="M960 118 L960 214 L936 166 Z" fill="#F2B98F" opacity="0.5"/>
-      <line x1="350" y1="255" x2="430" y2="255" stroke="#E07A34" stroke-width="8" stroke-linecap="round"/>
-      <line x1="920" y1="283" x2="1000" y2="283" stroke="#E07A34" stroke-width="8" stroke-linecap="round"/>
-
-      <!-- deck path lights, evenly spaced, skipping tower zones -->
-      <g class="deck-light" style="animation-delay:0s">
-        <circle cx="120" cy="611" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="120" cy="611" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="120" cy="611" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-0.6s">
-        <circle cx="220" cy="606" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="220" cy="606" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="220" cy="606" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-1.3s">
-        <circle cx="300" cy="602" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="300" cy="602" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="300" cy="602" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-2.1s">
-        <circle cx="540" cy="588" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="540" cy="588" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="540" cy="588" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-2.8s">
-        <circle cx="700" cy="579" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="700" cy="579" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="700" cy="579" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-3.4s">
-        <circle cx="810" cy="573" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="810" cy="573" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="810" cy="573" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-0.4s">
-        <circle cx="1020" cy="561" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="1020" cy="561" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="1020" cy="561" r="2.6" fill="#FAE6D7"/>
-      </g>
-      <g class="deck-light" style="animation-delay:-1.8s">
-        <circle cx="1180" cy="552" r="13" fill="#F0AD7A" opacity="0.18" filter="url(#lightBlurHero)"/>
-        <circle cx="1180" cy="552" r="7" fill="#F0AD7A" opacity="0.35"/>
-        <circle cx="1180" cy="552" r="2.6" fill="#FAE6D7"/>
-      </g>
-    </symbol>
   </defs>
 </svg>
 
@@ -364,8 +233,8 @@
   <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-between">
     <nav class="flex items-center gap-5" aria-label="Utility">
       <span class="hidden sm:inline text-cream/40">Alton, IL</span>
-      <a href="#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
-      <a href="#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
+      <a href="site.html#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
+      <a href="site.html#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
     </nav>
     <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200" aria-label="Change Maven on LinkedIn">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
@@ -377,10 +246,10 @@
 <!-- Main nav -->
 <header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-navy/10" id="site-header">
   <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-[76px] flex items-center justify-between gap-6">
-    <a href="landing.html" class="flex items-center gap-2.5 shrink-0" aria-label="Change Maven home">
-      <svg width="34" height="17" viewBox="0 0 140 70" class="text-navy shrink-0" aria-hidden="true"><use href="#bridge-icon"></use></svg>
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0" aria-label="Change Maven home">
+      <img src="Image_Upload/CMbridgeonly.png" alt="" class="h-4 w-auto" aria-hidden="true">
       <span class="font-display font-bold text-navy text-xl tracking-tight">
-        Change Maven <span class="text-gold">·</span> <span class="font-body font-medium text-[0.65rem] tracking-[0.12em] uppercase text-slate align-middle">LLC</span>
+        Change Maven <span class="text-gold">&middot;</span> <span class="font-body font-medium text-[0.65rem] tracking-[0.12em] uppercase text-slate align-middle">LLC</span>
       </span>
     </a>
     <nav class="hidden lg:flex items-center gap-7 text-[0.92rem] font-medium text-navy/85" aria-label="Primary">
@@ -407,15 +276,15 @@
           </div>
         </div>
       </div>
-      <a href="resources/index.html" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Resources</a>
-      <a href="#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
-      <a href="#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
+      <a href="resources/site.html" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Resources</a>
+      <a href="site.html#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
+      <a href="site.html#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
     </nav>
     <div class="flex items-center gap-3">
       <button class="hidden sm:flex p-2 text-navy/70 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Search">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
-      <a href="#contact" class="hidden sm:inline-block border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">Start a Conversation</a>
+      <a href="site.html#contact" class="hidden sm:inline-block border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">Start a Conversation</a>
       <button id="navToggle" class="lg:hidden flex flex-col gap-[5px] p-2" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
         <span class="w-6 h-[2px] bg-navy transition-transform duration-200"></span>
         <span class="w-6 h-[2px] bg-navy transition-opacity duration-200"></span>
@@ -424,317 +293,109 @@
     </div>
   </div>
   <nav id="mobileNav" class="hidden lg:hidden flex-col bg-cream border-t border-navy/10 px-5 py-4 gap-1" aria-label="Mobile">
-    <a href="#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
-    <a href="resources/index.html" class="py-2.5 border-b border-navy/10 text-navy">Resources</a>
-    <a href="#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
-    <a href="#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
-    <a href="#contact" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm">Start a Conversation</a>
+    <a href="site.html#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
+    <a href="resources/site.html" class="py-2.5 border-b border-navy/10 text-navy">Resources</a>
+    <a href="site.html#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
+    <a href="site.html#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
+    <a href="site.html#contact" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm">Start a Conversation</a>
   </nav>
 </header>
 
-<!-- Breadcrumb -->
-<div class="bg-cream border-b border-navy/10">
-  <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-3 text-[0.82rem] text-slate flex items-center gap-2 flex-wrap">
-    <a href="#top" class="hover:text-gold transition-colors duration-200">Home</a>
-    <span class="text-navy/30">/</span>
-    <a href="#services" class="hover:text-gold transition-colors duration-200">Services</a>
-    <span class="text-navy/30">/</span>
-    <span class="text-navy font-medium">Change Management and Implementation</span>
-  </div>
-</div>
-
 <main id="main">
 
-  <!-- Hero -->
-  <section id="top" class="relative bg-navy grain overflow-hidden">
-    <div class="hero-gradient" aria-hidden="true"></div>
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-28 grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-6 items-center">
-      <div class="relative z-10">
-        <h1 class="font-display font-bold text-cream text-[2.5rem] sm:text-[3.2rem] lg:text-[3.4rem] leading-[1.08] tracking-[-0.01em]">Change Management<br>and Implementation</h1>
-        <p class="mt-5 text-cream/70 text-lg max-w-md">Because how you change matters as much as what you change.</p>
-        <div class="mt-9 flex flex-wrap gap-4">
-          <a href="#contact" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm">Start a Conversation</a>
-          <a href="#approach" class="border border-cream/30 text-cream font-semibold text-sm px-7 py-3.5 rounded-sm hover:border-gold-light hover:text-gold-light focus-visible:border-gold-light focus-visible:text-gold-light transition-colors duration-200">See how we work</a>
+  <!-- Hero + interactive image accordion -->
+  <section class="relative bg-navy grain overflow-hidden">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-28">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-14">
+
+        <!-- Left: text content -->
+        <div class="w-full lg:w-2/5 text-center lg:text-left">
+          <img src="Image_Upload/CMbridgeonly.png" alt="" class="mx-auto w-full mb-6" aria-hidden="true">
+          <p class="text-gold-light text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Change Maven</p>
+          <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.1] tracking-[-0.01em]">
+            Getting You Where You Need to Be
+          </h1>
+          <div class="mt-9">
+            <a href="site.html#contact" class="inline-block bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm">Contact Us</a>
+          </div>
         </div>
-        <button type="button" id="heroWatchBtn" class="mt-6 flex items-center gap-2.5 text-cream/80 text-sm font-medium hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">
-          <span class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5L19 12L8 19V5Z"/></svg>
-          </span>
-          Watch: why change sticks (90 sec)
-        </button>
-      </div>
-      <div class="relative z-10 hero-bridge hero-photo-frame rounded-sm overflow-hidden shadow-navy-lg mx-auto lg:mx-0 w-full max-w-[420px] lg:max-w-none" aria-hidden="true">
-        <img src="hero-bridge-sunset.jpg" alt="" class="w-full h-full object-cover block" width="768" height="1376" fetchpriority="high">
-        <div class="hero-photo-tint" aria-hidden="true"></div>
-        <div class="hero-photo-vignette" aria-hidden="true"></div>
-        <span class="hero-photo-corner" aria-hidden="true"></span>
-      </div>
-    </div>
-  </section>
 
-  <!-- Intro -->
-  <section class="bg-cream">
-    <div class="max-w-[860px] mx-auto px-5 sm:px-8 py-16 lg:py-20 text-center">
-      <p class="text-navy text-xl sm:text-2xl leading-[1.6] font-display">Change isn't rare anymore — it's constant. The organizations that get ahead aren't the ones with the best plan on paper; they're the ones who can keep moving once the plan meets reality. Change Maven combines hands-on
-        <a href="#services" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold focus-visible:decoration-gold transition-[text-decoration-color] duration-200">change management</a> with practical
-        <a href="#approach" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold focus-visible:decoration-gold transition-[text-decoration-color] duration-200">coaching and tools</a> to help your team build that muscle — not just for this rollout, but for the next one, too.</p>
-    </div>
-  </section>
-
-  <!-- Signature panel: The Bridge Method -->
-  <section class="bg-cream">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 pb-16 lg:pb-20">
-      <div class="bg-white shadow-card rounded-sm p-3 sm:p-5">
-        <div id="bridgePanel" class="bg-navy grain relative rounded-sm overflow-hidden flex items-center justify-center py-20 sm:py-28">
-          <svg viewBox="0 0 1360 700" aria-hidden="true" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[130%] sm:w-[100%] max-w-none opacity-40 pointer-events-none"><use href="#bridge-signature"></use></svg>
-          <video id="bridgeVideo" class="hidden absolute inset-0 w-full h-full object-cover" preload="metadata" playsinline controls>
-            <source src="videos/ChangeMavenWebsite.mp4" type="video/mp4">
-          </video>
-          <button id="bridgePlayBtn" class="absolute z-10 w-16 h-16 rounded-full bg-cream/90 flex items-center justify-center hover:bg-cream focus-visible:bg-cream transition-colors duration-200 hover:scale-105 focus-visible:scale-105" aria-label="Play overview" style="transition-property: background-color, transform;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#57534A"><path d="M8 5L19 12L8 19V5Z"/></svg>
-          </button>
-          <p id="bridgeHeadline" class="relative font-display font-bold text-cream text-[2.6rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[0.95] tracking-[-0.02em] text-center px-6">THE BRIDGE<br>METHOD</p>
-        </div>
-      </div>
-      <p class="mt-5 text-center text-slate italic font-display text-base sm:text-lg">How we create the conditions for change that holds.</p>
-    </div>
-  </section>
-
-  <!-- Bridge Method video lightbox -->
-  <div id="bridgeVideoModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 sm:p-8">
-    <div id="bridgeModalBackdrop" class="absolute inset-0 bg-navy-deep/90"></div>
-    <div class="relative w-full max-w-[1100px]">
-      <button id="bridgeModalClose" class="absolute -top-11 right-0 sm:-top-12 w-9 h-9 rounded-full bg-cream/10 hover:bg-cream/20 focus-visible:bg-cream/20 text-cream flex items-center justify-center transition-colors duration-200" aria-label="Close video">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"></line><line x1="20" y1="4" x2="4" y2="20"></line></svg>
-      </button>
-      <div id="bridgeModalStage" class="flex items-center justify-center"></div>
-    </div>
-  </div>
-
-  <!-- How We Can Help -->
-  <section id="services" class="bg-cream">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase text-center mb-4">How We Can Help</p>
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center">The Bridge Method</h2>
-      <p class="mt-5 max-w-[640px] mx-auto text-center text-slate text-[0.98rem] leading-relaxed">Every engagement starts the same way: find out where you are, decide where you're going, and build what it takes to get there — then build what it takes to make the next change easier too.</p>
-
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.72rem] sm:text-[0.78rem] font-semibold tracking-[0.08em] uppercase text-navy/60">
-        <span>Current State</span>
-        <span class="text-gold" aria-hidden="true">→</span>
-        <span>Why</span>
-        <span class="text-gold" aria-hidden="true">→</span>
-        <span>How</span>
-        <span class="text-gold" aria-hidden="true">→</span>
-        <span>Future State</span>
-      </div>
-
-      <div class="mt-14 grid lg:grid-cols-2 gap-x-14 gap-y-12">
-        <div>
-          <h3 class="text-center font-display font-bold text-navy text-[0.8rem] tracking-[0.14em] uppercase mb-7">Define the Destination &amp; Build the Capacity</h3>
-          <div class="flex flex-col items-stretch gap-3">
-            <a href="services/strategic-management-consulting.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Strategic &amp; Management Consulting</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Board and executive-level work that defines vision, direction, and succession.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+        <!-- Right: image accordion -->
+        <div class="w-full lg:w-3/5">
+          <div class="flex flex-row items-center justify-center lg:justify-end gap-3 sm:gap-4 overflow-x-auto p-2">
+            <a href="services/strategic-planning.html" class="accordion-item is-active" data-index="0">
+              <img src="Image_Upload/Strategicplan.jpg" alt="Strategic Planning">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Strategic Planning</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Strategic Planning</span>
+                <span class="accordion-caption-desc">Assess where you are, and chart where you're going.</span>
+                <ul class="accordion-caption-list">
+                  <li>Current-state assessment &amp; stakeholder interviews</li>
+                  <li>Organizational assessment</li>
+                  <li>Executive &amp; board-level vision setting</li>
+                </ul>
+              </div>
             </a>
-            <a href="services/operational-change-implementation.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Operational Change Implementation</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Change management strategy, stakeholder and market analysis, standardization, and org alignment.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            <a href="services/building-capability.html" class="accordion-item" data-index="1">
+              <img src="Image_Upload/Buildthecabability.jpg" alt="Building Capability">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Building Capability</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Building Capability</span>
+                <span class="accordion-caption-desc">Build the ability to get there.</span>
+                <ul class="accordion-caption-list">
+                  <li>Leadership development &amp; executive coaching</li>
+                  <li>Six Sigma training &amp; certification</li>
+                  <li>Skill-building workshops</li>
+                </ul>
+              </div>
             </a>
-            <a href="services/workshops-kaizen-tabletop.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Workshops, Kaizen &amp; Tabletop Exercises</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Decision-forcing, facilitated sessions built to end with a process map, an action plan, or a decision made.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            <a href="services/building-capacity.html" class="accordion-item" data-index="2">
+              <img src="Image_Upload/Buildthecapacity.jpg" alt="Building Capacity">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Building Capacity</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Building Capacity</span>
+                <span class="accordion-caption-desc">Build the platform to cross it.</span>
+                <ul class="accordion-caption-list">
+                  <li>Kaizen events &amp; tabletop exercises</li>
+                  <li>Workshop facilitation</li>
+                  <li>Operational efficiency implementation</li>
+                </ul>
+              </div>
             </a>
-            <a href="services/technical-automation.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Technical Automation</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">AI automation, process mapping, project management, and IV&amp;V for system implementations.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
+            <a href="services/sustaining-the-change.html" class="accordion-item" data-index="3">
+              <img src="Image_Upload/Sustain.jpg" alt="Sustaining the Change">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">Sustaining the Change</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">Sustaining the Change</span>
+                <span class="accordion-caption-desc">Drive continuous success, and get the most from the change.</span>
+                <ul class="accordion-caption-list">
+                  <li>Change management support</li>
+                  <li>Organizational alignment</li>
+                  <li>Succession planning &amp; team engagement</li>
+                </ul>
+              </div>
+            </a>
+            <a href="site.html#about" class="accordion-item" data-index="4">
+              <img src="Image_Upload/Aboutmecover.jpg" alt="About Change Maven">
+              <div class="accordion-scrim"></div>
+              <span class="accordion-caption-collapsed">About Change Maven</span>
+              <div class="accordion-caption-active">
+                <span class="accordion-caption-title">About Change Maven</span>
+                <span class="accordion-caption-desc">Meet the maven behind the method.</span>
+                <ul class="accordion-caption-list">
+                  <li>What it's like working with us</li>
+                  <li>About us</li>
+                </ul>
+              </div>
             </a>
           </div>
         </div>
-        <div>
-          <h3 class="text-center font-display font-bold text-navy text-[0.8rem] tracking-[0.14em] uppercase mb-7">Build the Capability</h3>
-          <div class="flex flex-col items-stretch gap-3">
-            <a href="services/training.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Training</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Standardized or custom-built, with workbooks and action-plan guides so it doesn't evaporate after the session ends.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
-            </a>
-            <a href="services/six-sigma-certification.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Six Sigma Certification</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">Delivered through our GoLean Six Sigma partnership: DMAIC facilitation over 8&ndash;16 weeks on real client ROI projects.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
-            </a>
-            <a href="services/executive-leadership-coaching.html" class="bridge-tier group block w-full rounded-sm border border-navy/15 bg-white shadow-card hover:shadow-card-hover hover:border-gold focus-visible:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-[border-color,box-shadow] duration-300 px-6 py-5 text-center">
-              <h4 class="font-display font-bold text-navy text-base sm:text-lg leading-snug">Executive &amp; Leadership Coaching</h4>
-              <p class="mt-2 text-slate text-[0.84rem] leading-relaxed">CEC-based active inquiry, 1:1 or small group, biweekly over 6-month contracts.</p>
-              <span class="mt-3 inline-flex items-center gap-1 text-gold text-[0.8rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">Learn more <span aria-hidden="true">›</span></span>
-            </a>
-          </div>
-        </div>
-      </div>
 
-      <div class="mt-14 flex items-center justify-center gap-4">
-        <span class="h-px w-16 sm:w-28 bg-navy/15" aria-hidden="true"></span>
-        <span class="font-display font-bold text-navy text-sm sm:text-base tracking-[0.06em] uppercase">Capacity <span class="text-gold px-1" aria-hidden="true">→</span> Capability</span>
-        <span class="h-px w-16 sm:w-28 bg-navy/15" aria-hidden="true"></span>
       </div>
-      <p class="mt-8 max-w-[640px] mx-auto text-center italic font-display text-navy/80 text-base sm:text-lg leading-relaxed">"We match your organization's needs to globally recognized standards, driving real people and culture adoption at every level."</p>
-    </div>
-  </section>
-
-  <!-- Current State Assessment — low-friction lead offer -->
-  <section class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-14 lg:py-16">
-      <div class="rounded-sm border border-gold/30 bg-gold/[0.06] px-6 py-8 sm:px-10 sm:py-10 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-        <div class="flex-1">
-          <h2 class="font-display font-bold text-navy text-xl sm:text-2xl leading-snug">Not sure where to start? Find out where you actually are.</h2>
-          <p class="mt-3 text-slate text-[0.95rem] leading-relaxed max-w-2xl">Every engagement begins with a Current State Assessment — stakeholder interviews, and Predixxa's diagnostic tool where a deeper data layer is warranted. No commitment, no jargon: just a clear read on your organization's readiness for the change you're already facing.</p>
-        </div>
-        <a href="partners/predixxa.html" class="shrink-0 inline-flex items-center gap-1.5 border border-gold text-gold font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold hover:text-navy focus-visible:bg-gold focus-visible:text-navy transition-colors duration-200">Start with an assessment <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials — real, attributed client quotes only. Never seed fake content here (Ray Edwards, 2026-08-18: "sometimes people will manufacture [testimonials]... be very careful"). Wesley has an active engagement with Hoyleton that could plausibly be a source once it reaches a natural checkpoint — do not draft a quote on their behalf. -->
-  <section id="testimonials" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase text-center mb-4">What Clients Say</p>
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Real Results, In Their Words</h2>
-      <div class="grid sm:grid-cols-3 gap-6">
-        <div class="rounded-sm border-2 border-dashed border-navy/15 bg-white/60 p-7 flex flex-col items-center justify-center text-center min-h-[220px]">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="text-navy/25 mb-3" aria-hidden="true"><path d="M7 8h4v4l-2 5H6l2-5H6V8Zm8 0h4v4l-2 5h-3l2-5h-1V8Z" fill="currentColor"/></svg>
-          <p class="text-navy/50 text-[0.85rem] font-semibold">Add a testimonial</p>
-          <p class="mt-1 text-slate/70 text-[0.78rem] max-w-[200px]">Real, attributed client quote — name, role, and org.</p>
-        </div>
-        <div class="rounded-sm border-2 border-dashed border-navy/15 bg-white/60 p-7 flex flex-col items-center justify-center text-center min-h-[220px]">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="text-navy/25 mb-3" aria-hidden="true"><path d="M7 8h4v4l-2 5H6l2-5H6V8Zm8 0h4v4l-2 5h-3l2-5h-1V8Z" fill="currentColor"/></svg>
-          <p class="text-navy/50 text-[0.85rem] font-semibold">Add a testimonial</p>
-          <p class="mt-1 text-slate/70 text-[0.78rem] max-w-[200px]">Real, attributed client quote — name, role, and org.</p>
-        </div>
-        <div class="rounded-sm border-2 border-dashed border-navy/15 bg-white/60 p-7 flex flex-col items-center justify-center text-center min-h-[220px]">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="text-navy/25 mb-3" aria-hidden="true"><path d="M7 8h4v4l-2 5H6l2-5H6V8Zm8 0h4v4l-2 5h-3l2-5h-1V8Z" fill="currentColor"/></svg>
-          <p class="text-navy/50 text-[0.85rem] font-semibold">Add a testimonial</p>
-          <p class="mt-1 text-slate/70 text-[0.78rem] max-w-[200px]">Real, attributed client quote — name, role, and org.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Change Maven -->
-  <section id="about" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">About Change Maven</h2>
-      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
-        <div class="reveal aspect-[4/5] rounded-sm overflow-hidden shadow-card">
-          <img src="Image_Upload/about_me.png" alt="Wesley, founder of Change Maven" class="w-full h-full object-cover block">
-        </div>
-        <div class="reveal">
-          <p class="font-display text-navy text-lg sm:text-xl leading-[1.7]">I started as an engineer in the United States Army. Teamwork, grit, strategy, and execution — that's what got instilled early: the ability to get the job done, right.</p>
-          <div class="mt-6 space-y-5 text-slate leading-relaxed">
-            <p>The credentials: an executive master's in international business from Saint Louis University, an MBA, executive coach certification, PMP, Certified Change Management Professional, and Six Sigma Black Belt — backed by twenty years executing sustainable change for governments, corporations, and nonprofits, across Asia, Europe, and the Middle East. But the real education came from watching good initiatives succeed or fail based on whether people felt like partners in the change, or just targets of it.</p>
-            <p class="italic">From where you are, to where you need to be.</p>
-          </div>
-          <div class="mt-8 flex flex-wrap gap-2">
-            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">PMP</span>
-            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">CCMP</span>
-            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">Six Sigma Black Belt</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Approach / Where We Help -->
-  <section id="approach" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Where We Help</h2>
-      <div class="grid sm:grid-cols-2 gap-x-10">
-        <div class="border-t border-navy/10 lg:col-span-1">
-          <p class="pt-4 text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Define the Destination &amp; Build the Capacity</p>
-          <a href="services/strategic-management-consulting.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategic &amp; Management Consulting <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="services/operational-change-implementation.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Operational Change Implementation <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="services/workshops-kaizen-tabletop.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Workshops, Kaizen &amp; Tabletop Exercises <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="services/technical-automation.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Technical Automation <span class="text-gold" aria-hidden="true">›</span></a>
-        </div>
-        <div class="border-t border-navy/10 lg:col-span-1">
-          <p class="pt-4 text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Build the Capability</p>
-          <a href="services/training.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Training <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="services/six-sigma-certification.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Six Sigma Certification <span class="text-gold" aria-hidden="true">›</span></a>
-          <a href="services/executive-leadership-coaching.html" class="flex items-center justify-between py-4 border-b border-navy/10 text-navy hover:text-gold focus-visible:text-gold transition-colors duration-200">Executive &amp; Leadership Coaching <span class="text-gold" aria-hidden="true">›</span></a>
-        </div>
-      </div>
-
-      <a href="partners/predixxa.html" class="group mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-sm border border-navy/10 bg-white px-6 py-5 hover:border-predixxa/40 focus-visible:border-predixxa/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-predixxa/30 transition-colors duration-200">
-        <span class="inline-flex items-center gap-2 shrink-0 text-predixxa text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
-          Diagnostic Partner
-        </span>
-        <span class="text-navy text-[0.92rem] leading-snug">Every engagement starts with a Current State Assessment — stakeholder interviews, and Predixxa's diagnostic where a deeper data layer is warranted. It's how we find out where you actually are before we talk about where you're going.</span>
-        <span class="sm:ml-auto shrink-0 inline-flex items-center gap-1 text-predixxa text-[0.84rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">See how we work together <span aria-hidden="true">›</span></span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Ready to talk -->
-  <section id="contact" class="bg-cream border-t border-navy/10">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <div class="bg-white border border-navy/10 shadow-card rounded-sm p-8 sm:p-12 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
-        <div>
-          <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl mb-3">Ready to talk?</h2>
-          <p class="text-slate">We work with mid-market companies, government agencies, and nonprofits who are ready to change — and want it to stick.</p>
-        </div>
-        <form id="contactForm" class="grid sm:grid-cols-2 gap-4 items-end">
-          <div class="sm:col-span-2">
-            <label for="industry" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">I'd like to talk about</label>
-            <select id="industry" class="industry-select w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
-              <option>Change Management</option>
-              <option>Strategy &amp; Planning</option>
-              <option>Training &amp; Adoption</option>
-              <option>Something else</option>
-            </select>
-          </div>
-          <div class="sm:col-span-1">
-            <label for="contactName" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your name</label>
-            <input id="contactName" type="text" placeholder="Jane Smith" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
-          </div>
-          <div class="sm:col-span-1">
-            <label for="email" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your email</label>
-            <input id="email" type="email" placeholder="you@company.com" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
-          </div>
-          <div class="sm:col-span-2">
-            <label for="contactMessage" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">How can we help?</label>
-            <textarea id="contactMessage" rows="4" placeholder="Tell us a bit about what you're working on." required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2 resize-y"></textarea>
-          </div>
-          <input type="text" id="contactCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" class="sm:col-span-2 bg-gold text-navy font-semibold text-sm py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed">Contact Us</button>
-          <p id="contactStatus" class="sm:col-span-2 text-sm text-slate" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Newsletter -->
-  <section class="bg-navy-deep grain">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20 grid lg:grid-cols-[1fr_1fr] gap-10 items-center">
-      <div>
-        <h2 class="font-display font-bold text-cream text-2xl sm:text-3xl mb-3">Stay ahead of the next change.</h2>
-        <p class="text-cream/65">Practical notes on change management, sent occasionally.</p>
-      </div>
-      <form id="newsletterForm" class="space-y-3">
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input id="newsletterEmail" type="email" placeholder="Your email address" required class="flex-1 border border-cream/25 bg-navy text-cream rounded-sm py-3.5 px-4 placeholder:text-cream/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
-          <input type="text" id="newsletterCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shrink-0 disabled:opacity-60 disabled:cursor-not-allowed">Subscribe</button>
-        </div>
-        <label class="flex items-start gap-2.5 text-cream/55 text-[0.82rem]">
-          <input type="checkbox" class="mt-0.5 accent-gold">
-          I have read and understand the <a href="#" class="underline hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>.
-        </label>
-        <p id="newsletterStatus" class="text-cream/70 text-sm" role="status" aria-live="polite"></p>
-      </form>
     </div>
   </section>
 
@@ -748,8 +409,8 @@
         <p class="text-cream/55 text-sm">Change Management &middot; Strategy<br>Alton, Illinois</p>
       </div>
       <nav class="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer">
-        <a href="#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
-        <a href="resources/index.html" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Resources</a>
+        <a href="site.html#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
+        <a href="resources/site.html" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Resources</a>
         <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Accessibility</a>
         <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Terms of Use</a>
         <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>
@@ -783,214 +444,24 @@
     });
   }
 
-  function initHeroGradient() {
-    var host = document.getElementById("top");
-    if (!host) return;
-
-    var prefersReduced = window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var intensity = prefersReduced ? 0.15 : 1;
-    var rafId = null;
-    var pending = null;
-
-    function apply() {
-      rafId = null;
-      if (!pending) return;
-      var rect = host.getBoundingClientRect();
-      var px = (pending.clientX - rect.left - rect.width / 2) * intensity;
-      var py = (pending.clientY - rect.top - rect.height / 2) * intensity;
-      host.style.setProperty("--posX", String(px));
-      host.style.setProperty("--posY", String(py));
-    }
-
-    function schedule(ev) {
-      pending = ev;
-      if (rafId) return;
-      rafId = requestAnimationFrame(apply);
-    }
-
-    function reset() {
-      host.style.setProperty("--posX", "0");
-      host.style.setProperty("--posY", "0");
-    }
-
-    host.addEventListener("pointermove", schedule, { passive: true });
-    host.addEventListener("pointerleave", reset);
-    host.addEventListener("touchmove", function (e) {
-      if (!e.touches.length) return;
-      schedule(e.touches[0]);
-    }, { passive: true });
-    host.addEventListener("touchend", reset);
-    host.addEventListener("touchcancel", reset);
-  }
-
-  function initReveal() {
-    var targets = document.querySelectorAll(".reveal");
-    if (!("IntersectionObserver" in window) || targets.length === 0) {
-      targets.forEach(function (el) { el.classList.add("in-view"); });
-      return;
-    }
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in-view");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    targets.forEach(function (el, i) {
-      el.style.transitionDelay = (i % 4) * 0.08 + "s";
-      observer.observe(el);
-    });
-  }
-
-  function initBridgeVideo() {
-    var panel = document.getElementById("bridgePanel");
-    var video = document.getElementById("bridgeVideo");
-    var playBtn = document.getElementById("bridgePlayBtn");
-    var headline = document.getElementById("bridgeHeadline");
-    var modal = document.getElementById("bridgeVideoModal");
-    var modalStage = document.getElementById("bridgeModalStage");
-    var modalClose = document.getElementById("bridgeModalClose");
-    var modalBackdrop = document.getElementById("bridgeModalBackdrop");
-    var heroWatchBtn = document.getElementById("heroWatchBtn");
-    if (!panel || !video || !playBtn || !headline || !modal || !modalStage || !modalClose || !modalBackdrop || !heroWatchBtn) return;
-
-    var panelClasses = ["hidden", "absolute", "inset-0", "w-full", "h-full", "object-cover"];
-    var modalVideoClasses = ["max-w-full", "max-h-[85vh]", "w-auto", "h-auto", "rounded-sm", "shadow-navy-lg"];
-
-    function openModal() {
-      video.classList.remove.apply(video.classList, panelClasses);
-      video.classList.add.apply(video.classList, modalVideoClasses);
-      modalStage.appendChild(video);
-      playBtn.classList.add("hidden");
-      headline.classList.add("hidden");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.body.classList.add("overflow-hidden");
-      video.play();
-      modalClose.focus();
-    }
-
-    function closeModal() {
-      video.pause();
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.body.classList.remove("overflow-hidden");
-      video.classList.remove.apply(video.classList, modalVideoClasses);
-      video.classList.add.apply(video.classList, panelClasses);
-      panel.appendChild(video);
-      playBtn.classList.remove("hidden");
-      headline.classList.remove("hidden");
-    }
-
-    playBtn.addEventListener("click", openModal);
-    heroWatchBtn.addEventListener("click", openModal);
-    modalClose.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", closeModal);
-    video.addEventListener("ended", closeModal);
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
-    });
-  }
-
-  function submitForm(endpoint, payload, statusEl, submitBtn, successMessage) {
-    submitBtn.disabled = true;
-    statusEl.textContent = "Sending…";
-    statusEl.classList.remove("text-red-600", "text-red-400");
-
-    return fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
-      .then(function (res) {
-        return res.json().then(function (body) {
-          return { ok: res.ok && body.ok, error: body.error };
-        });
-      })
-      .then(function (result) {
-        if (result.ok) {
-          statusEl.textContent = successMessage;
-          return true;
-        }
-        statusEl.textContent = result.error || "Something went wrong. Please try again.";
-        statusEl.classList.add("text-red-600", "text-red-400");
-        return false;
-      })
-      .catch(function () {
-        statusEl.textContent = "Something went wrong. Please try again.";
-        statusEl.classList.add("text-red-600", "text-red-400");
-        return false;
-      })
-      .finally(function () {
-        submitBtn.disabled = false;
+  function initAccordion() {
+    var items = document.querySelectorAll(".accordion-item");
+    if (!items.length) return;
+    items.forEach(function (item) {
+      item.addEventListener("mouseenter", function () {
+        items.forEach(function (other) { other.classList.remove("is-active"); });
+        item.classList.add("is-active");
       });
-  }
-
-  function initContactForm() {
-    var form = document.getElementById("contactForm");
-    var status = document.getElementById("contactStatus");
-    var nameInput = document.getElementById("contactName");
-    var emailInput = document.getElementById("email");
-    var topicInput = document.getElementById("industry");
-    var messageInput = document.getElementById("contactMessage");
-    var honeypot = document.getElementById("contactCompany");
-    if (!form || !status || !nameInput || !emailInput || !topicInput || !messageInput || !honeypot) return;
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var payload = {
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        topic: topicInput.value,
-        message: messageInput.value.trim(),
-        company: honeypot.value,
-      };
-      submitForm(
-        "/api/contact",
-        payload,
-        status,
-        form.querySelector("button[type=submit]"),
-        "Thanks — we'll be in touch soon."
-      ).then(function (ok) {
-        if (ok) form.reset();
-      });
-    });
-  }
-
-  function initNewsletterForm() {
-    var form = document.getElementById("newsletterForm");
-    var status = document.getElementById("newsletterStatus");
-    var emailInput = document.getElementById("newsletterEmail");
-    var honeypot = document.getElementById("newsletterCompany");
-    if (!form || !status || !emailInput || !honeypot) return;
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var payload = { email: emailInput.value.trim(), company: honeypot.value };
-      submitForm(
-        "/api/subscribe",
-        payload,
-        status,
-        form.querySelector("button[type=submit]"),
-        "You're subscribed — thanks for staying in touch."
-      ).then(function (ok) {
-        if (ok) form.reset();
+      item.addEventListener("focus", function () {
+        items.forEach(function (other) { other.classList.remove("is-active"); });
+        item.classList.add("is-active");
       });
     });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
-    initHeroGradient();
-    initReveal();
-    initBridgeVideo();
-    initContactForm();
-    initNewsletterForm();
+    initAccordion();
   });
 })();
 </script>

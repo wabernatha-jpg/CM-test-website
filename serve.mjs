@@ -22,7 +22,7 @@ const types = {
 
 const server = http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split("?")[0]);
-  if (urlPath === "/") urlPath = "/landing.html";
+  if (urlPath === "/") urlPath = "/index.html";
   const filePath = path.join(root, urlPath);
 
   if (!filePath.startsWith(root)) {
