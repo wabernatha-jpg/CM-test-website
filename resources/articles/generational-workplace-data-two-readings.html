@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generational Differences at Work: Two Ways to Read the Same Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --paper: #171310;
+    --ink: #F3EDE0;
+    --ink-muted: #B7AC97;
+    --accent: #C1440E;
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(243, 237, 224, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @media print {
+    html, body { background: var(--paper); }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.7;
+    padding: 52px 46px 24px;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ---- Keep-together utility ---- */
+  /* Wrap a heading + its immediately-following content (e.g. a section
+     title and the box/quadrant that illustrates it) so a page break never
+     separates them -- individual break-inside: avoid rules on the heading
+     and the box don't stop a break from landing *between* them. */
+  .keep-together {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Masthead ---- */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  h1.title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  p.dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  .byline-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 20px;
+    margin-bottom: 34px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .byline-row .dot { color: var(--accent); }
+
+  /* ---- Body typography ---- */
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 40px 0 14px;
+    padding-top: 20px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 28px 0 10px;
+    padding-top: 14px;
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body p {
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 8px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 2px;
+  }
+
+  .article-body strong { color: var(--ink); font-weight: 600; }
+  .article-body em { color: var(--ink); }
+
+  .article-body ul, .article-body ol {
+    margin: 4px 0 18px 22px;
+  }
+  .article-body li {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Pull quotes ---- */
+  .article-body blockquote {
+    position: relative;
+    margin: 30px 0 30px 6px;
+    padding: 16px 0 4px 26px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .article-body blockquote p { margin-bottom: 8px; }
+  .article-body blockquote p:last-child { margin-bottom: 0; }
+
+  /* ---- Tables (comparisons, data) ---- */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 24px;
+    font-size: 12.5px;
+  }
+  .article-body th {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 8px 10px;
+  }
+  .article-body td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
+
+  /* ---- Section break ornament ---- */
+  .article-body hr {
+    border: none;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .article-body hr::after {
+    content: '\2726';
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    padding: 1px 5px;
+  }
+
+  /* ---- Footnotes / sources ---- */
+  .footnote {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .footnote hr { display: none; }
+  .footnote > ol {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin-left: 18px;
+  }
+  .footnote a { color: var(--accent); }
+  .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .footnote-backref { text-decoration: none; margin-left: 4px; }
+
+  /* ---- Quadrant (SWOT-style 2x2 frameworks) ---- */
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .quadrant-cell {
+    background: var(--paper);
+    padding: 18px 22px;
+  }
+
+  .quadrant-cell .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quadrant-cell.q-strength .q-label,
+  .quadrant-cell.q-opportunity .q-label {
+    color: var(--accent);
+  }
+
+  .quadrant-cell.q-weakness .q-label,
+  .quadrant-cell.q-threat .q-label {
+    color: var(--ink-muted);
+  }
+
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
+  /* Plain divs, not <ul><li> -- nested real list markup inside this large
+     raw-HTML block triggered inconsistent behavior from python-markdown's
+     HTML-passthrough parser (some cells' lists rendered as literal text
+     instead of being preserved as HTML, unpredictably across renders).
+     Divs styled as bullets via ::before sidestep markdown's list-parsing
+     heuristics entirely. */
+  .quadrant-cell .q-item {
+    position: relative;
+    padding-left: 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  .quadrant-cell .q-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Pull-stat (pinned index-card callout) ---- */
+  .pull-stat-wrap {
+    text-align: center;
+    margin: 8px 0 30px;
+    padding-top: 14px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat {
+    display: inline-block;
+    width: 220px;
+    padding: 10px 20px 16px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: rotate(-1.4deg);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .pull-stat-pin {
+    /* A real, normal-flow element -- not position:absolute. An earlier
+       version used an absolutely-positioned ::before for this dot, which
+       left a visible ghost fragment at its original position when the box
+       moved to the next page under break-inside: avoid (a known Chromium
+       print-pagination quirk with abspos content). Normal flow sidesteps
+       it entirely. */
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 3px rgba(24, 20, 16, 0.3);
+  }
+
+  .pull-stat--b { transform: rotate(1.6deg); }
+
+  .pull-stat--float {
+    float: right;
+    width: 150px;
+    margin: 4px 0 18px 22px;
+  }
+
+  .pull-stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .pull-stat--float .pull-stat-number { font-size: 30px; }
+
+  .pull-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
+  /* ---- Historical tidbit (boxed aside w/ image) ---- */
+  .tidbit-box {
+    margin: 34px 0 34px;
+    padding: 22px 24px;
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .tidbit-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tidbit-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-image {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 2px 18px 10px 0;
+    border: 1px solid var(--rule);
+    filter: sepia(0.35) saturate(0.7) grayscale(0.15);
+  }
+
+  .tidbit-text p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .tidbit-text p:last-child { margin-bottom: 0; }
+  .tidbit-text::after { content: ""; display: block; clear: both; }
+
+  /* ---- Call to action ---- */
+  .cta-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 48px 0 20px;
+    padding: 28px 30px;
+    background: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .cta-portrait,
+  .cta-monogram {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+  }
+
+  .cta-portrait {
+    object-fit: cover;
+    border: 2px solid var(--accent);
+  }
+
+  .cta-monogram {
+    background: var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .cta-content { flex: 1; min-width: 0; }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .cta-copy {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--paper);
+    margin-bottom: 18px;
+  }
+
+  .cta-copy p:last-child { margin-bottom: 0; }
+  .cta-copy a { color: var(--accent); text-decoration: underline; }
+  .cta-copy strong { color: var(--paper); }
+
+  .cta-contact {
+    /* The cta-box background is var(--ink), which is the light cream tone
+       in this dark theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be dark, matching --paper, not
+       the light rgba this line used when --ink was still the dark tone. */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(23, 19, 16, 0.75);
+    padding-top: 14px;
+    border-top: 1px solid rgba(23, 19, 16, 0.18);
+  }
+
+  .cta-contact a { color: var(--accent); text-decoration: none; }
+  .cta-contact .dot { color: var(--accent); }
+
+  /* ---- Closing mark ---- */
+  .end-mark {
+    margin: 40px 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-muted);
+  }
+  .end-mark::before { content: '\25A0'; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Workplace</p>
+  <h1 class="title">Generational Differences at Work: Two Ways to Read the Same Data</h1>
+  <p class="dek">Job-hopping, promotions, retirement, and how people prefer to collaborate: every number below gets two honest explanations, not one verdict.</p>
+
+  <div class="byline-row">
+    <span>Wesley Abernatha</span>
+    <span class="dot">&middot;</span>
+    <span>August 20, 2026</span>
+  </div>
+
+  <div class="article-body">
+    <p>A 52-year-old regional sales director notices her newest hire, 26, log off at 5:01 every single day, and quietly decides he doesn&rsquo;t care about the job. The 26-year-old notices his director still forwards every internal memo by printout and sticky note, and quietly decides she doesn&rsquo;t trust him to read his own email. Neither one has said a word to the other about it. Both of them are wrong, and both are about to spend the next six months acting on a theory about the other person&rsquo;s character that has nothing to do with who that person actually is.</p>
+<p>That&rsquo;s the actual mechanism behind most generational friction at work: not four cohorts wanting fundamentally different things, but each side reading a behavior through the wrong lens and mistaking a structural pattern, a career stage, a habit formed somewhere else entirely, for a character flaw. This piece takes on the numbers everyone already has an opinion about: job-hopping, promotions, retirement, and how people prefer to work together, and gives each one two honest readings instead of one. Neither reading is the correct one to memorize. Sitting with both is the actual point.</p>
+<div class="figure figure--wide">
+<img src="assets/images/generational-data-hero.png" alt="Two colleagues of visibly different generations at separate desks, each glancing toward the other with guarded body language">
+<div class="figure-caption">Two readings of the same behavior, and no way to tell which one's true from across the room.</div>
+</div>
+
+<h2>How to Read the Numbers Below</h2>
+<p>Every statistic in this piece can be explained two different, equally defensible ways. One explanation is generational: something specific about how a cohort was raised, shaped by the historical conditions covered in the piece before this one, that produces a real, lasting behavioral difference. The other explanation is structural: something about the specific circumstance a person is in right now, their career stage, the economy at the moment, the tools available to them, that would produce the exact same number for anyone in that circumstance, regardless of which decade they were born in.</p>
+<p>Both explanations are usually true at once, in different proportions, for different statistics. A stat that looks purely generational at first glance (younger workers change jobs constantly) often turns out to be mostly a career-stage pattern that&rsquo;s held steady for forty years. A stat that looks purely structural (of course retirement is delayed, inflation is high) often turns out to carry a real generational signal once you look closer. This piece won&rsquo;t tell you which reading to believe for a given number. It&rsquo;ll give you both, honestly sourced, and let you decide what you think is actually going on with the specific person you know.</p>
+<h2>Job Tenure and Job-Hopping</h2>
+<p>The generational reading, the one behind nearly every &ldquo;kids these days&rdquo; conversation, says younger workers today simply don&rsquo;t stick around the way people used to. The structural reading says the exact same thing has been true of every 20-something in the workforce for the last forty years, because tenure tracks almost perfectly with age, not birth year. U.S. median job tenure for workers 25 and older has held steady near five years for roughly four decades. Tenure rises predictably with age in every era measured: 1.4 years at ages 20 to 24, 2.7 years at 25 to 34, 4.6 years at 35 to 44, 7.0 years at 45 to 54, 9.6 years at 55 to 64.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> In January 2024, 70% of 16-to-19-year-olds had held their job a year or less, versus just 10% of workers 55 to 64, the same shape it&rsquo;s always had.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>The most direct generational comparison available makes the structural case bluntly: workers 25 to 34 in 2024, Millennials and the oldest Gen Z workers, had a median tenure of 2.7 years. That&rsquo;s only slightly lower than Baby Boomers had at the same age, in 1983.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> Quit rates rise in strong economies and fall in recessions, and state and local government workers, who tend to have pensions and stable healthcare, quit far less often than private-sector workers of the same age, both patterns that track the situation someone&rsquo;s in, not the generation they belong to.<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<div class="pull-stat-wrap">
+<div class="pull-stat">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">2.7 yrs</div>
+<div class="pull-stat-label">25-34 Year Olds' Tenure Today,<br>Nearly Matching Boomers in 1983</div>
+</div>
+</div>
+
+<p>None of that fully closes the case, though. A 2025 global survey found the average job stint in someone&rsquo;s first five years of a career is 1.1 years for Gen Z, compared with 1.8 for Millennials, 2.8 for Gen X, and 2.9 for Baby Boomers, meaning Gen Z specifically does appear to be moving faster than any generation before it moved at the same early-career point.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> The same research found lack of career progression, not disloyalty, is Gen Z&rsquo;s second-biggest reason for leaving a job, after pay, that job postings requiring zero to two years of experience have dropped 29 percentage points since January 2024, and that 41% of Gen Z always factor long-term goals into a job decision, higher than any other generation measured.<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<p>So which is it? Both, held at the same time. The cross-sectional labor data says tenure has always been an age story, not a generation story. The early-career-specific survey says Gen Z is still moving somewhat faster than that age story alone would predict, for reasons, fewer entry-level roles, a real premium on visible progression, that are their own kind of structural explanation, just a newer one. A 24-year-old switching jobs after fourteen months isn&rsquo;t proof of a generational character flaw or a generational virtue. It might be exactly what a 24-year-old has always done, or a specific response to a job market that looks different than it did for anyone older than them. Probably some of both.</p>
+<h2>Promotion and Advancement</h2>
+<p>The generational reading here runs the opposite direction from the stereotype: Gen Z isn&rsquo;t stuck waiting its turn, it&rsquo;s being promoted into management faster than any generation before it at the same stage. Employers analyzing payroll data across nearly 50 million workers found Gen Z&rsquo;s promotion rate into management grew 20% since 2019, while Baby Boomers&rsquo; promotion rate into management fell 30% over the same stretch. Employers promoted Gen Z into management 1.2 times faster in 2023 than in 2019, and Gen Z&rsquo;s share of all manager-months worked jumped from under 1% in 2019 to 3% in 2023. In 2023, Gen Z accounted for 13.9% of new managerial hires, nearly five times its 3% share of the existing managerial workforce.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
+<p>The structural reading is simpler: someone has to fill the management roles Boomers are stepping out of, and that opportunity mechanically lands on whoever&rsquo;s next in line with the tenure to take it, which happens to be a lot of Gen Z workers right now given how badly entry-level hiring has contracted elsewhere. Within any single year&rsquo;s data, the pattern isn&rsquo;t really about Gen Z specifically either: workers 26 and younger report the highest rate of recent promotions and the most optimism about getting one soon, in basically every year measured, because that&rsquo;s simply where the room to climb is early in anyone&rsquo;s career.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> Millennials and Gen X still hold higher absolute promotion rates than Gen Z in raw numbers, since they&rsquo;re mid-career and there&rsquo;s more ladder left to climb; what&rsquo;s specifically notable about Gen Z is being the only generation promoted more often in 2023 than in 2019, a direction, not a headline rate.<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
+<p>A side note on the statistic this section deliberately isn&rsquo;t leading with: who commits workplace fraud by generation. It&rsquo;s tempting to build a whole narrative there, and the data doesn&rsquo;t really support one. Large-scale fraud requires the kind of institutional access, budget authority, and tenure that takes years to accumulate, the exact same things this section just described advancement tracking with. A generation can&rsquo;t be structurally overrepresented in major fraud cases before its oldest members have had time to reach the positions where that kind of fraud becomes possible. That&rsquo;s a tenure-and-access story, the same one already told above, not a character story about any particular generation.</p>
+<h2>Retirement Timing</h2>
+<p>The financial-necessity reading is well documented: in a 2025 survey of pre-retirees over 50, 70% said they&rsquo;re considering or delaying their planned retirement date, and 23% said they&rsquo;re definitely pushing it back. The reasons given are exactly what that reading would predict: 48% worry they haven&rsquo;t saved enough, 44% are worried about inflation, 40% want more financial flexibility before they commit, 34% fear a recession or a market downturn eating into what they&rsquo;ve saved.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<p>The meaning-and-identity reading shows up in nearly the same breath, in the same survey population: 42% say they enjoy the intellectual challenge working still gives them, and 33% say they&rsquo;re not ready to lose the sense of purpose a job provides. Financial worry and personal fulfillment aren&rsquo;t competing explanations here, they&rsquo;re close to evenly split reasons inside the same group of people, often the same individual holding both at once.<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<p>A more specific generational contrast is worth pulling out on its own: 29% of retirees overall say they&rsquo;re considering going back to work, but that figure hides a real split. 54% of Gen X retirees, ages 50 to 59, are considering unretiring, compared with just 28% of Baby Boomer retirees.<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup> The generational reading says something like: Gen X was raised on self-reliance and a discomfort with being fully dependent on anyone, including a pension, so stepping fully away from earning power never quite sits right with them. The structural reading says something plainer: Gen X is retiring into a higher-cost, higher-inflation environment than the one Boomers retired into, so the same amount of savings simply buys less, no generational trait required. Both readings explain the same 26-point gap. Neither one needs the other to be wrong.</p>
+<h2>Collaboration and Work Style</h2>
+<p>This is the section where the popular narrative gets genuinely complicated by the data, not confirmed or denied by it. The assumption going in is usually that Gen Z, raised on screens, would be the generation most comfortable working fully remote, away from any office at all. A large 2025 Gallup survey of over 19,000 U.S. employees found the opposite: Gen Z is the least likely generation to want fully remote work, at 23% among those who could work remotely, versus 35% for Millennials, Gen X, and Baby Boomers alike. 71% of Gen Z specifically want a hybrid arrangement, the highest preference for hybrid of any generation measured.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup></p>
+<p>The generational reading of that number is almost the reverse of the stereotype: despite being the most digitally fluent generation, Gen Z seems to want more in-person connection at work than any generation older than it currently gets. Gallup&rsquo;s loneliness data sharpens that further:</p>
+<div class="pull-stat-wrap">
+<div class="pull-stat pull-stat--b">
+<div class="pull-stat-pin"></div>
+<div class="pull-stat-number">3x</div>
+<div class="pull-stat-label">Gen Z's Reported Loneliness<br>vs. Boomers, Working Fully Remote</div>
+</div>
+</div>
+
+<p>Gen Z employees working fully remote are almost twice as likely as Gen X, and nearly three times as likely as Baby Boomers, to say they felt lonely on a given day.<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup></p>
+<p>The structural reading is just as available, though: entry-level workers of any generation have always needed more in-person mentorship, more proximity to people who already know the job, more chances to absorb the unwritten rules of a workplace by being physically near them, than someone ten years into a career does. A 23-year-old feeling isolated working fully remote might have nothing to do with being Gen Z specifically and everything to do with being new, at any point in history. Millennials, notably, sit at the opposite end: they&rsquo;re the generation most likely to want their colleagues working remotely more often, and 41% say they&rsquo;d be extremely likely to leave a job if remote options were cut, the strongest attachment to flexibility Gallup measured.<sup id="fnref3:7"><a class="footnote-ref" href="#fn:7">7</a></sup> Read generationally, that&rsquo;s Millennials having fought hardest and longest for flexible work and refusing to give it back. Read structurally, it&rsquo;s simply where Millennials are in their careers right now: established enough not to need the in-person mentorship a newer hire does, senior enough that remote work reads as a hard-won privilege rather than a risk.</p>
+<h2>Which Generational Pairings Work Well Together, and Which Clash</h2>
+<p>Everything above is measured. This section isn&rsquo;t. It&rsquo;s a theory, built forward from what the diagnostic piece before this one already established about where each generation&rsquo;s values actually came from, the same method Strauss and Howe used to predict Millennial behavior from watching how they were being raised, decades before there was any survey data to confirm it. Treat what follows as a set of testable hypotheses about why certain pairings feel easier than others, not a settled finding.</p>
+<p><strong>Gen X and Gen Z, theorized to click.</strong> Both generations were formed by a version of institutional distrust, just from opposite directions. Gen X learned it from watching institutions fail in public: Watergate, corporate layoffs, a promise of lifetime employment that quietly stopped being true. Gen Z learned it from growing up inside institutions that were already visibly strained: a Great Recession childhood, a pandemic that upended school with no warning, a political climate neither generation was raised to take on faith. Neither one expects an employer to prove its worth through tenure or title alone, and neither one is surprised when a system doesn&rsquo;t hold. That shared starting assumption, don&rsquo;t take the institution&rsquo;s word for it, tends to translate into mutual respect rather than friction: a Gen X manager&rsquo;s blunt, no-corporate-speak style reads as trustworthy to a Gen Z report who was never going to buy the corporate-speak version anyway.</p>
+<p><strong>Boomers and Millennials, theorized to clash.</strong> These two generations are working from close to opposite operating systems on the same question: what does a job owe you, and what do you owe it. Boomers were raised to read loyalty, visible hours, and tenure as the currency that earns advancement and trust. Millennials were raised, by 9/11 and a Great Recession entry into the job market, to treat purpose and alignment with an employer&rsquo;s stated values as the real currency, sometimes even ahead of pay. A Boomer reading a Millennial&rsquo;s question about a company&rsquo;s mission as entitlement, and a Millennial reading a Boomer&rsquo;s insistence on visible hours as a demand for blind loyalty, are both misreading a values difference as a character flaw, the exact mechanism the closing section of this piece is about.</p>
+<p><strong>Millennials and Gen Z, theorized to click more than expected.</strong> On paper these two are close enough in age that the friction should be minimal, and mostly it is, but the more interesting theory is why: both generations were shaped by entering, or watching a parent enter, an economy that broke a promise partway through, the 2008 crash for Millennials, its long aftermath for Gen Z as children. Both generations came out the other side placing purpose and mental-health awareness above blind institutional loyalty, just with Gen Z&rsquo;s version turned up louder and stated more directly. A Millennial manager tends to already share the underlying value a Gen Z report is asking for, which makes it read as reasonable rather than demanding.</p>
+<p><strong>Gen X and Boomers, theorized to have the most functional, least emotionally charged relationship of any adjacent pairing.</strong> Not because they agree, but because Gen X&rsquo;s whole formative experience was learning to work around institutions rather than fight them, which extends naturally to working around a Boomer&rsquo;s expectations without needing either side to actually change. This is a pairing built on low expectations of agreement rather than genuine alignment, and it tends to be stable specifically because neither side is trying to convert the other.</p>
+<h2>A Forecast: Gen Z Running the Workplace, and Gen Alpha After Them</h2>
+<p>The methodological justification for what follows was already established in the diagnostic piece before this one: Strauss and Howe correctly predicted, from watching how Millennials were being raised in the 1980s, that crime would fall, families would grow closer, and young adults would become more risk-averse by 2000, years before any of that showed up in a survey.<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup> That&rsquo;s a real, if contested, track record: watching how a generation is currently being raised is a legitimate way to make a forward call about how it will behave as adults, not a guarantee.</p>
+<p>Applying that same method to Gen Z fully running the workplace, and to what&rsquo;s currently observable about Gen Alpha, the generation being raised right now: the promotion data above already shows Gen Z accelerating into management faster than any generation measured before it, while carrying the values documented in the diagnostic piece, purpose over title, direct communication about mental health and workload, comfort naming a boundary out loud. The reasonable forecast is a workplace that runs on more explicit, more frequently renegotiated expectations than the implicit, tenure-based trust Boomers built their version of management on, not because Gen Z rejects trust, but because the retirement and job-market ruptures logged throughout this piece taught them not to assume any arrangement is permanent.</p>
+<div class="split-section">
+<div class="split-aside">
+<div class="figure">
+<img src="assets/images/generational-data-gen-alpha.png" alt="A young child using a tablet alongside a parent, an AI voice-assistant device nearby, warm domestic setting">
+</div>
+</div>
+<div class="split-main">
+<blockquote>Gen Alpha is currently being raised by parents who, by a wide margin, describe technology as something that makes parenting easier rather than something to be managed or feared, a sharp break from how the generations in this piece were raised to relate to technology.</blockquote>
+</div>
+</div>
+
+<p>Gen Alpha, mostly children of Millennial parents, is currently being raised inside conditions that look like an intensified version of what shaped their parents: an average of four to five hours of daily screen time, a first personal device around age six or seven, roughly half having used an AI tool by age eight.<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> If the Strauss-Howe method holds, that points toward a generation for whom AI-assisted work isn&rsquo;t a workplace adjustment to learn, the way it currently is for every generation covered in this piece, but simply how work has always been done, the same way Gen Z never had to adjust to smartphones because they never knew a world without them. McCrindle Research projects Gen Alpha will make up roughly 11% of the global workforce by 2030, its oldest members starting entry-level jobs before this decade is out.<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup> Call this section what it is: an informed bet on how current conditions are likely to play out, built the same way Strauss and Howe built theirs, not a data point.</p>
+<h2>What Each Generation Assumes About the Other That Usually Isn&rsquo;t True</h2>
+<p>Most generational conflict at work doesn&rsquo;t come from two people who actually want incompatible things. It comes from each side assuming something false about the other&rsquo;s motive, and reacting to the assumption instead of the actual person. Neither side needs to change for that friction to ease. Both sides need to see clearly what&rsquo;s actually driving the other one.</p>
+<p><strong>What an older colleague might assume about a younger one, that usually isn&rsquo;t true.</strong> Logging off at 5 sharp doesn&rsquo;t mean they don&rsquo;t care about the work. More often it means they&rsquo;ve learned, the way this piece&rsquo;s tenure and promotion data both suggest, that visible hours were never actually the thing that gets their generation rewarded, purpose and results are, so the hours themselves stopped being the signal worth sending. Asking about mental-health support or flexibility isn&rsquo;t a request for less work either; the data above says it&rsquo;s usually a request for a real answer to a question this generation was taught, by a Great Recession and a pandemic, was worth asking out loud. And changing jobs after a year doesn&rsquo;t mean they can&rsquo;t commit to anything. Per the tenure data above, that&rsquo;s close to what a 24-year-old has always done, in every generation measured, now made slightly faster by a job market with fewer entry-level rungs to climb.</p>
+<p><strong>What a younger colleague might assume about an older one, that usually isn&rsquo;t true.</strong> Insisting on visible hours or in-office time doesn&rsquo;t mean they don&rsquo;t trust you, or don&rsquo;t respect your time. More often it means hours were the only reliable signal of commitment their own first boss ever gave them credit for, and no one&rsquo;s ever handed them a better one to replace it with. Staying past a &ldquo;normal&rdquo; retirement age doesn&rsquo;t mean they&rsquo;re only doing it for the money, or worse, blocking a promotion out of stubbornness. The retirement data above shows the split is close to even between financial necessity and genuinely enjoying the work, and the promotion data shows this generation&rsquo;s advancement rate is actually falling, not rising, as younger generations move up faster than they did. And a reluctance to change a process doesn&rsquo;t mean they&rsquo;re resistant to new ideas on principle. More often it&rsquo;s the accumulated evidence of having watched a lot of new processes come and go without actually improving anything, a track record a newer employee simply hasn&rsquo;t had time to build yet, in either direction.</p>
+<p>None of this requires either generation to become the other. It requires noticing, the next time a coworker&rsquo;s behavior lands as a character flaw, that there&rsquo;s very likely a specific, coherent, entirely defensible reason behind it, one this piece has probably already covered.</p>
+<h2>A Final Thought</h2>
+<p>The numbers behind job-hopping, promotions, retirement, and collaboration style all support two honest stories at once: one about who a generation was raised to be, one about the specific circumstance anyone in that position would face regardless of when they were born. Holding both, instead of picking the one that confirms what you already believed about a coworker, is what actually changes how a mixed-generation team works together.</p>
+<p>Go back to the sales director and the 26-year-old from the opening of this piece. She could keep believing he doesn&rsquo;t care about the job. He could keep believing she doesn&rsquo;t trust him. Neither one would be acting on anything real, just on a theory, and theories like that tend to calcify into fact simply because nobody ever tests them. The alternative isn&rsquo;t complicated: name the assumption, then name the structural explanation that would produce the identical behavior regardless of the person&rsquo;s age. If the second one is at least as believable as the first, and it usually is, what looked like a generational conflict was never really about generations at all. It was about two people who never checked their own math.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>How Long Do Americans Stay at Their Jobs? &ndash; USAFacts, summarizing U.S. Bureau of Labor Statistics data, https://usafacts.org/articles/how-long-do-americans-stay-at-their-jobs/; see also Median Tenure With Current Employer Was 3.9 Years in January 2024 &ndash; U.S. Bureau of Labor Statistics, https://www.bls.gov/opub/ted/2024/median-tenure-with-current-employer-was-3-9-years-in-january-2024.htm&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Debunking the Job-Hopping Myth: A Data-Driven Look at Tenure and Turnover Among Younger Workers &ndash; National Institute on Retirement Security, https://www.nirsonline.org/articles/new-research-debunks-job-hopping-myth-about-millennials-and-gen-z/&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Gen Z Workplace Blueprint 2025 &ndash; Randstad, https://www.randstad.com/press/2025/genz-workplace-blueprint/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Look Who Got Promoted! (No, It&rsquo;s Not Mom or Dad) &ndash; ADP Research Institute, https://www.adpresearch.com/research/gen-z-rises-into-management&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>With Youth, Optimism &ndash; ADP Research Institute, https://www.adpresearch.com/research/with-youth-optimism&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Retirement Reconsidered 2025: Third Annual F&amp;G Survey &ndash; F&amp;G Life, https://www.fglife.com/news/retirement-survey-2025&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Fully Remote Work Least Popular With Gen Z &ndash; Gallup, https://www.gallup.com/workplace/692675/fully-remote-work-least-popular-gen-z.aspx&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>What Is A &lsquo;Millennial&rsquo; Anyway? Meet The Man Who Coined The Phrase &ndash; Forbes, https://www.forbes.com/sites/samanthasharf/2015/08/24/what-is-a-millennial-anyway-meet-the-man-who-coined-the-phrase/ (previously cited in this series&rsquo; diagnostic piece)&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>Gen Alpha upbringing and technology-exposure statistics, aggregated from multiple workforce and consumer-research sources including McCrindle Research&rsquo;s Gen Alpha workforce projections; treat as directional rather than a single authoritative primary source.&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+  
+
+  <p class="end-mark">Publications</p>
+
+</div>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script>
+(function () {
+  "use strict";
+  var slug = location.pathname.split("/").pop().replace(".html", "");
+  var startTime = Date.now();
+  var sent = false;
+
+  window.va("event", { name: "article_view", data: { slug: slug } });
+
+  function sendReadTime() {
+    if (sent) return;
+    sent = true;
+    var seconds = Math.round((Date.now() - startTime) / 1000);
+    window.va("event", { name: "article_read_time", data: { slug: slug, seconds: seconds } });
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") sendReadTime();
+  });
+  window.addEventListener("pagehide", sendReadTime);
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
