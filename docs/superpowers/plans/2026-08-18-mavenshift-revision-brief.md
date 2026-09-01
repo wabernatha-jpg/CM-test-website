@@ -10,7 +10,7 @@
 
 **Tech Stack:** Tailwind CSS (CDN), vanilla JS (IIFE per page), Vercel Analytics (`window.va` + `/_vercel/insights/script.js`, already installed site-wide).
 
-**Spec:** `mavenshift-website-revision-brief.md` (repo root) — the plan argues from this spec; executors should read both.
+**Spec:** `docs/planning/mavenshift-website-revision-brief.md` — the plan argues from this spec; executors should read both.
 
 ## Global Constraints
 

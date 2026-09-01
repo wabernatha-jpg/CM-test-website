@@ -16,7 +16,7 @@ If there's no git activity since the last report, don't regenerate the whole fil
 
 This repo has no content-catalog or deliverable-folder concept — it's a static site codebase. Gather state from:
 - `git log` since the last report: which pages changed (`index.html`, `services/*.html`, `clarity/*`) and roughly what changed (new section, copy edit, redesign pass).
-- Brand asset changes: any new/updated files in `brand_assets/` or root-level brand files (e.g. `Change_Maven_Brand_Guide.md`, `Change_Maven_Logo.png`) since the last report.
+- Brand asset changes: any new/updated files in `brand_assets/` (images) or `docs/planning/Change_Maven_Brand_Guide.md` since the last report.
 - If a `temporary screenshots/` folder has recent screenshots newer than the last report's timestamp, that indicates an active design/review loop (per `CLAUDE.md`'s Screenshot Workflow) even if it hasn't landed as a commit yet — worth a mention under Current focus even if it's not yet "progress."
 - Whether the site currently matches the reference/brand guide it's supposed to match, if that's assessable from recent commit messages or an obvious mismatch — flag as a red flag if a stalled redesign pass has left the live site inconsistent with `brand_assets/`.
 
