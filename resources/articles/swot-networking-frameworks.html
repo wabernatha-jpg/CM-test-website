@@ -11,12 +11,30 @@
     --font-display: 'Fraunces', Georgia, serif;
     --font-body: 'Source Serif 4', Georgia, serif;
     --font-mono: 'JetBrains Mono', 'Courier New', monospace;
-    --paper: #FAF6EC;
-    --ink: #181410;
-    --ink-muted: #5C5344;
+    --paper: #F3EDE0;
+    --ink: #171310;
+    --ink-muted: #6E6455;
     --accent: #C1440E;
-    --accent-soft: rgba(193, 68, 14, 0.08);
-    --rule: rgba(24, 20, 16, 0.14);
+    --accent-soft: rgba(193, 68, 14, 0.16);
+    --rule: rgba(23, 19, 16, 0.16);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above, since these exist to give multi-category
+       diagrams (a 5-rung spectrum, a 4-quadrant map) distinct, legible
+       colors rather than to carry brand identity. Same values are used
+       on-screen and in print (see templates/print_theme.css). */
+    --viz-1: #C1440E; /* reuses --accent */
+    --viz-2: #2B6E8C; /* deep teal */
+    --viz-3: #3F7D4F; /* forest green */
+    --viz-4: #6B4C93; /* muted plum */
+    --viz-5: #B08D2B; /* muted gold */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -209,6 +227,75 @@
     vertical-align: top;
   }
   .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- e.g. a public-participation ladder or maturity model. A
+     single short, normal-flow block (not built from independently
+     breakable pieces), so break-inside: avoid on the outer wrap is enough;
+     nothing here risks the ghost-fragment bug documented on process-map,
+     since the whole bar is meant to render as one visual unit. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
 
   /* ---- Section break ornament ---- */
   .article-body hr {
@@ -227,7 +314,6 @@
     font-size: 0.9em;
     background: var(--accent-soft);
     padding: 1px 5px;
-    border-radius: 3px;
   }
 
   /* ---- Footnotes / sources ---- */
@@ -246,10 +332,15 @@
   }
   .footnote a { color: var(--accent); }
   .footnote-ref {
+    /* Consecutive refs (e.g. two citations back-to-back with no space in
+       the source markdown, [^2][^3]) render as adjacent <sup> elements with
+       no separating text node -- this margin keeps them from visually
+       mashing into one number (e.g. "23" read as twenty-three). */
     font-family: var(--font-mono);
     font-size: 0.68em;
     color: var(--accent);
     font-weight: 700;
+    margin-left: 2px;
   }
   .footnote-backref { text-decoration: none; margin-left: 4px; }
 
@@ -259,9 +350,8 @@
     grid-template-columns: 1fr 1fr;
     gap: 1px;
     background: var(--rule);
-    border: 1px solid var(--rule);
+    border: 1.5px solid var(--rule);
     margin: 30px 0 34px;
-    padding-top: 12px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -290,6 +380,18 @@
     color: var(--ink-muted);
   }
 
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     a top border plus a matching label color, using the fixed --viz-N
+     data-viz palette instead of the accent/muted-only SWOT scheme above. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
   /* Plain divs, not <ul><li> -- nested real list markup inside this large
      raw-HTML block triggered inconsistent behavior from python-markdown's
      HTML-passthrough parser (some cells' lists rendered as literal text
@@ -312,6 +414,83 @@
     color: var(--ink-muted);
   }
 
+  /* ---- Process map (simple numbered step-by-step flow) ---- */
+  /* Each step is its own normal-flow block with its own connecting-line
+     segment (a stretched flex child, not an absolutely-positioned pseudo
+     element) -- the pull-stat-pin note above documents why an abspos
+     decorative element left a ghost fragment across a page break under
+     break-inside: avoid. Stacked real elements sidestep that entirely: if a
+     break lands between two steps, each segment just starts/ends cleanly at
+     its own block boundary. Omit the .process-line div on the final step
+     (no next node to connect to). */
+  .process-map {
+    margin: 30px 0 34px;
+    padding-top: 12px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 18px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .process-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .process-num {
+    width: 30px;
+    height: 30px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Optional phase-color modifiers -- use when a process-map's steps group
+     into named phases (e.g. four project phases) and that grouping is
+     itself worth showing at a glance, not just decoration. */
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
+
+  .process-line {
+    flex: 1;
+    width: 2px;
+    min-height: 16px;
+    margin-top: 4px;
+    background: var(--rule);
+  }
+
+  .process-content {
+    flex: 1;
+    padding-bottom: 22px;
+  }
+
+  .process-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .process-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
   /* ---- Pull-stat (pinned index-card callout) ---- */
   .pull-stat-wrap {
     text-align: center;
@@ -326,9 +505,8 @@
     width: 220px;
     padding: 10px 20px 16px;
     background: var(--paper);
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    box-shadow: 0 4px 12px rgba(24, 20, 16, 0.12), 0 1px 2px rgba(24, 20, 16, 0.08);
+    border: 1.5px solid var(--rule);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
     text-align: center;
     transform: rotate(-1.4deg);
     break-inside: avoid;
@@ -379,13 +557,250 @@
     line-height: 1.5;
   }
 
+  /* ---- Lens wheel (radial summary of parallel factors + a center verdict) ---- */
+  /* For frameworks whose parts are parallel lenses rather than a 2x2 or a
+     sequence (PESTLE's six, Porter's five forces, the 5 Cs) -- a compact
+     "at a glance" recap of a worked example, not a substitute for the full
+     per-lens breakdown in the body copy. Colors follow the same
+     accent-on-paper contrast pattern as .process-num (dark text on the
+     accent-colored hub) and .tidbit-box (accent-soft fill with --ink text
+     on the outer nodes) rather than inventing a new palette. */
+  .lens-wheel-wrap {
+    margin: 34px auto 40px;
+    max-width: 440px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lens-wheel-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lens-wheel-ring {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .lens-wheel-node-circle {
+    fill: var(--accent-soft);
+    stroke: var(--rule);
+    stroke-width: 1.5;
+  }
+
+  .lens-wheel-node-label {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    fill: var(--accent);
+  }
+
+  .lens-wheel-node-finding {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    fill: var(--ink);
+  }
+
+  .lens-wheel-hub {
+    fill: var(--accent);
+  }
+
+  .lens-wheel-hub-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-hub-sub {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: 1px;
+    fill: var(--paper);
+  }
+
+  .lens-wheel-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  /* ---- Figure (standalone illustrative image + optional caption) ---- */
+  .figure {
+    margin: 30px 0 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead hero variant -- cropped to a shorter banner (instead of the
+     full square source image) so the title, dek, byline, image, and the
+     opening paragraphs can all share page 1 instead of the image alone
+     eating the whole page. */
+  .figure--hero img {
+    height: 165px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
+  .figure-caption {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* A drop-in replacement for the <img> inside .figure / .figure--wide, not
+     a new top-level wrapper -- inherits those wrappers' margin,
+     break-inside, and (wide variant) --bleed-x bleed math for free instead
+     of a third copy of pagination-safety rules. Sizing is a per-instance
+     inline `style="min-height:Npx"` on this div, not discrete size classes:
+     its whole purpose is that height is a lever tuned to the exact gap
+     tools/check_page_gaps.py measures on a given pagination pass, which a
+     fixed set of size buckets couldn't match precisely. Uses only var()
+     tokens already defined per-brand (--accent-soft, --ink-muted) -- no
+     templates/print_theme.css patch needed, same as --viz-1..5. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
+  /* ---- Split section (boxed aside next to a main column) ---- */
+  /* Used to run a short supporting aside (e.g. "Where Drift Comes From")
+     alongside a longer primary block (e.g. the process-map) instead of
+     stacking them. Chromium's print engine doesn't reliably fragment a
+     CSS grid across a page boundary, so both columns get break-inside:
+     avoid -- this section should only be used where the combined content
+     is short enough to plausibly fit in one page's remaining space; for a
+     longer aside, stack instead of forcing a two-column split. */
+  .split-section {
+    /* Negative side margins break this section out of the article's normal
+       620px measure, closer to the page's own edge padding, so the box
+       reads as a wider callout rather than being boxed in by the same
+       narrow column as running text. Removing align-items: start (the
+       grid default is stretch) lets the shorter column's box fill the
+       full row height instead of stopping short and leaving blank space
+       beside the taller column. */
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    margin: 56px var(--bleed-x) 34px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .split-aside {
+    background: var(--accent-soft);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+  }
+
+  .split-main {
+    padding-top: 2px;
+  }
+
+  .split-aside h2,
+  .split-main h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .split-aside h2 {
+    font-size: 19px;
+  }
+
+  .split-aside p {
+    font-size: 12px;
+  }
+
+  .split-aside .figure {
+    margin: 0 0 16px;
+  }
+
+  .split-aside .figure img {
+    width: 130px;
+    margin: 0 auto;
+  }
+
+  .split-aside .figure-caption {
+    font-size: 9.5px;
+    text-align: center;
+  }
+
+  .split-main .process-map {
+    margin-top: 20px;
+  }
+
   /* ---- Historical tidbit (boxed aside w/ image) ---- */
   .tidbit-box {
     margin: 34px 0 34px;
     padding: 22px 24px;
     background: var(--accent-soft);
     border: 1px solid var(--rule);
-    border-radius: 2px;
     overflow: hidden;
     break-inside: avoid;
     page-break-inside: avoid;
@@ -436,7 +851,6 @@
     margin: 48px 0 20px;
     padding: 28px 30px;
     background: var(--ink);
-    border-radius: 2px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -490,6 +904,12 @@
   .cta-copy strong { color: var(--paper); }
 
   .cta-contact {
+    /* The cta-box background is var(--ink), which is the dark warm-black
+       tone in this light theme (paper/ink tokens describe role, not literal
+       light/dark) -- so this text needs to be light, matching --paper. If
+       the palette flips again, re-check this against whatever --paper
+       currently resolves to; it's a literal rgba(), not a var(), so it
+       won't auto-adjust. */
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -498,9 +918,9 @@
     font-size: 10.5px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    color: rgba(250, 246, 236, 0.75);
+    color: rgba(243, 237, 224, 0.75);
     padding-top: 14px;
-    border-top: 1px solid rgba(250, 246, 236, 0.18);
+    border-top: 1px solid rgba(243, 237, 224, 0.18);
   }
 
   .cta-contact a { color: var(--accent); text-decoration: none; }
@@ -526,20 +946,22 @@
 
   <p class="kicker">Frameworks</p>
   <h1 class="title">You Don't Have to Want to Network. You Just Need a Framework.</h1>
-  <p class="dek">The real research behind why structured tools like SWOT make dreaded tasks easier to actually do -- and why the event you're avoiding is still worth attending.</p>
+  <p class="dek">I talked myself out of a first time networking event for a solid ten minutes before running a SWOT on myself instead. Here's what happened when the room didn't match a single thing I'd planned for.</p>
 
   <div class="byline-row">
     <span>Wesley Abernatha</span>
     <span class="dot">&middot;</span>
-    <span>July 14, 2026</span>
+    <span>September 10, 2026</span>
   </div>
 
   <div class="article-body">
-    <p>You know the feeling. The invite has been sitting in your calendar for two weeks. You RSVP&rsquo;d yes because saying no felt worse, and now it&rsquo;s an hour before the mixer and you are negotiating with yourself about whether &ldquo;not feeling well&rdquo; counts as a lie. Nothing is wrong with you. You are not bad at people. You are facing an unstructured task, and unstructured tasks are exactly the kind of thing the human brain is built to avoid.</p>
-<p>That&rsquo;s the actual finding underneath most advice about networking, and it&rsquo;s better news than &ldquo;just push through it.&rdquo; You don&rsquo;t need more willpower. You need a framework &ndash; and there&rsquo;s real research on why that swap works, plus a fifty-year-old finding about who actually gets ahead that makes the case for going even when you don&rsquo;t want to.</p>
+    <p>The invite for the Friday morning networking event had been sitting on my calendar for two weeks. The morning of, I was doing what everyone does: telling myself I had too much else going on. Too many deliverables. Too many things I &ldquo;really needed&rdquo; to work on instead. It was a good story and I almost believed some of it. I knew I was making excuses, because the actual reason was I didn&rsquo;t want to walk into a room full of strangers.</p>
+<p>I&rsquo;d already told myself I was doing one networking event a week, no exceptions, so backing out wasn&rsquo;t really on the table. What got me out the door wasn&rsquo;t willpower. It was the tools I already had to lean on, and my fiancée, who wasn&rsquo;t hearing those excuses again and kindly let me know &ldquo;Practice what you preach and set a goal.&rdquo;</p>
+<p>I asked myself what was in my control, what I was good at, and what I needed to stop doing. Then I looked at what wasn&rsquo;t in my control and figured out how to leverage it anyway. The whole thing took less than a few minutes.</p>
+<p>Turns out there&rsquo;s a reason why &ldquo;I should really go network more&rdquo; quietly dies on a calendar, and why a specific plan doesn&rsquo;t.</p>
 <h2>Why &ldquo;Just Go&rdquo; Doesn&rsquo;t Work, and What Does</h2>
-<p>Psychologist Peter Gollwitzer has spent decades studying why some intentions turn into action and others quietly die in your calendar. His answer is almost embarrassingly simple: vague intentions (&ldquo;I should network more&rdquo;) rely on in-the-moment willpower, and willpower is exactly what&rsquo;s missing when you&rsquo;re standing in a parking lot dreading an event. Specific, structured plans &ndash; what he calls implementation intentions, built as &ldquo;if X, then Y&rdquo; &ndash; don&rsquo;t rely on willpower at all. They pre-load the decision, so there&rsquo;s nothing left to negotiate about when the moment arrives.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
-<p>The effect size is larger than you&rsquo;d expect from something this simple. In one of Gollwitzer&rsquo;s studies, students who wrote a specific if-then plan for when and where they&rsquo;d do a piece of homework started, on average, about ninety minutes after their intended time. Students who only set a goal without the structured plan started closer to eight hours late.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> Other studies in his research program found the effect holding up even after people had already depleted their willpower on an unrelated task, and even in six-year-olds &ndash; which tells you this isn&rsquo;t a discipline trick for disciplined people. It&rsquo;s a structural fix for an unstructured problem.</p>
+<p>Psychologist Peter Gollwitzer has spent decades studying why some intentions turn into action and others quietly die in your calendar. His answer is almost embarrassingly simple: vague intentions (&ldquo;I should network more&rdquo;) rely on in-the-moment willpower, and willpower is exactly what&rsquo;s missing when you&rsquo;re an hour out from something you&rsquo;re already dreading. Specific, structured plans (what he calls implementation intentions, built as &ldquo;if X, then Y&rdquo;) don&rsquo;t rely on willpower at all. They pre-load the decision, so there&rsquo;s nothing left to negotiate about when the moment arrives.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>The effect size is larger than you&rsquo;d expect from something this simple. In one of Gollwitzer&rsquo;s studies, students who wrote a specific if-then plan for when and where they&rsquo;d do a piece of homework started, on average, about ninety minutes after their intended time. Students who only set a goal without the structured plan started closer to eight hours late.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> Other studies in his research program found the effect holding up even after people had already depleted their willpower on an unrelated task, and even in six-year-olds, which tells you this isn&rsquo;t a discipline trick for disciplined people. It&rsquo;s a structural fix for an unstructured problem.</p>
 <div class="pull-stat-wrap">
 <div class="pull-stat">
 <div class="pull-stat-pin"></div>
@@ -551,19 +973,17 @@
 <blockquote>
 <p>The dread isn&rsquo;t a character flaw. It&rsquo;s what an unstructured task feels like from the inside. Structure is the fix, not motivation.</p>
 </blockquote>
-<p>This is the piece most networking advice skips. &ldquo;Just put yourself out there&rdquo; is a goal, not a plan, and goals without plans are exactly what Gollwitzer&rsquo;s research says will get quietly abandoned. What you actually need is a way to turn &ldquo;networking&rdquo; &ndash; vague, global, faintly humiliating &ndash; into a small number of specific, bounded decisions you&rsquo;ve already made in advance.</p>
+<p>This is the piece most networking advice skips. &ldquo;Just put yourself out there&rdquo; is a goal, not a plan, and goals without plans are exactly what Gollwitzer&rsquo;s research says will get quietly abandoned. What you actually need is a way to turn &ldquo;networking&rdquo; (vague, global, faintly humiliating) into a small number of specific, bounded decisions you&rsquo;ve already made in advance.</p>
 <h2>Does Networking Even Matter That Much?</h2>
-<p>Before getting to the fix, it&rsquo;s worth being honest about the stakes &ndash; because a lot of the stats used to justify networking don&rsquo;t hold up.</p>
-<p>You&rsquo;ve probably heard some version of &ldquo;85% of jobs are filled through networking.&rdquo; It&rsquo;s one of the most repeated numbers in career advice, and it traces back to a single non-random 2015-2016 survey of about 3,000 self-selected respondents. The original data actually showed networking accounting for 42-62% of hires depending on the group surveyed &ndash; nowhere near 85% &ndash; and the widely-cited figure appears to come from combining categories in a way that inflates it.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> It&rsquo;s a bad stat, and repeating it doesn&rsquo;t do the underlying argument any favors.</p>
-<p>The real evidence is both older and more interesting. In 1973, Stanford sociologist Mark Granovetter published a finding that&rsquo;s held up for fifty years: people are more likely to land a new job through weak ties &ndash; acquaintances, not close friends or family &ndash; than through strong ones. The reason is structural, not social. Your close contacts mostly know what you already know. Your weak ties sit in different circles entirely, which means they&rsquo;re the ones actually carrying information you don&rsquo;t already have.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<p>You&rsquo;ve probably heard some version of &ldquo;85% of jobs are filled through networking.&rdquo; It&rsquo;s one of the most repeated stats in career advice, and it traces back to a single non-random 2015-2016 survey of about 3,000 self-selected respondents whose actual results showed 42-62%, not 85%. It&rsquo;s a bad stat, and repeating it doesn&rsquo;t do the underlying argument any favors.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>The real evidence is older and better. In 1973, Stanford sociologist Mark Granovetter found people are more likely to land a job through weak ties (acquaintances, not close friends or family) because your close contacts mostly know what you already know.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> A 2022 field experiment across 20 million LinkedIn users confirmed it, with a twist: the relationship isn&rsquo;t a straight line, it&rsquo;s an inverted U. Total strangers underperform too. The sweet spot is <em>moderately</em> weak ties: someone you&rsquo;ve met a couple of times, with maybe ten mutual connections.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
 <div class="pull-stat pull-stat--float pull-stat--b">
 <div class="pull-stat-pin"></div>
 <div class="pull-stat-number">~10</div>
 <div class="pull-stat-label">Mutual Connections<br>= the Sweet Spot</div>
 </div>
 
-<p>In 2022, a team led by MIT&rsquo;s Sinan Aral tested this at a scale Granovetter never could: a five-year field experiment across roughly 20 million LinkedIn users, 2 billion new connections, 70 million job applications, and 600,000 hires, with the platform&rsquo;s &ldquo;People You May Know&rdquo; algorithm deliberately tuned to show some users more weak-tie suggestions and others more strong-tie ones.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> Weak ties won, confirming Granovetter &ndash; but with a twist he couldn&rsquo;t have measured in 1973. The relationship isn&rsquo;t a straight line. It&rsquo;s an inverted U. The very weakest ties &ndash; total strangers with no shared context &ndash; underperform. The sweet spot is <em>moderately</em> weak ties: connections with around ten mutual contacts. Not your best friend, not a cold stranger, but the person you met twice at industry events and have a handful of mutual connections with. The effect was strongest in tech and digital industries, where information moves fast and goes stale quickly.<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
-<p>The same pattern shows up from the other side of the hiring table. According to Jobvite&rsquo;s recruiting data, referred candidates get hired at roughly a 30% rate, against about 7% for candidates sourced through other channels &ndash; and SHRM&rsquo;s research puts referred hires at 55% faster time-to-fill, with higher measured job performance and longer tenure once they&rsquo;re in the role.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> That&rsquo;s two independent data sources, measuring from opposite ends of the hiring process &ndash; job seekers and employers &ndash; landing on the same conclusion: relationships move faster and convert better than cold applications, by a wide margin.</p>
+<p>Employers see the same pattern from the other side: referred candidates get hired at roughly 30%, against about 7% through other channels, and land faster with better retention once they&rsquo;re in the role.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> Two data sources, from opposite ends of hiring, land on the same conclusion, and it brings us back to that Friday I almost talked myself out of. The stakes are real. So is the dread. You need a way to hold both at once.</p>
 <div class="pull-stat-wrap">
 <div class="pull-stat pull-stat--b">
 <div class="pull-stat-pin"></div>
@@ -572,97 +992,105 @@
 </div>
 </div>
 
-<p>That&rsquo;s the honest case for networking: not a mythologized 85%, but a fifty-year-old finding, replicated at LinkedIn-scale in 2022 and corroborated by employer-side hiring data, that the loose edge of your network is where opportunity actually tends to come from. Which brings you back to the parking lot. The stakes are real. The dread is also real. You need a way to hold both at once.</p>
 <h2>An Unlikely Assist From a 1960s Consulting Framework</h2>
 <div class="tidbit-box">
 <p><img class="tidbit-image" src="../assets/images/swot-origin.png" alt="Vintage documentary-style photograph of a 1960s corporate research team gathered around a chalkboard sketching a four-quadrant diagram"></p>
 <div class="tidbit-label">Historical Tidbit</div>
 <div class="tidbit-title">The Accidental Rename</div>
 <div class="tidbit-text">
-<p>That&rsquo;s where SWOT comes in &ndash; and its own backstory is a useful reminder that frameworks are working tools, not sacred texts. SWOT was built between 1960 and 1970 by a Stanford Research Institute team &ndash; Robert Stewart, Albert Humphrey, and others &ndash; trying to figure out why corporate planning kept failing at Fortune 500 companies. It wasn&rsquo;t even called SWOT at first: the original version was SOFT (Satisfactory, Opportunity, Fault, Threat), presented at a 1964 Zurich seminar. Two attendees swapped the F for a W on the spot. Humphrey&rsquo;s own account: &ldquo;This was later changed to SWOT &ndash; don&rsquo;t ask.&rdquo;<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> The familiar two-by-two matrix wasn&rsquo;t formalized until Heinz Weihrich did it in 1982 &ndash; and even the credit is disputed; Humphrey later had to push back on Harvard and MIT staking a claim to it.<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
-<p>The point isn&rsquo;t trivia. It&rsquo;s that a framework used by nearly every business school and strategy consultant on earth started as a scrappy, informally-named fix for a real problem, refined over twenty years by several different people. That&rsquo;s exactly the spirit in which to borrow it for something Stanford Research Institute never intended: figuring out how to walk into a room full of strangers.</p>
+<p>That&rsquo;s where SWOT comes in, and its own backstory is a useful reminder that frameworks are working tools, not sacred texts. SWOT was built between 1960 and 1970 by a Stanford Research Institute team (Robert Stewart, Albert Humphrey, and others) trying to figure out why corporate planning kept failing at Fortune 500 companies. It wasn&rsquo;t even called SWOT at first: the original version was SOFT (Satisfactory, Opportunity, Fault, Threat), presented at a 1964 Zurich seminar. Two attendees swapped the F for a W on the spot. Humphrey&rsquo;s own account: &ldquo;This was later changed to SWOT &ndash; don&rsquo;t ask.&rdquo;<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> The familiar two-by-two matrix wasn&rsquo;t formalized until Heinz Weihrich did it in 1982. Even the credit is disputed: Humphrey later had to push back on Harvard and MIT staking a claim to it.<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup></p>
+<p>The point isn&rsquo;t trivia. It&rsquo;s that a framework used by nearly every business school and strategy consultant on earth started as a scrappy, informally-named fix for a real problem. These frameworks aren&rsquo;t limited to organizations, either. We need to practice them regularly, and figuring out how to walk into a room full of strangers is as good a place as any.</p>
 <div class="keep-together">
 <h2>The Personal Networking SWOT</h2>
 <p>Applied to yourself instead of a company, SWOT does the same job it always does: it takes something too big to think about clearly and breaks it into four bounded questions.</p>
 <div class="quadrant-grid">
 <div class="quadrant-cell q-strength">
 <div class="q-label">Strengths</div>
-<div class="q-item">Industry knowledge</div>
-<div class="q-item">Good listener</div>
-<div class="q-item">Follows up reliably</div>
+<div class="q-item">Years of experience, education and passion</div>
+<div class="q-item">Boots-on-the-ground work ethic</div>
+<div class="q-item">A toolbox of frameworks to pull from</div>
+<div class="q-item">A great support network</div>
+<div class="q-item">A steady book of nonprofit business</div>
 </div>
 <div class="quadrant-cell q-weakness">
 <div class="q-label">Weaknesses</div>
-<div class="q-item">Awkward at small talk</div>
-<div class="q-item">Slow to follow up</div>
-<div class="q-item">Avoids group settings</div>
+<div class="q-item">Downplay what I do</div>
+<div class="q-item">A story for everything, and I want to tell all of them</div>
+<div class="q-item">Zero brand recognition in this room</div>
+<div class="q-item">Ramble when nervous</div>
 </div>
 <div class="quadrant-cell q-opportunity">
 <div class="q-label">Opportunities</div>
-<div class="q-item">Alumni &amp; industry events</div>
-<div class="q-item">Warm intros via colleagues</div>
-<div class="q-item">Online communities</div>
+<div class="q-item">Multiple industries will be in the room</div>
+<div class="q-item">A real chance to promote what I do</div>
+<div class="q-item">New relationships</div>
+<div class="q-item">Learning about other events and organizations</div>
 </div>
 <div class="quadrant-cell q-threat">
 <div class="q-label">Threats</div>
-<div class="q-item">Time constraints</div>
-<div class="q-item">Over-reliance on one circle</div>
-<div class="q-item">Event fatigue / burnout</div>
+<div class="q-item">No idea what to expect walking in</div>
+<div class="q-item">New guy, no track record with this group</div>
+<div class="q-item">Getting booed and laughed at! (Rated as pretty low likelihood)</div>
 </div>
 </div>
 </div>
-<p><strong>Strengths</strong> are what you already bring to a conversation &ndash; domain knowledge, being an actual listener instead of waiting to talk, following up when you say you will. Most people underrate these because they don&rsquo;t feel like &ldquo;networking skills,&rdquo; but they&rsquo;re the entire game once you&rsquo;re in the room.</p>
-<p><strong>Weaknesses</strong> stop being shameful once you name them specifically. &ldquo;I&rsquo;m bad at networking&rdquo; is a verdict on your character. &ldquo;I go quiet in group settings&rdquo; and &ldquo;I don&rsquo;t follow up within a week&rdquo; are two fixable behaviors. That&rsquo;s the whole reframe: global judgment becomes a short list of specific, improvable things.</p>
-<p><strong>Opportunities</strong> are the moderately-weak-tie machine from the research above, made concrete: which alumni events, which recurring meetups, which colleague could make one warm introduction this month. This is where Granovetter&rsquo;s finding turns into a calendar entry instead of an abstraction.</p>
-<p><strong>Threats</strong> are what quietly erodes the whole effort if you don&rsquo;t name them &ndash; not enough time, all your contacts clustered in one company or industry, or just burning out on the whole enterprise because you tried to do all of it at once.</p>
+<p><strong>Strengths</strong> took a few seconds to write down. Years of experience, a work ethic built from actually doing the work, and I know what I&rsquo;m good at. I&rsquo;ve got plenty of education, a stack of frameworks and resources ready to use, a strong support network, and a steady book of nonprofit business I almost forgot to write down.</p>
+<p><strong>Weaknesses</strong> (or &ldquo;opportunities to improve,&rdquo; if you want to be a bit easier on yourself) are next. I downplay my own experience, I have a story for everything and want to tell every single one of them, nobody in that room had heard of me yet, and I ramble when I&rsquo;m nervous. Being awkward is my superpower sometimes.</p>
+<p><strong>Opportunities</strong> were a five-minute Google search and a scroll through the organization&rsquo;s page and its sponsors, plus a little light LinkedIn stalking on a few names (I&rsquo;ll admit it). There would be multiple industries in the room, a real shot at promoting what I do, new relationships, and a chance to learn about events I didn&rsquo;t know existed.</p>
+<p><strong>Threats</strong> were mostly &ldquo;I don&rsquo;t know what to expect&rdquo; and &ldquo;I&rsquo;m the new guy with zero track record here.&rdquo; I also wrote down &ldquo;everyone in the room boos me off the stage&rdquo; and rated it very low likelihood, because writing it down is funnier than not. For the record, nobody booed.</p>
 </div>
 </div>
+<h2>The Room Didn&rsquo;t Match the Plan</h2>
+<p>Here&rsquo;s the part that actually mattered. I&rsquo;d built an elevator pitch (scalable from thirty seconds to two minutes) aimed at a room of business owners and entrepreneurs. My SWOT hadn&rsquo;t predicted the room I actually walked into: heavy with nonprofits and community caregivers instead. I didn&rsquo;t have a nonprofit-specific pitch loaded and ready, but I had a different strength to lean on. I love working with nonprofits, so this is where I naturally fit in.</p>
+<p>I did notice toward the end of my introduction I&rsquo;d stopped looking anyone in the eye. That&rsquo;s my signal that I&rsquo;ve stopped talking <em>to</em> someone and started talking to hear myself talk. Because I&rsquo;d written that weakness down an hour earlier, I caught it live instead of on the drive home, and wrapped the pitch up clean.</p>
+<p>I walked out with real connections, not just cards in a pocket, and with next steps on all four boxes: one thing to actively fix, one strength I now know to lead with in a room like that, and a list of opportunities I hadn&rsquo;t known existed until that Friday.</p>
 <h2>From Four Boxes to an If-Then Plan</h2>
 <p>A SWOT on its own is still just an analysis. The move that actually gets you through the door is converting each quadrant into the kind of if-then plan Gollwitzer&rsquo;s research says works: pre-decide the response so there&rsquo;s nothing left to negotiate on the night.</p>
 <ul>
-<li><em>If I don&rsquo;t know anyone at an event, then</em> I introduce myself to whoever else is standing alone &ndash; there&rsquo;s always at least one.</li>
-<li><em>If a conversation is winding down, then</em> I ask for one specific follow-up (a resource, an introduction, a coffee) before it ends, instead of a vague &ldquo;let&rsquo;s stay in touch.&rdquo;</li>
+<li><em>If the room doesn&rsquo;t match what I prepared for, then</em> I lean on my next-best strength instead of forcing the pitch I rehearsed.</li>
+<li><em>If I need to adjust on the fly, then</em> I&rsquo;ve already scaled the pitch from thirty seconds to two minutes, ready either way.</li>
+<li><em>If I notice I&rsquo;ve stopped making eye contact, then</em> I know I&rsquo;m rambling, and I wrap it up.</li>
 <li><em>If it&rsquo;s been a week since I met someone worth staying in touch with, then</em> I send the follow-up that day, not &ldquo;eventually.&rdquo;</li>
-<li><em>If an event falls entirely inside one of my existing circles, then</em> I treat it as maintenance, not growth, and prioritize the one outside my usual circle instead.</li>
 </ul>
-<p>None of these require you to become a different person. They require you to make four decisions once, in advance, calmly &ndash; instead of remaking them from scratch, under stress, in a parking lot.</p>
+<p>None of these require you to become a different person. They require you to make four decisions once, in advance, calmly, instead of remaking them from scratch, under stress, an hour before you almost don&rsquo;t go.</p>
 <h2>The Actual Lesson Isn&rsquo;t About Networking</h2>
-<p>Widen the lens and the pattern generalizes past this one dreaded event. Difficult conversations, salary negotiations, career pivots, asking for help &ndash; almost everything people habitually avoid shares the same shape: it&rsquo;s important, it&rsquo;s ambiguous, and the ambiguity itself is what triggers the avoidance. The fix in every case is structurally identical to what you just did with SWOT. Take the vague, threatening version of the task, break it into a small number of bounded questions, and convert the answers into if-then plans you&rsquo;ve already made. The framework changes. The mechanism doesn&rsquo;t.</p>
+<p>Widen the lens and the pattern generalizes past this one dreaded event. Difficult conversations, salary negotiations, career pivots, asking for help: almost everything people habitually avoid shares the same shape. It&rsquo;s important, it&rsquo;s ambiguous, and the ambiguity itself is what triggers the avoidance. The fix in every case is structurally identical to what I did with a SWOT and a Friday night mixer. Take the vague, threatening version of the task, break it into a small number of bounded questions, and convert the answers into if-then plans you&rsquo;ve already made. The framework changes. The mechanism doesn&rsquo;t.</p>
+<p>None of this works if a SWOT is a tool you pick up for the first time when the stakes are already high. I reach for frameworks out of habit because I practice on things that don&rsquo;t matter yet. I&rsquo;ve written elsewhere about doing this on purpose, on stuff as low-stakes as how you make coffee, specifically so the muscle is there when a room full of strangers is on the line.</p>
 <p>That&rsquo;s the actual argument here, and networking is just the clearest place to see it work: frameworks aren&rsquo;t corporate décor for strategy decks. They&rsquo;re one of the most reliable tools available for getting yourself to do the specific, high-value thing you keep avoiding.</p>
-<p>The invite is still sitting in your calendar. Go anyway &ndash; you don&rsquo;t need to want to. You just need a plan for what happens when you walk in.</p>
+<p>The invite is still sitting in your calendar. Go anyway. You don&rsquo;t need to want to. You just need a plan for what happens when you walk in.</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>Peter Gollwitzer&rsquo;s implementation-intentions research, summarized in &ldquo;Implementation Intentions Facilitate Action Control,&rdquo; Psychology Today &ndash; https://www.psychologytoday.com/us/blog/dont-delay/201001/implementation-intentions-facilitate-action-control&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Peter Gollwitzer&rsquo;s implementation-intentions research, summarized in &ldquo;Implementation Intentions Facilitate Action Control,&rdquo; Psychology Today: https://www.psychologytoday.com/us/blog/dont-delay/201001/implementation-intentions-facilitate-action-control&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>&ldquo;No, 85% of All Jobs Are Not Filled Via Networking&rdquo; &ndash; https://www.linkedin.com/pulse/85-all-jobs-filled-via-networking-ed-herzog&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>&ldquo;No, 85% of All Jobs Are Not Filled Via Networking&rdquo;: https://www.linkedin.com/pulse/85-all-jobs-filled-via-networking-ed-herzog&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>Mark Granovetter, &ldquo;The Strength of Weak Ties&rdquo; (1973), summarized at Cornell Networks course blog &ndash; https://blogs.cornell.edu/info2040/2022/09/30/the-strength-of-weak-ties-in-the-job-market/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Mark Granovetter, &ldquo;The Strength of Weak Ties&rdquo; (1973), summarized at Cornell Networks course blog: https://blogs.cornell.edu/info2040/2022/09/30/the-strength-of-weak-ties-in-the-job-market/&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>&ldquo;The power of weak ties in gaining new employment,&rdquo; MIT News, on the 2022 Aral et al. LinkedIn field experiment &ndash; https://news.mit.edu/2022/weak-ties-linkedin-employment-0915&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>&ldquo;The power of weak ties in gaining new employment,&rdquo; MIT News, on the 2022 Aral et al. LinkedIn field experiment: https://news.mit.edu/2022/weak-ties-linkedin-employment-0915&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p>History of SWOT analysis, including Albert Humphrey&rsquo;s own account &ndash; https://rapidbi.com/history-of-the-swot-analysis/&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>History of SWOT analysis, including Albert Humphrey&rsquo;s own account: https://rapidbi.com/history-of-the-swot-analysis/&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:6">
-<p>Referral hiring-rate and time-to-hire data from Jobvite and SHRM, summarized at Keevee &ndash; https://www.keevee.com/employee-referral-statistics ; SHRM directly &ndash; https://www.shrm.org/topics-tools/news/talent-acquisition/employee-referrals-remain-top-source-hires&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>Referral hiring-rate and time-to-hire data from Jobvite and SHRM, summarized at Keevee: https://www.keevee.com/employee-referral-statistics ; SHRM directly: https://www.shrm.org/topics-tools/news/talent-acquisition/employee-referrals-remain-top-source-hires&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
   </div>
 
-  
+
   <div class="cta-box">
-    
+
     <div class="cta-monogram">WA</div>
-    
+
     <div class="cta-content">
       <div class="cta-label">Work With Me</div>
-      <div class="cta-copy"><p>If you&rsquo;re staring down a version of this problem that&rsquo;s bigger than one event &ndash; a pivot, a business you need to grow through relationships instead of ads, a negotiation you&rsquo;ve been putting off &ndash; that&rsquo;s exactly the kind of ambiguity I help people turn into a plan. Reach out and let&rsquo;s build yours.</p></div>
+      <div class="cta-copy"><p>If you&rsquo;re staring down a version of this problem that&rsquo;s bigger than one event (a pivot, a business you need to grow through relationships instead of ads, a negotiation you&rsquo;ve been putting off), that&rsquo;s exactly the kind of ambiguity I help people turn into a plan. Reach out and let&rsquo;s build yours.</p></div>
       <div class="cta-contact">
         <span>Wesley Abernatha</span>
         <span class="dot">&middot;</span>
@@ -672,7 +1100,7 @@
       </div>
     </div>
   </div>
-  
+
 
   <p class="end-mark">Publications</p>
 
