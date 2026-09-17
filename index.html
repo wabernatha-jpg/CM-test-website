@@ -218,6 +218,15 @@
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
 
+  /* Where We Help detail popup */
+  .service-modal-backdrop { opacity: 0; transition: opacity .3s cubic-bezier(.22,1,.36,1); }
+  .service-modal-panel { opacity: 0; transform: scale(0.96) translateY(10px); transition: opacity .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1); }
+  #serviceModal.is-open .service-modal-backdrop { opacity: 1; }
+  #serviceModal.is-open .service-modal-panel { opacity: 1; transform: scale(1) translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .service-modal-backdrop, .service-modal-panel { transition: none; }
+  }
+
   select.industry-select {
     appearance: none;
     -webkit-appearance: none;
@@ -294,19 +303,19 @@
           <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-2 w-[320px]">
             <a href="services/strategic-planning.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
               <span class="block text-sm font-medium text-navy">Strategic Planning</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Assess where you are, and chart where you're going.</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You know where you are, and where you're going.</span>
             </a>
             <a href="services/building-capability.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
               <span class="block text-sm font-medium text-navy">Building Capability</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Build the ability to get there.</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You have the ability to get there.</span>
             </a>
             <a href="services/building-capacity.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
               <span class="block text-sm font-medium text-navy">Building Capacity</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Build the platform to cross it.</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You have the platform to cross it.</span>
             </a>
             <a href="services/sustaining-the-change.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
               <span class="block text-sm font-medium text-navy">Sustaining the Change</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Drive continuous success, and get the most from the change.</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You keep driving forward.</span>
             </a>
           </div>
         </div>
@@ -375,7 +384,7 @@
               <span class="accordion-caption-collapsed">Strategic Planning</span>
               <div class="accordion-caption-active">
                 <span class="accordion-caption-title">Strategic Planning</span>
-                <span class="accordion-caption-desc">Assess where you are, and chart where you're going.</span>
+                <span class="accordion-caption-desc">You know where you are, and where you're going.</span>
                 <ul class="accordion-caption-list">
                   <li>Current-state assessment &amp; stakeholder interviews</li>
                   <li>Organizational assessment</li>
@@ -389,7 +398,7 @@
               <span class="accordion-caption-collapsed">Building Capability</span>
               <div class="accordion-caption-active">
                 <span class="accordion-caption-title">Building Capability</span>
-                <span class="accordion-caption-desc">Build the ability to get there.</span>
+                <span class="accordion-caption-desc">You have the ability to get there.</span>
                 <ul class="accordion-caption-list">
                   <li>Leadership development &amp; executive coaching</li>
                   <li>Six Sigma training &amp; certification</li>
@@ -403,7 +412,7 @@
               <span class="accordion-caption-collapsed">Building Capacity</span>
               <div class="accordion-caption-active">
                 <span class="accordion-caption-title">Building Capacity</span>
-                <span class="accordion-caption-desc">Build the platform to cross it.</span>
+                <span class="accordion-caption-desc">You have the platform to cross it.</span>
                 <ul class="accordion-caption-list">
                   <li>Kaizen events &amp; tabletop exercises</li>
                   <li>Workshop facilitation</li>
@@ -417,7 +426,7 @@
               <span class="accordion-caption-collapsed">Sustaining the Change</span>
               <div class="accordion-caption-active">
                 <span class="accordion-caption-title">Sustaining the Change</span>
-                <span class="accordion-caption-desc">Drive continuous success, and get the most from the change.</span>
+                <span class="accordion-caption-desc">You keep driving forward.</span>
                 <ul class="accordion-caption-list">
                   <li>Change management support</li>
                   <li>Organizational alignment</li>
@@ -461,25 +470,25 @@
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
       <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Where We Help</h2>
       <div class="grid sm:grid-cols-2 gap-x-10">
-        <a href="services/strategic-planning.html" class="group border-t border-navy/10 py-5 block">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Why &middot; Define the Destination</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategic Planning <span class="text-gold" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">Assess where you are, and chart where you're going.</span>
+        <a href="services/strategic-planning.html" data-modal="strategic-planning" class="group border-t border-navy/10 py-5 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Define the Destination</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategic Planning <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">You know where you are, and where you're going.</span>
         </a>
-        <a href="services/building-capability.html" class="group border-t border-navy/10 py-5 block sm:border-l sm:pl-10">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Build the Capability</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capability <span class="text-gold" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">Build the ability to get there.</span>
+        <a href="services/building-capability.html" data-modal="building-capability" class="group border-t border-navy/10 py-5 block sm:border-l sm:pl-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Build the Team There</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capability <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">You have the ability to get there.</span>
         </a>
-        <a href="services/building-capacity.html" class="group border-t border-b border-navy/10 py-5 block">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">How &middot; Build the Capacity</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capacity <span class="text-gold" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">Build the platform to cross it.</span>
+        <a href="services/building-capacity.html" data-modal="building-capacity" class="group border-t border-b border-navy/10 py-5 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Create the Tools Needed</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capacity <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">You have the platform to cross it.</span>
         </a>
-        <a href="services/sustaining-the-change.html" class="group border-t border-b border-navy/10 py-5 block sm:border-l sm:pl-10">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Sustain &middot; Keep It Standing</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Sustaining the Change <span class="text-gold" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">Drive continuous success, and get the most from the change.</span>
+        <a href="services/sustaining-the-change.html" data-modal="sustaining-the-change" class="group border-t border-b border-navy/10 py-5 block sm:border-l sm:pl-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Make the Change Stick</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Sustaining the Change <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">You keep driving forward.</span>
         </a>
       </div>
 
@@ -578,6 +587,25 @@
   </div>
 </footer>
 
+<!-- Where We Help detail popup: one shared dialog, content swapped per service via JS -->
+<div id="serviceModal" class="fixed inset-0 z-[60]" hidden>
+  <div id="serviceModalBackdrop" class="service-modal-backdrop fixed inset-0 bg-navy-deep/70 backdrop-blur-[2px]"></div>
+  <div class="fixed inset-0 overflow-y-auto" data-modal-close>
+    <div class="flex min-h-full items-center justify-center p-4 sm:p-6 py-10">
+      <div id="serviceModalPanel" class="service-modal-panel relative w-full max-w-xl bg-white rounded-sm shadow-navy-lg p-7 sm:p-10" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle" tabindex="-1">
+        <button type="button" data-modal-close aria-label="Close" class="absolute right-5 top-5 w-9 h-9 rounded-full flex items-center justify-center text-navy/45 hover:text-navy hover:bg-navy/5 active:bg-navy/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 transition-colors duration-200">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <p id="serviceModalEyebrow" class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-2"></p>
+        <h3 id="serviceModalTitle" class="font-display font-bold text-navy text-2xl sm:text-3xl mb-4"></h3>
+        <p id="serviceModalIntro" class="text-slate text-[0.95rem] leading-relaxed mb-7"></p>
+        <div id="serviceModalFeatures" class="space-y-4 mb-8"></div>
+        <a id="serviceModalLink" href="#" class="group inline-flex items-center gap-1 text-gold font-semibold text-sm hover:text-gold-light focus-visible:text-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm transition-colors duration-200">See the full page <span class="text-2xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   "use strict";
@@ -611,6 +639,154 @@
       item.addEventListener("focus", function () {
         items.forEach(function (other) { other.classList.remove("is-active"); });
         item.classList.add("is-active");
+      });
+    });
+  }
+
+  var SERVICE_MODAL_DATA = {
+    "strategic-planning": {
+      eyebrow: "We Define the Destination",
+      title: "Strategic Planning",
+      intro: "Before anything gets built, trained on, or rolled out, someone has to know exactly where the organization stands, and where it's actually headed. Every engagement starts here: an honest read on the current state, and a clear, executive-level picture of what comes next.",
+      features: [
+        { heading: "Current-State Assessment & Stakeholder Interviews", description: "A grounded, first-hand read on where things actually stand today, gathered directly from the people doing the work, not just the org chart." },
+        { heading: "Organizational Assessment", description: "A structured look at how the organization is actually built to operate today, so the plan accounts for real constraints instead of assumed ones." },
+        { heading: "Executive & Board-Level Vision Setting", description: "Working sessions with leadership to define what “better” actually looks like, in specific enough terms that the rest of the engagement has something to aim at." }
+      ],
+      href: "services/strategic-planning.html"
+    },
+    "building-capability": {
+      eyebrow: "We Build the Team There",
+      title: "Building Capability",
+      intro: "A strategy is only as good as the people who have to carry it out. Once the destination is set, we build the ability directly into your team, through certified training, hands-on coaching, and skill-building sessions designed to stick long after we've left the room.",
+      features: [
+        { heading: "Leadership Development & Executive Coaching", description: "One-on-one coaching for the leaders who have to model the change themselves before they can ask anyone else to." },
+        { heading: "Six Sigma Training & Certification", description: "Certified methodology your team can apply immediately, not just a credential to file away." },
+        { heading: "Skill-Building Workshops", description: "Focused sessions built around your team's specific gap, with a workbook and action-plan guide so it doesn't evaporate after the session ends." }
+      ],
+      href: "services/building-capability.html"
+    },
+    "building-capacity": {
+      eyebrow: "We Create the Tools Needed",
+      title: "Building Capacity",
+      intro: "Capability without a platform to run on stalls out. We build the operational capacity: the processes, systems, and hands-on sessions that turn a plan and a trained team into something that actually runs day to day.",
+      features: [
+        { heading: "Kaizen Events & Tabletop Exercises", description: "Focused, hands-on sessions that surface real process problems and work through them with the people who own the work." },
+        { heading: "Workshop Facilitation", description: "Structured facilitation that keeps cross-functional groups moving toward a decision, not stuck circling the same conversation." },
+        { heading: "Operational Efficiency Implementation", description: "Getting process and system improvements installed and running, not just documented in a report." }
+      ],
+      href: "services/building-capacity.html"
+    },
+    "sustaining-the-change": {
+      eyebrow: "We Make the Change Stick",
+      title: "Sustaining the Change",
+      intro: "The real test of a change isn't the rollout: it's what's still standing a year later. We stay engaged past the finish line to keep it alive: aligning the organization around it, planning for who carries it forward, and keeping the team engaged in it long after the initial push fades.",
+      features: [
+        { heading: "Change Management Support", description: "Ongoing support that keeps the change from quietly reverting once the project team moves on." },
+        { heading: "Organizational Alignment", description: "Keeping teams, incentives, and priorities pointed at the same outcome, so the change doesn't get quietly undone by conflicting goals." },
+        { heading: "Succession Planning & Team Engagement", description: "Making sure the change doesn't depend on any one person staying in their seat, and that the team stays invested in it." }
+      ],
+      href: "services/sustaining-the-change.html"
+    }
+  };
+
+  function initServiceModals() {
+    var triggers = document.querySelectorAll("[data-modal]");
+    var modal = document.getElementById("serviceModal");
+    if (!triggers.length || !modal) return;
+
+    var panel = document.getElementById("serviceModalPanel");
+    var eyebrowEl = document.getElementById("serviceModalEyebrow");
+    var titleEl = document.getElementById("serviceModalTitle");
+    var introEl = document.getElementById("serviceModalIntro");
+    var featuresEl = document.getElementById("serviceModalFeatures");
+    var linkEl = document.getElementById("serviceModalLink");
+    var closeEls = modal.querySelectorAll("[data-modal-close]");
+    var lastFocused = null;
+
+    function featureBlock(feature) {
+      var wrap = document.createElement("div");
+      wrap.className = "flex gap-4";
+      wrap.innerHTML =
+        '<div class="w-9 h-9 rounded-full bg-gold/10 flex items-center justify-center shrink-0">' +
+        '<svg width="18" height="9" viewBox="0 0 140 70" class="text-gold" aria-hidden="true"><use href="#bridge-icon"></use></svg>' +
+        '</div>' +
+        '<div>' +
+        '<p class="font-display font-bold text-navy text-[0.95rem] leading-snug mb-1"></p>' +
+        '<p class="text-slate text-[0.85rem] leading-relaxed"></p>' +
+        '</div>';
+      wrap.querySelector("p.font-display").textContent = feature.heading;
+      wrap.querySelectorAll("p")[1].textContent = feature.description;
+      return wrap;
+    }
+
+    function openModal(slug) {
+      var data = SERVICE_MODAL_DATA[slug];
+      if (!data) return;
+      lastFocused = document.activeElement;
+
+      eyebrowEl.textContent = data.eyebrow;
+      titleEl.textContent = data.title;
+      introEl.textContent = data.intro;
+      linkEl.href = data.href;
+      featuresEl.innerHTML = "";
+      data.features.forEach(function (feature) {
+        featuresEl.appendChild(featureBlock(feature));
+      });
+
+      modal.hidden = false;
+      document.documentElement.classList.add("overflow-hidden");
+      requestAnimationFrame(function () {
+        modal.classList.add("is-open");
+      });
+      panel.focus();
+
+      document.addEventListener("keydown", onKeydown);
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      document.removeEventListener("keydown", onKeydown);
+      window.setTimeout(function () {
+        modal.hidden = true;
+        document.documentElement.classList.remove("overflow-hidden");
+      }, 300);
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      }
+    }
+
+    function onKeydown(e) {
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      var focusable = panel.querySelectorAll('a[href], button:not([disabled])');
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function (e) {
+        e.preventDefault();
+        openModal(trigger.getAttribute("data-modal"));
+      });
+    });
+
+    closeEls.forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        if (el.tagName === "BUTTON" || !panel.contains(e.target)) {
+          closeModal();
+        }
       });
     });
   }
@@ -728,6 +904,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
     initAccordion();
+    initServiceModals();
     initReveal();
     initContactForm();
     initNewsletterForm();
