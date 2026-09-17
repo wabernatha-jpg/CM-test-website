@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Getting You Where You Need to Be | Change Maven LLC</title>
-<meta name="description" content="Change Maven guides public-sector, mission-driven, and mid-market organizations through strategic planning, building capability and capacity, and sustaining the change once it's made.">
+<meta name="description" content="Change Maven guides mission-driven organizations through strategic planning, building capability and capacity, and sustaining the change once it's made.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2357534A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23E07A34'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23E07A34'/%3E%3Cg stroke='%23E07A34' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="alternate icon" href="brand_assets/Change_Maven_Logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -214,6 +214,17 @@
       transition: none;
     }
   }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  select.industry-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23E07A34' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
 </style>
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -254,8 +265,8 @@
   <div class="max-w-[1240px] mx-auto px-5 sm:px-8 h-9 flex items-center justify-between">
     <nav class="flex items-center gap-5" aria-label="Utility">
       <span class="hidden sm:inline text-cream/40">Alton, IL</span>
-      <a href="site.html#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
-      <a href="site.html#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
+      <a href="#careers" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Careers</a>
+      <a href="#contact" class="hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact</a>
     </nav>
     <a href="https://www.linkedin.com" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200" aria-label="Change Maven on LinkedIn">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
@@ -280,26 +291,29 @@
           <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         </button>
         <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
-          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-3 w-[440px] grid grid-cols-2 gap-1">
-            <div>
-              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Define &amp; Build Capacity</p>
-              <a href="services/strategic-management-consulting.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Strategic &amp; Management Consulting</a>
-              <a href="services/operational-change-implementation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Operational Change Implementation</a>
-              <a href="services/workshops-kaizen-tabletop.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Workshops, Kaizen &amp; Tabletop</a>
-              <a href="services/technical-automation.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Technical Automation</a>
-            </div>
-            <div class="border-l border-navy/10">
-              <p class="px-4 pb-1 text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">Build the Capability</p>
-              <a href="services/training.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Training</a>
-              <a href="services/six-sigma-certification.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Six Sigma Certification</a>
-              <a href="services/executive-leadership-coaching.html" class="block px-4 py-2 text-sm hover:bg-cream hover:text-gold transition-colors duration-200">Executive &amp; Leadership Coaching</a>
-            </div>
+          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-2 w-[320px]">
+            <a href="services/strategic-planning.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Strategic Planning</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Assess where you are, and chart where you're going.</span>
+            </a>
+            <a href="services/building-capability.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Building Capability</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Build the ability to get there.</span>
+            </a>
+            <a href="services/building-capacity.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Building Capacity</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Build the platform to cross it.</span>
+            </a>
+            <a href="services/sustaining-the-change.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Sustaining the Change</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Drive continuous success, and get the most from the change.</span>
+            </a>
           </div>
         </div>
       </div>
       <a href="resources/index.html" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Resources</a>
-      <a href="site.html#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
-      <a href="site.html#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
+      <a href="#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
+      <a href="#careers" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Careers</a>
     </nav>
     <div class="flex items-center gap-3">
       <button class="hidden sm:flex p-2 text-navy/70 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Search">
@@ -314,10 +328,10 @@
     </div>
   </div>
   <nav id="mobileNav" class="hidden lg:hidden flex-col bg-cream border-t border-navy/10 px-5 py-4 gap-1" aria-label="Mobile">
-    <a href="site.html#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
+    <a href="#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
     <a href="resources/index.html" class="py-2.5 border-b border-navy/10 text-navy">Resources</a>
-    <a href="site.html#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
-    <a href="site.html#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
+    <a href="#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
+    <a href="#careers" class="py-2.5 border-b border-navy/10 text-navy">Careers</a>
     <a href="https://calendly.com/change_maven/new-meeting?month=2026-09" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm" onclick="Calendly.initPopupWidget({url:'https://calendly.com/change_maven/new-meeting?month=2026-09'});return false;">Start a Conversation</a>
   </nav>
 </header>
@@ -325,16 +339,16 @@
 <main id="main">
 
   <!-- Hero + interactive image accordion -->
-  <section class="relative bg-navy grain overflow-hidden">
+  <section id="services" class="relative bg-navy grain overflow-hidden">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-28">
 
       <!-- Industry focus: sits above the four service pillars -->
       <div class="text-right mb-12 lg:mb-16">
         <div class="flex flex-wrap justify-end gap-2">
-          <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold-light text-sm px-3.5 py-1.5">Government &amp; Public Sector</span>
           <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold-light text-sm px-3.5 py-1.5">Nonprofits &amp; Community Organizations</span>
           <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold-light text-sm px-3.5 py-1.5">Healthcare</span>
           <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold-light text-sm px-3.5 py-1.5">Education</span>
+          <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold-light text-sm px-3.5 py-1.5">Government &amp; Public Sector</span>
         </div>
       </div>
 
@@ -345,10 +359,10 @@
           <img src="brand_assets/CMbridgeonly.png" alt="" class="mx-auto w-full mb-6" aria-hidden="true">
           <p class="text-gold-light text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Change Maven</p>
           <h1 class="font-display font-bold text-cream text-3xl sm:text-4xl lg:text-[2.4rem] leading-[1.15] tracking-[-0.01em]">
-            Getting Public-sector and Mission-driven Organizations Where You Need to Be
+            Getting Mission-driven Organizations Where You Need to Be
           </h1>
           <div class="mt-9">
-            <a href="https://calendly.com/change_maven/new-meeting?month=2026-09" class="inline-block bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm" onclick="Calendly.initPopupWidget({url:'https://calendly.com/change_maven/new-meeting?month=2026-09'});return false;">Contact Us</a>
+            <a href="https://calendly.com/change_maven/new-meeting?month=2026-09" class="inline-block bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light hover:-translate-y-0.5 focus-visible:bg-gold-light transition-[background-color,transform] duration-200 shadow-gold-sm" onclick="Calendly.initPopupWidget({url:'https://calendly.com/change_maven/new-meeting?month=2026-09'});return false;">Start a Conversation</a>
           </div>
         </div>
 
@@ -418,6 +432,129 @@
     </div>
   </section>
 
+  <!-- About -->
+  <section id="about" class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
+      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">About Change Maven</h2>
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
+        <div class="reveal aspect-[4/5] rounded-sm overflow-hidden shadow-card">
+          <img src="brand_assets/about_me.png" alt="Wesley, founder of Change Maven" class="w-full h-full object-cover block">
+        </div>
+        <div class="reveal">
+          <p class="font-display text-navy text-lg sm:text-xl leading-[1.7]">I started as an engineer in the United States Army. Teamwork, grit, strategy, and execution got instilled early: the ability to get the job done, right.</p>
+          <div class="mt-6 space-y-5 text-slate leading-relaxed">
+            <p>The credentials: an executive master's in international business from Saint Louis University, an MBA, executive coach certification, PMP, Certified Change Management Professional, and Six Sigma Black Belt. Backed by twenty years executing sustainable change for governments, corporations, and nonprofits, across Asia, Europe, and the Middle East. But the real education came from watching good initiatives succeed or fail based on whether people felt like partners in the change, or just targets of it.</p>
+            <p class="italic">From where you are, to where you need to be.</p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-2">
+            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">PMP</span>
+            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">CCMP</span>
+            <span class="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 text-gold text-[0.72rem] font-semibold tracking-wide uppercase px-3 py-1">Six Sigma Black Belt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Where We Help -->
+  <section id="approach" class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
+      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Where We Help</h2>
+      <div class="grid sm:grid-cols-2 gap-x-10">
+        <a href="services/strategic-planning.html" class="group border-t border-navy/10 py-5 block">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Why &middot; Define the Destination</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategic Planning <span class="text-gold" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">Assess where you are, and chart where you're going.</span>
+        </a>
+        <a href="services/building-capability.html" class="group border-t border-navy/10 py-5 block sm:border-l sm:pl-10">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Build the Capability</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capability <span class="text-gold" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">Build the ability to get there.</span>
+        </a>
+        <a href="services/building-capacity.html" class="group border-t border-b border-navy/10 py-5 block">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">How &middot; Build the Capacity</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capacity <span class="text-gold" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">Build the platform to cross it.</span>
+        </a>
+        <a href="services/sustaining-the-change.html" class="group border-t border-b border-navy/10 py-5 block sm:border-l sm:pl-10">
+          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">Sustain &middot; Keep It Standing</p>
+          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Sustaining the Change <span class="text-gold" aria-hidden="true">›</span></span>
+          <span class="block text-sm text-navy/60 mt-1">Drive continuous success, and get the most from the change.</span>
+        </a>
+      </div>
+
+      <a href="partners/predixxa.html" class="group mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-sm border border-navy/10 bg-white px-6 py-5 hover:border-predixxa/40 focus-visible:border-predixxa/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-predixxa/30 transition-colors duration-200">
+        <span class="inline-flex items-center gap-2 shrink-0 text-predixxa text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+          Diagnostic Partner
+        </span>
+        <span class="text-navy text-[0.92rem] leading-snug">Every engagement starts with a Current State Assessment: stakeholder interviews, and Predixxa's diagnostic where a deeper data layer is warranted. It's how we find out where you actually are before we talk about where you're going.</span>
+        <span class="sm:ml-auto shrink-0 inline-flex items-center gap-1 text-predixxa text-[0.84rem] font-semibold group-hover:gap-1.5 transition-[gap] duration-200">See how we work together <span aria-hidden="true">›</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Ready to talk -->
+  <section id="contact" class="bg-cream border-t border-navy/10">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <div class="bg-white border border-navy/10 shadow-card rounded-sm p-8 sm:p-12 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
+        <div>
+          <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl mb-3">Ready to talk?</h2>
+          <p class="text-slate">We work with leaders who are ready to make their change stick.</p>
+        </div>
+        <form id="contactForm" class="grid sm:grid-cols-2 gap-4 items-end">
+          <div class="sm:col-span-2">
+            <label for="industry" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">I'd like to talk about</label>
+            <select id="industry" class="industry-select w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+              <option>Not sure where to start</option>
+              <option>Building our team's capability</option>
+              <option>Rolling out a change</option>
+              <option>Making a change stick</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="sm:col-span-1">
+            <label for="contactName" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your name</label>
+            <input id="contactName" type="text" placeholder="Jane Smith" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+          </div>
+          <div class="sm:col-span-1">
+            <label for="email" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">Your email</label>
+            <input id="email" type="email" placeholder="you@company.com" required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="contactMessage" class="block text-[0.78rem] font-semibold tracking-[0.06em] uppercase text-navy mb-2">How can we help?</label>
+            <textarea id="contactMessage" rows="4" placeholder="Tell us a bit about what you're working on." required class="w-full border border-navy/20 rounded-sm py-3 px-4 text-navy bg-white placeholder:text-slate/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2 resize-y"></textarea>
+          </div>
+          <input type="text" id="contactCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="sm:col-span-2 bg-gold text-navy font-semibold text-sm py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed">Contact Us</button>
+          <p id="contactStatus" class="sm:col-span-2 text-sm text-slate" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="bg-navy-deep grain">
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20 grid lg:grid-cols-[1fr_1fr] gap-10 items-center">
+      <div>
+        <h2 class="font-display font-bold text-cream text-2xl sm:text-3xl mb-3">Stay ahead of the next change.</h2>
+        <p class="text-cream/65">Practical notes on change management, sent occasionally.</p>
+      </div>
+      <form id="newsletterForm" class="space-y-3">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input id="newsletterEmail" type="email" placeholder="Your email address" required class="flex-1 border border-cream/25 bg-navy text-cream rounded-sm py-3.5 px-4 placeholder:text-cream/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+          <input type="text" id="newsletterCompany" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="bg-gold text-navy font-semibold text-sm px-7 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light transition-colors duration-200 shrink-0 disabled:opacity-60 disabled:cursor-not-allowed">Subscribe</button>
+        </div>
+        <label class="flex items-start gap-2.5 text-cream/55 text-[0.82rem]">
+          <input type="checkbox" class="mt-0.5 accent-gold">
+          I have read and understand the <a href="#" class="underline hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Privacy Policy</a>.
+        </label>
+        <p id="newsletterStatus" class="text-cream/70 text-sm" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
 </main>
 
 <footer class="bg-navy">
@@ -428,7 +565,7 @@
         <p class="text-cream/55 text-sm">Change Management &middot; Strategy<br>Alton, Illinois</p>
       </div>
       <nav class="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer">
-        <a href="site.html#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
+        <a href="#contact" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Contact Us</a>
         <a href="resources/index.html" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Resources</a>
         <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Accessibility</a>
         <a href="#" class="text-cream/75 text-sm hover:text-gold-light focus-visible:text-gold-light transition-colors duration-200">Terms of Use</a>
@@ -478,9 +615,122 @@
     });
   }
 
+  function initReveal() {
+    var targets = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window) || targets.length === 0) {
+      targets.forEach(function (el) { el.classList.add("in-view"); });
+      return;
+    }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    targets.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 0.08 + "s";
+      observer.observe(el);
+    });
+  }
+
+  function submitForm(endpoint, payload, statusEl, submitBtn, successMessage) {
+    submitBtn.disabled = true;
+    statusEl.textContent = "Sending…";
+    statusEl.classList.remove("text-red-600", "text-red-400");
+
+    return fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(function (res) {
+        return res.json().then(function (body) {
+          return { ok: res.ok && body.ok, error: body.error };
+        });
+      })
+      .then(function (result) {
+        if (result.ok) {
+          statusEl.textContent = successMessage;
+          return true;
+        }
+        statusEl.textContent = result.error || "Something went wrong. Please try again.";
+        statusEl.classList.add("text-red-600", "text-red-400");
+        return false;
+      })
+      .catch(function () {
+        statusEl.textContent = "Something went wrong. Please try again.";
+        statusEl.classList.add("text-red-600", "text-red-400");
+        return false;
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
+  }
+
+  function initContactForm() {
+    var form = document.getElementById("contactForm");
+    var status = document.getElementById("contactStatus");
+    var nameInput = document.getElementById("contactName");
+    var emailInput = document.getElementById("email");
+    var topicInput = document.getElementById("industry");
+    var messageInput = document.getElementById("contactMessage");
+    var honeypot = document.getElementById("contactCompany");
+    if (!form || !status || !nameInput || !emailInput || !topicInput || !messageInput || !honeypot) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var payload = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        topic: topicInput.value,
+        message: messageInput.value.trim(),
+        company: honeypot.value,
+      };
+      submitForm(
+        "/api/contact",
+        payload,
+        status,
+        form.querySelector("button[type=submit]"),
+        "Thanks, we'll be in touch soon."
+      ).then(function (ok) {
+        if (ok) form.reset();
+      });
+    });
+  }
+
+  function initNewsletterForm() {
+    var form = document.getElementById("newsletterForm");
+    var status = document.getElementById("newsletterStatus");
+    var emailInput = document.getElementById("newsletterEmail");
+    var honeypot = document.getElementById("newsletterCompany");
+    if (!form || !status || !emailInput || !honeypot) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var payload = { email: emailInput.value.trim(), company: honeypot.value };
+      submitForm(
+        "/api/subscribe",
+        payload,
+        status,
+        form.querySelector("button[type=submit]"),
+        "You're subscribed. Thanks for staying in touch."
+      ).then(function (ok) {
+        if (ok) form.reset();
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
     initAccordion();
+    initReveal();
+    initContactForm();
+    initNewsletterForm();
   });
 })();
 </script>
