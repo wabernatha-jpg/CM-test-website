@@ -24,7 +24,7 @@ Enroll straight into GoLean Six Sigma's courses and work at your own pace. We'll
 Same courses, plus live support along the way — sales calls, demos, and technical help from the GoLean Six Sigma team, with us staying in the loop throughout. A good fit for teams who want structure without a dedicated facilitator running the project.
 
 **Tier 3 — Facilitated DMAIC Certification** *(Change Maven's flagship offering — highlight visually)*
-The full engagement: Change Maven facilitates your DMAIC project end to end, over 8–16 weeks, against a real problem in your organization. You deal with us directly from kickoff to certification.
+The full engagement: Change Maven facilitates your DMAIC project end to end, across 6 total hours of live sessions, against a real problem in your organization. You deal with us directly from kickoff to certification.
 
 ---
 

@@ -51,7 +51,7 @@ This is the main rewrite. Same section shell (eyebrow → H2 → subtitle → sp
 
 **Column 2 — Build the Capability**
 - **Training** — Standardized (Six Sigma, project management, change management, systems) or built custom for your team, with workbooks and action-plan guides so it doesn't evaporate after the session ends.
-- **Six Sigma Certification** — Delivered through our GoLean Six Sigma partnership: DMAIC facilitation over 8–16 weeks, working real client ROI projects, not textbook exercises.
+- **Six Sigma Certification** — Delivered through our GoLean Six Sigma partnership: DMAIC facilitation across 6 hours of live sessions, working real client ROI projects, not textbook exercises.
 - **Executive & Leadership Coaching** — CEC-based active inquiry, 1:1 or small group, biweekly over 6-month contracts. A performance-improvement-plan variant is available where that's the fit.
 
 **Closing pull-quote** — keep the existing one, it still lands:
@@ -193,7 +193,7 @@ Recommended new titles, slugs, and per-page copy. Each follows the existing page
 **Slug:** `services/six-sigma-certification.html`
 **Eyebrow:** Build the Capability
 **H1:** Six Sigma Certification
-**Subhead:** Delivered through our GoLean Six Sigma partnership. DMAIC facilitation over 8–16 weeks, working real client ROI projects.
+**Subhead:** Delivered through our GoLean Six Sigma partnership. DMAIC facilitation across 6 hours of live sessions, working real client ROI projects.
 
 **Body intro:** Certification means more when it's earned on a real problem, not a simulated one. Through our partnership with GoLean Six Sigma, we facilitate DMAIC projects against your organization's actual work — so the certification and the ROI land at the same time.
 
