@@ -4,3 +4,6 @@ www.bain.com_consulting-services_change-management-results-delivery_.png
 .DS_Store
 .playwright-mcp/
 .vscode/
+
+# Secrets
+.env
