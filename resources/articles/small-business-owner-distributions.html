@@ -17,6 +17,22 @@
     --accent: #1E7A4C;
     --accent-soft: rgba(30, 122, 76, 0.12);
     --rule: rgba(32, 30, 27, 0.12);
+    /* How far .split-section/.figure--wide bleed past the article's 620px
+       measure toward the page edge, calibrated against this template's
+       screen body padding (46px sides). templates/print_theme.css overrides
+       this to a smaller value at PDF-export time, since real Playwright
+       margins replace most of that screen padding there. */
+    --bleed-x: -40px;
+
+    /* Extended data-viz palette for .badge, .spectrum-bar, and the colored
+       .quadrant-grid modifiers -- a fixed set, not brand-configurable like
+       the seven tokens above. Same values as the main template (see
+       templates/article_template.html), used as-is in print too. */
+    --viz-1: #C1440E;
+    --viz-2: #2B6E8C;
+    --viz-3: #3F7D4F;
+    --viz-4: #6B4C93;
+    --viz-5: #B08D2B;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -205,6 +221,72 @@
     vertical-align: top;
   }
   .article-body tr:nth-child(even) td { background: var(--accent-soft); }
+  .article-body tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Badge (small colored label, inline or in a table cell) ---- */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    color: var(--paper);
+    background: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .badge--viz-1 { background: var(--viz-1); }
+  .badge--viz-2 { background: var(--viz-2); }
+  .badge--viz-3 { background: var(--viz-3); }
+  .badge--viz-4 { background: var(--viz-4); }
+  .badge--viz-5 { background: var(--viz-5); }
+
+  /* ---- Spectrum bar (an ordered ladder/spectrum of N stages, one marked
+     current) -- see templates/article_template.html for the full rationale
+     comment. ---- */
+  .spectrum-bar {
+    display: flex;
+    margin: 26px 0 10px;
+    border: 1.5px solid var(--rule);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .spectrum-segment {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-right: 1.5px solid var(--paper);
+  }
+  .spectrum-segment:last-child { border-right: none; }
+  .spectrum-segment.sb-1 { background: var(--viz-1); }
+  .spectrum-segment.sb-2 { background: var(--viz-2); }
+  .spectrum-segment.sb-3 { background: var(--viz-3); }
+  .spectrum-segment.sb-4 { background: var(--viz-4); }
+  .spectrum-segment.sb-5 { background: var(--viz-5); }
+  .spectrum-segment.sb-active {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  .spectrum-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--ink-muted);
+    margin-bottom: 22px;
+  }
 
   /* ---- Section break ornament ---- */
   .article-body hr {
@@ -285,6 +367,17 @@
     color: var(--ink-muted);
   }
 
+  /* Generic colored variants (not SWOT-specific) for any 4-way breakdown --
+     see templates/article_template.html for the full rationale comment. */
+  .quadrant-cell.q-viz-1 { border-top: 4px solid var(--viz-1); }
+  .quadrant-cell.q-viz-2 { border-top: 4px solid var(--viz-2); }
+  .quadrant-cell.q-viz-3 { border-top: 4px solid var(--viz-3); }
+  .quadrant-cell.q-viz-4 { border-top: 4px solid var(--viz-4); }
+  .quadrant-cell.q-viz-1 .q-label { color: var(--viz-1); }
+  .quadrant-cell.q-viz-2 .q-label { color: var(--viz-2); }
+  .quadrant-cell.q-viz-3 .q-label { color: var(--viz-3); }
+  .quadrant-cell.q-viz-4 .q-label { color: var(--viz-4); }
+
   .quadrant-cell .q-item {
     position: relative;
     padding-left: 14px;
@@ -334,6 +427,11 @@
     justify-content: center;
     flex-shrink: 0;
   }
+
+  .process-num.pn-viz-1 { background: var(--viz-1); }
+  .process-num.pn-viz-2 { background: var(--viz-2); }
+  .process-num.pn-viz-3 { background: var(--viz-3); }
+  .process-num.pn-viz-4 { background: var(--viz-4); }
 
   .process-line {
     flex: 1;
@@ -442,6 +540,27 @@
     object-position: center 35%;
   }
 
+  /* Feature-image variant -- bleeds past the 620px measure toward the page
+     edge (same technique as .split-section, sharing --bleed-x) and allows a
+     real, uncropped feature moment instead of .figure--hero's 165px banner.
+     Use this for a genuine visual break in a section, or deliberately near
+     an awkward page break to push trailing text onto a cleaner boundary. */
+  .figure--wide {
+    margin: 34px var(--bleed-x) 40px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .figure--wide img {
+    max-height: 340px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .figure--wide .figure-caption {
+    padding: 0 8px;
+  }
+
   .figure-caption {
     font-family: var(--font-mono);
     font-size: 10.5px;
@@ -451,12 +570,44 @@
     line-height: 1.5;
   }
 
+  /* ---- Visual placeholder (a not-yet-sourced photo/graphic that still
+     needs to hold real layout space and read as intentional, not broken) ---- */
+  /* See templates/article_template.html for the full rationale comment. */
+  .visual-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 180px;
+    background: var(--accent-soft);
+    border: 1.5px dashed var(--ink-muted);
+    text-align: center;
+    padding: 16px;
+  }
+
+  .visual-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .visual-placeholder-note {
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+
   /* ---- Split section (boxed aside next to a main column) ---- */
   .split-section {
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     gap: 26px;
-    margin: 56px -40px 34px;
+    margin: 56px var(--bleed-x) 34px;
     break-inside: avoid;
     page-break-inside: avoid;
   }
@@ -664,12 +815,12 @@
   </div>
 
   <div class="article-body">
-    <p>Every time you move money from your business account to your personal one, you&rsquo;re making a decision with tax and legal consequences, whether it feels that way or not. For most small business owners, sole proprietors, single-member LLCs, and partners in multi-member LLCs, that money is called a draw or a distribution. Neither one is a paycheck. Neither one has taxes withheld. And neither one is automatically the same thing as profit, even though the number in your account makes it feel that way.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
-<p>That gap, between what&rsquo;s sitting in the account and what you actually owe on it, is where most of the trouble starts. Not fraud, not a scheme, just a habit that formed because the money was there and nobody told you otherwise. A national survey of roughly 90,000 small business owners, freelancers, and gig workers found that a third of them didn&rsquo;t know whether they were even supposed to pay estimated taxes.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> If that&rsquo;s you, you&rsquo;re not careless. You&rsquo;re the norm. It&rsquo;s also fixable, in specific, checkable steps.</p>
+    <p>Every time you move money from your business account to your personal one, you&rsquo;re making a decision with tax and legal consequences, whether it feels that way or not. For most small business owners, sole proprietors, single-member LLCs, and partners in multi-member LLCs, that money is called a draw or a distribution. Neither one is a paycheck. Neither one has taxes withheld. And neither one is automatically the same thing as profit, even though the number in your account makes it feel that way.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>That gap, between what&rsquo;s sitting in the account and what you actually owe on it, is where most of the trouble starts. Not fraud, not a scheme, just a habit that formed because the money was there and nobody told you otherwise. A national survey of roughly 90,000 small business owners, freelancers, and gig workers found that a third of them didn&rsquo;t know whether they were even supposed to pay estimated taxes.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> If that&rsquo;s you, you&rsquo;re not careless. You&rsquo;re the norm. It&rsquo;s also fixable, in specific, checkable steps.</p>
 <h2>The First Mistake: Spending the Tax Before You&rsquo;ve Set It Aside</h2>
-<p>Here&rsquo;s the part that catches people off guard. Whether you draw the money or leave it in the account, you owe tax on your full share of the business&rsquo;s profit for the year, not just on what you withdrew.<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup> A draw doesn&rsquo;t create the tax bill. It just decides whether you have the cash on hand to pay it when it&rsquo;s due.</p>
-<p>The IRS requires anyone who expects to owe $1,000 or more for the year, including sole proprietors, partners, and S-corp shareholders, to make estimated payments during the year, not just at filing time. You avoid the underpayment penalty by paying at least 90% of what you owe for the current year, or 100% of what you owed last year, whichever is smaller.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> There&rsquo;s no employer here holding that money back for you. You&rsquo;re both the employee and the payroll department.</p>
-<p>Accountants commonly advise setting aside roughly 25 to 30% of net profit for federal income and self-employment tax, plus another few percentage points for state tax depending on where you&rsquo;re located.<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup> That&rsquo;s a rule of thumb, not a law. Your actual number depends on your bracket and your state, but it&rsquo;s a defensible starting point if you don&rsquo;t already have one.</p>
+<p>Here&rsquo;s the part that catches people off guard. Whether you draw the money or leave it in the account, you owe tax on your full share of the business&rsquo;s profit for the year, not just on what you withdrew.<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> A draw doesn&rsquo;t create the tax bill. It just decides whether you have the cash on hand to pay it when it&rsquo;s due.</p>
+<p>The IRS requires anyone who expects to owe $1,000 or more for the year, including sole proprietors, partners, and S-corp shareholders, to make estimated payments during the year, not just at filing time. You avoid the underpayment penalty by paying at least 90% of what you owe for the current year, or 100% of what you owed last year, whichever is smaller.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> There&rsquo;s no employer here holding that money back for you. You&rsquo;re both the employee and the payroll department.</p>
+<p>Accountants commonly advise setting aside roughly 25 to 30% of net profit for federal income and self-employment tax, plus another few percentage points for state tax depending on where you&rsquo;re located.<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup> That&rsquo;s a rule of thumb, not a law. Your actual number depends on your bracket and your state, but it&rsquo;s a defensible starting point if you don&rsquo;t already have one.</p>
 <div class="process-map">
 <div class="process-step">
 <div class="process-num-col">
@@ -721,9 +872,9 @@
 </div>
 
 <h2>The Second Mistake: Distributions That Don&rsquo;t Match the Agreement</h2>
-<p>If you&rsquo;re the only owner, a sole proprietor or a single-member LLC, this section doesn&rsquo;t apply to you the same way. There&rsquo;s no separate basis mechanic here the way there is for a partnership: you&rsquo;re simply taxed on your full profit regardless of how much you draw, and there&rsquo;s no other owner&rsquo;s share to protect.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> If you have partners or co-members, it does.</p>
-<p>For a partnership or a multi-member LLC, a cash distribution is generally tax-free to you up to your basis, your tax-adjusted stake in the business. Take more than that in a single distribution, and the excess is treated as taxable gain.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> That&rsquo;s the technical version. The practical version: distributions are supposed to track what your operating agreement actually says about ownership and profit shares. If one partner is quietly taking more than their share while another takes less, that&rsquo;s not a favor between friends. It&rsquo;s a discrepancy that can create a real tax problem for both of you, and a real conflict later. Specific allocation rules can get technical fast, so if your split doesn&rsquo;t match the agreement, that&rsquo;s a conversation for your accountant, not a guess you make yourselves.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
-<p>There&rsquo;s a second risk here that has nothing to do with the IRS. Courts deciding whether to hold an LLC&rsquo;s owners personally liable for the business&rsquo;s debts look at whether the owners actually treated the LLC as separate from themselves: whether funds were kept apart, records were maintained, and the entity&rsquo;s money was used for entity purposes.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> Casual, undocumented distributions and a shared account with your personal spending are exactly the kind of thing that shows up in that analysis. The specific legal test varies by state, but the underlying question doesn&rsquo;t: did you actually run this like a separate business, or was it just your money with an LLC&rsquo;s name on the account?</p>
+<p>If you&rsquo;re the only owner, a sole proprietor or a single-member LLC, this section doesn&rsquo;t apply to you the same way. There&rsquo;s no separate basis mechanic here the way there is for a partnership: you&rsquo;re simply taxed on your full profit regardless of how much you draw, and there&rsquo;s no other owner&rsquo;s share to protect.<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> If you have partners or co-members, it does.</p>
+<p>For a partnership or a multi-member LLC, a cash distribution is generally tax-free to you up to your basis, your tax-adjusted stake in the business. Take more than that in a single distribution, and the excess is treated as taxable gain.<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> That&rsquo;s the technical version. The practical version: distributions are supposed to track what your operating agreement actually says about ownership and profit shares. If one partner is quietly taking more than their share while another takes less, that&rsquo;s not a favor between friends. It&rsquo;s a discrepancy that can create a real tax problem for both of you, and a real conflict later. Specific allocation rules can get technical fast, so if your split doesn&rsquo;t match the agreement, that&rsquo;s a conversation for your accountant, not a guess you make yourselves.<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></p>
+<p>There&rsquo;s a second risk here that has nothing to do with the IRS. Courts deciding whether to hold an LLC&rsquo;s owners personally liable for the business&rsquo;s debts look at whether the owners actually treated the LLC as separate from themselves: whether funds were kept apart, records were maintained, and the entity&rsquo;s money was used for entity purposes.<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> Casual, undocumented distributions and a shared account with your personal spending are exactly the kind of thing that shows up in that analysis. The specific legal test varies by state, but the underlying question doesn&rsquo;t: did you actually run this like a separate business, or was it just your money with an LLC&rsquo;s name on the account?</p>
 <h2>What to Actually Do About It</h2>
 <p>None of this requires a dramatic fix. It requires a specific one.</p>
 <ul>
@@ -732,7 +883,6 @@
 <li>If you have partners, a five-minute comparison between what your agreement says and what&rsquo;s actually gone out the door this year.</li>
 </ul>
 <h2>Key Takeaways</h2>
-<p><strong>Objective:</strong> I&rsquo;ll know the real difference between cash in my account and profit I actually owe tax on, and I&rsquo;ll have a concrete number to set aside every time I take money out.</p>
 <p><strong>Key Frameworks:</strong></p>
 <ul>
 <li>Estimated tax safe harbor: the IRS threshold and percentage that determines whether you owe an underpayment penalty.</li>
@@ -743,25 +893,25 @@
 <hr />
 <ol>
 <li id="fn:1">
-<p>IRS, &ldquo;Estimated Taxes,&rdquo; https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Insogna CPA, &ldquo;What Is an Owner&rsquo;s Draw and How Is It Taxed for Small Business Owners,&rdquo; https://insognacpa.com/blog/what-is-an-owners-draw-and-how-is-it-taxed-for-small-business-owners&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>IRS Publication 541, &ldquo;Partnerships,&rdquo; https://www.irs.gov/publications/p541&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>American University, Small Business Tax Literacy Survey, Caroline Bruckner and Barbara J. Robles, https://www.american.edu/media/news/20230418_carolinebrucknertaxliteracysurvey.cfm&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>26 U.S.C. Section 731, Cornell Law School Legal Information Institute, https://www.law.cornell.edu/uscode/text/26/731&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>IRS, &ldquo;Estimated Taxes,&rdquo; https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>Wolters Kluwer, &ldquo;Piercing the Veil of Small Business: What the Owners of LLCs and Corporations Need to Know,&rdquo; https://www.wolterskluwer.com/en/expert-insights/piercing-the-veil-of-small-business-what-the-owners-of-llcs-and-corporations-need-to-know&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>KT LLP CPA, &ldquo;Are My Distributions Taxable,&rdquo; https://www.ktllp.cpa/are-my-distributions-taxable/&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p>American University, Small Business Tax Literacy Survey, Caroline Bruckner and Barbara J. Robles, https://www.american.edu/media/news/20230418_carolinebrucknertaxliteracysurvey.cfm&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>26 U.S.C. Section 731, Cornell Law School Legal Information Institute, https://www.law.cornell.edu/uscode/text/26/731&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:6">
-<p>Insogna CPA, &ldquo;What Is an Owner&rsquo;s Draw and How Is It Taxed for Small Business Owners,&rdquo; https://insognacpa.com/blog/what-is-an-owners-draw-and-how-is-it-taxed-for-small-business-owners&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>IRS Publication 541, &ldquo;Partnerships,&rdquo; https://www.irs.gov/publications/p541&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:7">
-<p>KT LLP CPA, &ldquo;Are My Distributions Taxable,&rdquo; https://www.ktllp.cpa/are-my-distributions-taxable/&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p>Wolters Kluwer, &ldquo;Piercing the Veil of Small Business: What the Owners of LLCs and Corporations Need to Know,&rdquo; https://www.wolterskluwer.com/en/expert-insights/piercing-the-veil-of-small-business-what-the-owners-of-llcs-and-corporations-need-to-know&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
