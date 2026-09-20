@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strategic Planning | Change Maven LLC</title>
-<meta name="description" content="You know where you are, and where you're going: current-state assessment, stakeholder interviews, and executive-level vision setting.">
+<meta name="description" content="You know where you are, and where you're going: current-state assessment, stakeholder interviews, and executive-level vision setting, plus leadership reviews that keep initiatives on track.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2357534A'/%3E%3Cline x1='8' y1='78' x2='92' y2='72' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='34' y1='46' x2='34' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='70' y1='52' x2='70' y2='82' stroke='%23E07A34' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 26 L40 36 L34 46 L28 36 Z' fill='%23E07A34'/%3E%3Cpath d='M70 32 L76 42 L70 52 L64 42 Z' fill='%23E07A34'/%3E%3Cg stroke='%23E07A34' stroke-width='1.4' stroke-linecap='round' opacity='0.8'%3E%3Cline x1='34' y1='30' x2='8' y2='78'/%3E%3Cline x1='34' y1='30' x2='20' y2='77'/%3E%3Cline x1='34' y1='30' x2='40' y2='74'/%3E%3Cline x1='34' y1='30' x2='47' y2='73'/%3E%3Cline x1='34' y1='30' x2='54' y2='72'/%3E%3Cline x1='70' y1='36' x2='92' y2='72'/%3E%3Cline x1='70' y1='36' x2='80' y2='72'/%3E%3Cline x1='70' y1='36' x2='64' y2='73'/%3E%3Cline x1='70' y1='36' x2='58' y2='73'/%3E%3Cline x1='70' y1='36' x2='50' y2='74'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="alternate icon" href="../brand_assets/Change_Maven_Logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,6 +67,11 @@
 
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  .tab-btn[aria-selected="true"] { color: #57534A; border-color: #E07A34; }
+  .tab-btn[aria-selected="false"] { color: #83807A; border-color: transparent; }
+  .tab-btn[aria-selected="false"]:hover { color: #57534A; }
+  .tab-btn:focus-visible { outline: 2px solid rgba(224,122,52,0.5); outline-offset: 2px; }
 </style>
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -233,6 +238,103 @@
     </div>
   </section>
 
+  <!-- Leadership Initiative Review -->
+  <section id="leadership-engagement" class="bg-cream border-t border-navy/10 scroll-mt-20">
+    <div class="max-w-[760px] mx-auto px-5 sm:px-8 py-14 lg:py-16">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 shrink-0 rounded-full bg-gold/10 flex items-center justify-center">
+          <svg width="28" height="14" viewBox="0 0 140 70" class="text-gold" aria-hidden="true"><use href="#bridge-icon"></use></svg>
+        </div>
+        <div>
+          <h2 class="font-display font-bold text-navy text-2xl sm:text-3xl">Leadership Initiative Review</h2>
+          <p class="text-gold font-semibold text-sm mt-2">Schedule a Consultation</p>
+        </div>
+      </div>
+      <p class="mt-6 text-navy text-lg leading-[1.7]">Strategic planning helps your leadership team guide high-impact initiatives through structured direction, review, and support. Through facilitated leadership reviews and alignment sessions, leaders keep initiatives aligned with strategy, supported, and on track to deliver measurable results.</p>
+      <a href="https://calendly.com/change_maven/new-meeting?month=2026-09" class="inline-block mt-7 bg-gold text-navy font-semibold text-sm px-8 py-3.5 rounded-sm hover:bg-gold-light focus-visible:bg-gold-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:opacity-80 transition-colors duration-200 shadow-gold-sm" onclick="Calendly.initPopupWidget({url:'https://calendly.com/change_maven/new-meeting?month=2026-09'});return false;">Schedule a Consultation</a>
+
+      <div class="mt-14">
+        <div class="flex gap-8 border-b border-navy/10" role="tablist" aria-label="Leadership Initiative Review details">
+          <button id="tab-strategic-description" class="tab-btn -mb-px py-3 border-b-2 font-semibold text-sm transition-colors duration-200" role="tab" aria-selected="true" aria-controls="panel-strategic-description">Description</button>
+          <button id="tab-strategic-timeline" class="tab-btn -mb-px py-3 border-b-2 font-semibold text-sm transition-colors duration-200" role="tab" aria-selected="false" aria-controls="panel-strategic-timeline" tabindex="-1">Timeline</button>
+        </div>
+
+        <div id="panel-strategic-description" role="tabpanel" aria-labelledby="tab-strategic-description" class="pt-10">
+          <h3 class="font-display font-bold text-navy text-xl mb-4">Why This Matters</h3>
+          <div class="space-y-5 text-slate leading-relaxed">
+            <p>Even well-chosen initiatives underperform when leadership direction is inconsistent or unclear. Organizations commonly run into the same four problems:</p>
+            <ul class="space-y-2 list-disc pl-5 marker:text-gold">
+              <li>Initiatives drift away from strategic intent.</li>
+              <li>Leaders have limited visibility into progress and risks.</li>
+              <li>Unresolved barriers slow down execution.</li>
+              <li>There is a weak connection between leadership and results.</li>
+            </ul>
+            <p>Strengthening leadership direction and review discipline is the fastest way to improve initiative outcomes.</p>
+          </div>
+
+          <h3 class="font-display font-bold text-navy text-xl mt-12 mb-4">The Leadership Engagement Model</h3>
+          <div class="grid sm:grid-cols-3 gap-5">
+            <div class="rounded-sm border border-navy/10 bg-white shadow-card p-6">
+              <h4 class="font-display font-bold text-navy text-base mb-2">Direction</h4>
+              <p class="text-slate text-[0.92rem] leading-relaxed">Keeping every initiative aligned with strategic objectives.</p>
+            </div>
+            <div class="rounded-sm border border-navy/10 bg-white shadow-card p-6">
+              <h4 class="font-display font-bold text-navy text-base mb-2">Progress Review</h4>
+              <p class="text-slate text-[0.92rem] leading-relaxed">Structured leadership checkpoints that assess outcomes and trajectory.</p>
+            </div>
+            <div class="rounded-sm border border-navy/10 bg-white shadow-card p-6">
+              <h4 class="font-display font-bold text-navy text-base mb-2">Obstacle Removal</h4>
+              <p class="text-slate text-[0.92rem] leading-relaxed">Identifying and clearing the barriers that stand in the way of success.</p>
+            </div>
+          </div>
+
+          <h3 class="font-display font-bold text-navy text-xl mt-12 mb-4">The Outcome</h3>
+          <p class="text-slate leading-relaxed">Stronger leadership direction, clearer visibility into progress, and faster removal of obstacles, so initiatives deliver measurable results and leadership's impact shows across the organization.</p>
+        </div>
+
+        <div id="panel-strategic-timeline" role="tabpanel" aria-labelledby="tab-strategic-timeline" class="pt-10" hidden>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Engagement Scope</h3>
+          <p class="text-slate text-[0.92rem] mb-8">24 hours in total. The schedule is flexible.</p>
+          <ol class="space-y-6">
+            <li class="flex gap-5">
+              <div class="shrink-0 flex flex-col items-center">
+                <span class="w-9 h-9 rounded-full bg-navy text-cream font-display font-bold text-sm flex items-center justify-center">1</span>
+                <span class="w-px flex-1 bg-navy/15 mt-2"></span>
+              </div>
+              <div class="pb-6">
+                <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">2 hours &middot; Start here</p>
+                <h4 class="font-display font-bold text-navy text-lg mb-1.5">Strategic Alignment Session Launch</h4>
+                <p class="text-slate text-[0.92rem] leading-relaxed">Preparation and a kickoff meeting that set direction for the initiatives leadership will be guiding.</p>
+              </div>
+            </li>
+            <li class="flex gap-5">
+              <div class="shrink-0 flex flex-col items-center">
+                <span class="w-9 h-9 rounded-full bg-navy text-cream font-display font-bold text-sm flex items-center justify-center">2</span>
+                <span class="w-px flex-1 bg-navy/15 mt-2"></span>
+              </div>
+              <div class="pb-6">
+                <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">10 meetings &middot; 2 hours each, 20 hours total</p>
+                <h4 class="font-display font-bold text-navy text-lg mb-1.5">Leadership Initiative Review Meetings</h4>
+                <p class="text-slate text-[0.92rem] leading-relaxed">Ten structured reviews, each with preparation, follow-up, and the meeting itself, that check progress and clear obstacles as initiatives move forward.</p>
+              </div>
+            </li>
+            <li class="flex gap-5">
+              <div class="shrink-0 flex flex-col items-center">
+                <span class="w-9 h-9 rounded-full bg-navy text-cream font-display font-bold text-sm flex items-center justify-center">3</span>
+                <span class="w-px flex-1 bg-transparent mt-2"></span>
+              </div>
+              <div class="pb-2">
+                <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1">2 hours &middot; Wrap up</p>
+                <h4 class="font-display font-bold text-navy text-lg mb-1.5">Strategic Alignment Session Conclusion</h4>
+                <p class="text-slate text-[0.92rem] leading-relaxed">Preparation and a closing meeting that confirm alignment and the impact the initiatives have delivered. This cadence builds leadership guidance directly into execution.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Built on certified methodology -->
   <section class="bg-cream border-t border-navy/10">
     <div class="max-w-[760px] mx-auto px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
@@ -325,9 +427,37 @@
     });
   }
 
+  function initTabs() {
+    document.querySelectorAll('[role="tablist"]').forEach(function (list) {
+      var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+      function select(tab) {
+        tabs.forEach(function (t) {
+          var selected = t === tab;
+          t.setAttribute("aria-selected", selected ? "true" : "false");
+          t.setAttribute("tabindex", selected ? "0" : "-1");
+          var panel = document.getElementById(t.getAttribute("aria-controls"));
+          if (panel) panel.hidden = !selected;
+        });
+      }
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener("click", function () { select(tab); });
+        tab.addEventListener("keydown", function (e) {
+          var next = e.key === "ArrowRight" ? tabs[(i + 1) % tabs.length]
+                   : e.key === "ArrowLeft" ? tabs[(i - 1 + tabs.length) % tabs.length]
+                   : null;
+          if (!next) return;
+          e.preventDefault();
+          select(next);
+          next.focus();
+        });
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNav();
     initReveal();
+    initTabs();
   });
 })();
 </script>
