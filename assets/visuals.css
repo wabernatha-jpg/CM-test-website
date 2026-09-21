@@ -1,0 +1,405 @@
+/* Change Maven: shared visual components for sub-pages.
+   Tokens mirror the Tailwind config each page already declares
+   (Warm Graphite / Tangerine / Ivory). Components only, no resets.
+   Nothing here animates. */
+
+:root {
+  --cm-graphite: #57534A;
+  --cm-graphite-deep: #3B3832;
+  --cm-taupe: #9C8F7E;
+  --cm-tangerine: #E07A34;
+  --cm-peach: #F0AD7A;
+  --cm-ivory: #FAF8F5;
+  --cm-gray: #83807A;
+  --cm-line: rgba(87, 83, 74, 0.12);
+}
+
+/* ---------- Plate: an illustration lifted off a dark hero ---------- */
+.plate {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--cm-ivory);
+  box-shadow:
+    0 2px 6px -2px rgba(30, 28, 24, 0.3),
+    0 28px 52px -18px rgba(30, 28, 24, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+.plate > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  transform: scale(var(--zoom, 1.3));
+}
+/* Colour treatment layer: a light graphite wash from below and a faint tangerine glow */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(87, 83, 74, 0.1), transparent 38%),
+    radial-gradient(circle at 85% 12%, rgba(224, 122, 52, 0.1), transparent 45%);
+}
+
+/* ---------- Figure: a diagram with a plain-language caption ---------- */
+.figure { margin: 0; }
+.figure__body {
+  border: 1px solid var(--cm-line);
+  border-radius: 2px;
+  background: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px -2px rgba(87, 83, 74, 0.06), 0 12px 28px -12px rgba(87, 83, 74, 0.12);
+}
+.figure__title {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--cm-graphite);
+  margin: 0 0 1.25rem;
+}
+.figure__caption {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--cm-gray);
+}
+
+/* ---------- Level: ordinal meter (1 to 3 pips) ---------- */
+.level {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.1rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--cm-gray);
+}
+.level__pips { display: inline-flex; gap: 4px; }
+.level__pip {
+  width: 22px;
+  height: 6px;
+  border-radius: 1px;
+  background: rgba(87, 83, 74, 0.16);
+}
+.level__pip.is-on { background: var(--cm-tangerine); }
+
+/* ---------- Facts: label / value rows inside a card ---------- */
+.facts {
+  margin: 1.25rem 0 0;
+  border-top: 1px solid var(--cm-line);
+}
+.facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(87, 83, 74, 0.08);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.facts dt { color: var(--cm-gray); }
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  color: var(--cm-graphite);
+}
+
+/* ---------- Coach map: two plans laid against the five DMAIC phases ----------
+   One set of placement variables serves both layouts.
+   --c = position along the process (1 = label, 2 = start, 3 to 7 = phases)
+   --r = lane (1 = phases, 2 = 1-on-1, 3 = group)
+   --cs = how many process steps the cell spans
+   Wide screens run the process left to right; narrow screens transpose it top to bottom. */
+.coachmap {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: minmax(0, 1.05fr) repeat(2, minmax(0, 1fr));
+}
+.coachmap > * {
+  grid-column: var(--r) / span 1;
+  grid-row: var(--c) / span var(--cs, 1);
+  min-width: 0;
+}
+@media (min-width: 760px) {
+  .coachmap { grid-template-columns: minmax(6rem, 7.5rem) repeat(6, minmax(0, 1fr)); }
+  .coachmap > * {
+    grid-column: var(--c) / span var(--cs, 1);
+    grid-row: var(--r) / span 1;
+  }
+}
+.coachmap__label {
+  display: flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cm-graphite);
+}
+.coachmap__label small {
+  display: block;
+  font-weight: 500;
+  color: var(--cm-gray);
+}
+.coachmap__phase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 0.4rem;
+  border-radius: 2px;
+  background: var(--cm-graphite);
+  color: var(--cm-ivory);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.coachmap__phase.is-start {
+  background: rgba(156, 143, 126, 0.2);
+  color: var(--cm-graphite);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.82rem;
+}
+.coachmap__chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--cm-line);
+  border-radius: 2px;
+  background: var(--cm-ivory);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--cm-gray);
+}
+.coachmap__chip strong {
+  font-weight: 600;
+  color: var(--cm-graphite);
+}
+/* A tollgate review is a checkpoint: the diamond is the bridge tower shape from the logo */
+.coachmap__chip--review strong::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 0.45rem;
+  vertical-align: 0.08em;
+  background: var(--cm-tangerine);
+  transform: rotate(45deg);
+}
+.coachmap__chip--group {
+  border-color: rgba(224, 122, 52, 0.45);
+  background: rgba(224, 122, 52, 0.09);
+}
+.coachmap__chip--finish {
+  border-style: dashed;
+  border-color: rgba(87, 83, 74, 0.4);
+  background: transparent;
+}
+
+/* ---------- Track: a short sequence with optional gap labels ----------
+   Steps sit on a line. A .track__gap label sits above the connector
+   that leads into its step. */
+.track {
+  list-style: none;
+  display: flex;
+  margin: 0 0 2rem;
+  padding: 2.4rem 0 0;
+}
+.track--plain { padding-top: 0; }
+.track > li {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  padding: 0 0.15rem;
+}
+.track > li + li::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(87, 83, 74, 0.22);
+}
+.track__dot {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 0 auto 0.6rem;
+  border-radius: 50%;
+  background: var(--cm-graphite);
+  box-shadow: 0 0 0 3px var(--cm-ivory);
+}
+.track > li.is-end .track__dot { background: var(--cm-tangerine); }
+.track__name {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cm-graphite);
+}
+.track__meta {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--cm-gray);
+}
+.track__gap {
+  position: absolute;
+  top: -2.3rem;
+  left: -50%;
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--cm-gray);
+}
+@media (min-width: 640px) {
+  .track__name { font-size: 0.85rem; }
+  .track__meta { font-size: 0.8rem; }
+  .track__gap { font-size: 0.78rem; }
+}
+
+/* ---------- Plate, photo variant: cropped photo with a warm colour layer ---------- */
+.plate--photo { aspect-ratio: 788 / 720; }
+.plate--photo > img {
+  mix-blend-mode: normal;
+  transform: none;
+}
+.plate--photo::after {
+  background:
+    linear-gradient(to top, rgba(59, 56, 50, 0.45), transparent 55%),
+    rgba(224, 122, 52, 0.14);
+  mix-blend-mode: multiply;
+}
+
+/* Dots sitting on a white figure body need a white ring, not an ivory one */
+.figure__body .track__dot { box-shadow: 0 0 0 3px #fff; }
+.figure__body .track { margin-bottom: 0; }
+
+/* ---------- Artifacts: small drawings of what a session leaves behind ---------- */
+.artifacts {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+.artifact {
+  border: 1px solid var(--cm-line);
+  border-radius: 2px;
+  background: #fff;
+  padding: 1.1rem 0.75rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px -2px rgba(87, 83, 74, 0.06), 0 12px 28px -12px rgba(87, 83, 74, 0.12);
+}
+.artifact svg {
+  display: block;
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  margin: 0 auto 0.7rem;
+  color: var(--cm-graphite);
+}
+.artifact strong {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cm-graphite);
+}
+
+/* ---------- Hour bar: one block per two hours, drawn to scale ---------- */
+.hourbar {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0 0 1rem;
+}
+.hourbar > span {
+  height: 34px;
+  border-radius: 2px;
+  background: var(--cm-graphite);
+}
+.hourbar > .is-edge { background: var(--cm-tangerine); }
+.hourlegend {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--cm-gray);
+}
+.hourlegend li { display: flex; align-items: flex-start; gap: 0.6rem; }
+.hourlegend i {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.2rem;
+  border-radius: 2px;
+  background: var(--cm-graphite);
+}
+.hourlegend i.is-edge { background: var(--cm-tangerine); }
+
+/* ---------- Problems: a short list drawn as small cards with a picture each ---------- */
+.problems {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 560px) {
+  .problems { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.problem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--cm-line);
+  border-radius: 2px;
+  background: #fff;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--cm-graphite);
+  box-shadow: 0 2px 6px -2px rgba(87, 83, 74, 0.06), 0 12px 28px -12px rgba(87, 83, 74, 0.12);
+}
+.problem svg { flex: none; width: 40px; height: 40px; color: var(--cm-graphite); }
+
+/* ---------- Cycle: three steps that repeat ---------- */
+.cycle {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
+.cycle text {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--cm-ivory);
+}
+
+@media (max-width: 480px) {
+  .artifact { padding-left: 0.4rem; padding-right: 0.4rem; }
+  .artifact strong { font-size: 0.82rem; }
+}

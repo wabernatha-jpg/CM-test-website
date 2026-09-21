@@ -68,6 +68,7 @@
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
   .reveal.in-view { opacity: 1; transform: translateY(0); }
 </style>
+<link rel="stylesheet" href="../assets/visuals.css">
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
@@ -195,10 +196,15 @@
 
   <!-- Tier hero -->
   <section class="bg-navy grain">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
-      <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Part of: Building Capability and Building Capacity</p>
-      <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Training &amp; Facilitation</h1>
-      <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Workshops, Kaizen events, tabletop exercises, seminars, retreats, and certified training. Every session ends with something you can use: a process map, an action plan, a workbook.</p>
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-12 items-center">
+      <div>
+        <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Part of: Building Capability and Building Capacity</p>
+        <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Training &amp; Facilitation</h1>
+        <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Workshops, Kaizen events, tabletop exercises, seminars, retreats, and certified training. Every session ends with something you can use: a process map, an action plan, a workbook.</p>
+      </div>
+      <div class="plate w-full max-w-[400px] mx-auto lg:mx-0 lg:justify-self-end" style="--zoom:1.06">
+        <img src="../assets/img/training-workshop.webp" width="900" height="900" decoding="async" fetchpriority="high" alt="Illustration of four people gathered around a round table with an open workbook and building blocks, next to a flipchart showing a process map.">
+      </div>
     </div>
   </section>
 
@@ -212,6 +218,41 @@
         <a href="#curriculum" class="text-gold border-b border-gold/40 pb-0.5 hover:text-navy hover:border-navy focus-visible:text-navy focus-visible:border-navy focus-visible:outline-none active:opacity-70 transition-colors duration-200">Training</a>
         <a href="#coaching" class="text-gold border-b border-gold/40 pb-0.5 hover:text-navy hover:border-navy focus-visible:text-navy focus-visible:border-navy focus-visible:outline-none active:opacity-70 transition-colors duration-200">Coaching</a>
       </nav>
+
+      <div class="mt-12">
+        <h2 class="font-display font-bold text-navy text-xl mb-5">What you leave with</h2>
+        <ul class="artifacts">
+          <li class="artifact">
+            <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="12" width="30" height="20" rx="2"/>
+              <rect x="84" y="12" width="30" height="20" rx="2" fill="#E07A34" stroke="#E07A34"/>
+              <rect x="45" y="46" width="30" height="20" rx="2"/>
+              <path d="M21 32v24h24"/><path d="M41 52l4 4-4 4"/>
+              <path d="M75 56h24V32"/><path d="M95 36l4-4 4 4"/>
+            </svg>
+            <strong>Process map</strong>
+          </li>
+          <li class="artifact">
+            <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="14" y="10" width="14" height="14" rx="2"/><path d="M38 17h66"/>
+              <rect x="14" y="33" width="14" height="14" rx="2"/><path d="M38 40h50"/>
+              <rect x="14" y="56" width="14" height="14" rx="2"/><path d="M38 63h58"/>
+              <path d="M17 17l3 3 6-7" stroke="#E07A34" stroke-width="2.5"/>
+              <path d="M17 40l3 3 6-7" stroke="#E07A34" stroke-width="2.5"/>
+            </svg>
+            <strong>Action plan</strong>
+          </li>
+          <li class="artifact">
+            <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M60 20C46 12 28 12 14 18v46c14-6 32-6 46 2 14-8 32-8 46-2V18c-14-6-32-6-46 2z"/>
+              <path d="M60 20v46"/>
+              <path d="M24 30h26M24 39h26M24 48h16"/>
+              <path d="M70 30h26M70 39h26M70 48h16" stroke="#E07A34"/>
+            </svg>
+            <strong>Workbook</strong>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 

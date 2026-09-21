@@ -74,6 +74,7 @@
   .tab-btn[aria-selected="false"]:hover { color: #57534A; }
   .tab-btn:focus-visible { outline: 2px solid rgba(224,122,52,0.5); outline-offset: 2px; }
 </style>
+<link rel="stylesheet" href="../assets/visuals.css">
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
@@ -201,14 +202,20 @@
 
   <!-- Tier hero -->
   <section class="bg-navy grain">
-    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-12 items-center">
-      <div>
-        <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Part of: Building Capability</p>
-        <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Six Sigma Certification</h1>
-        <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Certification means more when it's earned on a real problem, not a simulated one. Through our partnership with GoLean Six Sigma, we facilitate DMAIC projects against your organization's actual work, so the certification and the ROI land at the same time.</p>
+    <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-16 lg:py-20">
+      <div class="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-12 items-center">
+        <div>
+          <p class="text-gold text-[0.78rem] font-semibold tracking-[0.14em] uppercase mb-4">Part of: Building Capability</p>
+          <h1 class="font-display font-bold text-cream text-4xl sm:text-5xl leading-tight tracking-[-0.01em]">Six Sigma Certification</h1>
+          <p class="mt-5 text-cream/70 text-lg max-w-xl leading-relaxed">Certification means more when it's earned on a real problem, not a simulated one. Through our partnership with GoLean Six Sigma, we facilitate DMAIC projects against your organization's actual work, so the certification and the ROI land at the same time.</p>
+        </div>
+
+        <div class="plate w-full max-w-[400px] mx-auto lg:mx-0 lg:justify-self-end">
+          <img src="../assets/img/six-sigma-ring.webp" width="900" height="900" decoding="async" fetchpriority="high" alt="Illustration of a segmented ring in graphite and tangerine around a central 6σ mark.">
+        </div>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
+      <div class="mt-12 grid sm:grid-cols-2 gap-6">
         <div class="rounded-sm border border-cream/10 bg-cream/[0.06] shadow-[0_2px_6px_-2px_rgba(30,28,24,0.25),0_16px_32px_-14px_rgba(30,28,24,0.45)] p-6">
           <div class="w-11 h-11 rounded-full bg-gold/20 flex items-center justify-center mb-4">
             <svg width="22" height="11" viewBox="0 0 140 70" class="text-gold" aria-hidden="true"><use href="#bridge-icon"></use></svg>
@@ -240,17 +247,20 @@
           <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-2">Tier 1</p>
           <h3 class="font-display font-bold text-navy text-lg mb-2.5">Self-Directed Certification</h3>
           <p class="text-slate text-[0.92rem] leading-relaxed">Enroll straight into GoLean Six Sigma's courses and work at your own pace. We'll point you to the right track for your role and check in when you want a second opinion: the belt is yours to earn on your own schedule.</p>
+          <p class="level" role="img" aria-label="Hands-on support: level 1 of 3"><span class="level__pips" aria-hidden="true"><span class="level__pip is-on"></span><span class="level__pip"></span><span class="level__pip"></span></span><span aria-hidden="true">Hands-on support</span></p>
         </div>
         <div class="reveal rounded-sm border border-navy/10 bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6">
           <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-2">Tier 2</p>
           <h3 class="font-display font-bold text-navy text-lg mb-2.5">Guided Certification</h3>
           <p class="text-slate text-[0.92rem] leading-relaxed">Same courses, plus live support along the way: sales calls, demos, and technical help from the GoLean Six Sigma team, with us staying in the loop throughout. A good fit for teams who want structure without a dedicated facilitator running the project.</p>
+          <p class="level" role="img" aria-label="Hands-on support: level 2 of 3"><span class="level__pips" aria-hidden="true"><span class="level__pip is-on"></span><span class="level__pip is-on"></span><span class="level__pip"></span></span><span aria-hidden="true">Hands-on support</span></p>
         </div>
         <div class="reveal relative rounded-sm border-2 border-gold bg-white shadow-card-hover p-6">
           <span class="absolute -top-3 left-6 inline-flex items-center rounded-full bg-gold text-navy text-[0.68rem] font-semibold tracking-wide uppercase px-3 py-1">Flagship</span>
           <p class="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-2 mt-1">Tier 3</p>
           <h3 class="font-display font-bold text-navy text-lg mb-2.5">Coached DMAIC Certification</h3>
           <p class="text-slate text-[0.92rem] leading-relaxed">The full engagement: a Black Belt coaches your DMAIC project against a real problem in your organization, one-on-one or with your whole team. You deal with us directly from kickoff to certification.</p>
+          <p class="level" role="img" aria-label="Hands-on support: level 3 of 3"><span class="level__pips" aria-hidden="true"><span class="level__pip is-on"></span><span class="level__pip is-on"></span><span class="level__pip is-on"></span></span><span aria-hidden="true">Hands-on support</span></p>
           <a href="#plans" class="inline-block mt-4 text-gold font-semibold text-sm hover:text-navy focus-visible:text-navy focus-visible:outline-none active:opacity-70 transition-colors duration-200">See the coaching plans</a>
         </div>
       </div>
@@ -269,16 +279,56 @@
           <h3 class="font-display font-bold text-navy text-lg">1-on-1 Project Coaching</h3>
           <p class="text-gold font-display font-bold text-2xl mt-1 mb-3">$1,499</p>
           <p class="text-slate text-[0.92rem] leading-relaxed">Six hours of live coaching with a Black Belt to complete a Lean Six Sigma project that improves your company and your career.</p>
+          <dl class="facts">
+            <div><dt>Live coaching</dt><dd>6 hours</dd></div>
+            <div><dt>Who it's for</dt><dd>One learner</dd></div>
+            <div><dt>Certification</dt><dd>Green Belt</dd></div>
+          </dl>
           <span class="mt-auto pt-5 text-gold font-semibold text-sm group-hover:text-navy group-focus-visible:text-navy transition-colors duration-200">View details</span>
         </a>
         <a href="#group-coaching" class="group flex flex-col rounded-sm border border-navy/10 bg-white shadow-card hover:shadow-card-hover hover:border-gold/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:bg-cream transition-shadow duration-300 p-6">
           <h3 class="font-display font-bold text-navy text-lg">Group Coaching</h3>
           <p class="text-gold font-display font-bold text-2xl mt-1 mb-3">$9,999</p>
           <p class="text-slate text-[0.92rem] leading-relaxed">Three one-hour group sessions that give your team a structure for finishing their projects together, with a Black Belt coaching the whole group.</p>
+          <dl class="facts">
+            <div><dt>Live coaching</dt><dd>3 sessions, 1 hour each</dd></div>
+            <div><dt>Who it's for</dt><dd>Up to 15 learners, up to 3 projects</dd></div>
+            <div><dt>Certification</dt><dd>Green Belt</dd></div>
+          </dl>
           <span class="mt-auto pt-5 text-gold font-semibold text-sm group-hover:text-navy group-focus-visible:text-navy transition-colors duration-200">View details</span>
         </a>
       </div>
       <p class="mt-6 text-center text-[0.8rem] text-slate">All prices are in U.S. dollars. Ask about nonprofit pricing.</p>
+
+      <figure class="figure reveal max-w-[900px] mx-auto mt-12">
+        <div class="figure__body">
+          <h3 class="figure__title">Where live coaching lands in a DMAIC project</h3>
+          <div class="coachmap" role="img" aria-label="Both plans follow the same five DMAIC phases. 1-on-1 coaching starts with one hour of project selection, then adds a one-hour tollgate review after each phase. Group coaching starts with an orientation session, then a session covering Define and Measure, a session covering Analyze and Improve, and 4 to 6 weeks to finish before the Black Belt reviews the work.">
+            <span class="coachmap__label" style="--c:1;--r:2" aria-hidden="true">1-on-1</span>
+            <span class="coachmap__label" style="--c:1;--r:3" aria-hidden="true">Group</span>
+
+            <span class="coachmap__phase is-start" style="--c:2;--r:1" aria-hidden="true">Start</span>
+            <span class="coachmap__phase" style="--c:3;--r:1" aria-hidden="true">Define</span>
+            <span class="coachmap__phase" style="--c:4;--r:1" aria-hidden="true">Measure</span>
+            <span class="coachmap__phase" style="--c:5;--r:1" aria-hidden="true">Analyze</span>
+            <span class="coachmap__phase" style="--c:6;--r:1" aria-hidden="true">Improve</span>
+            <span class="coachmap__phase" style="--c:7;--r:1" aria-hidden="true">Control</span>
+
+            <span class="coachmap__chip" style="--c:2;--r:2" aria-hidden="true"><strong>Project selection</strong>1 hour</span>
+            <span class="coachmap__chip coachmap__chip--review" style="--c:3;--r:2" aria-hidden="true"><strong>Review</strong>1 hour</span>
+            <span class="coachmap__chip coachmap__chip--review" style="--c:4;--r:2" aria-hidden="true"><strong>Review</strong>1 hour</span>
+            <span class="coachmap__chip coachmap__chip--review" style="--c:5;--r:2" aria-hidden="true"><strong>Review</strong>1 hour</span>
+            <span class="coachmap__chip coachmap__chip--review" style="--c:6;--r:2" aria-hidden="true"><strong>Review</strong>1 hour</span>
+            <span class="coachmap__chip coachmap__chip--review" style="--c:7;--r:2" aria-hidden="true"><strong>Review</strong>1 hour</span>
+
+            <span class="coachmap__chip coachmap__chip--group" style="--c:2;--r:3" aria-hidden="true"><strong>Orientation</strong>Session 1</span>
+            <span class="coachmap__chip coachmap__chip--group" style="--c:3;--r:3;--cs:2" aria-hidden="true"><strong>Session 2</strong>Define and Measure</span>
+            <span class="coachmap__chip coachmap__chip--group" style="--c:5;--r:3;--cs:2" aria-hidden="true"><strong>Session 3</strong>Analyze and Improve</span>
+            <span class="coachmap__chip coachmap__chip--finish" style="--c:7;--r:3" aria-hidden="true"><strong>4 to 6 weeks</strong>to finish, then Black Belt review</span>
+          </div>
+        </div>
+        <figcaption class="figure__caption">Both plans follow the same five phases. 1-on-1 adds a review after each phase. Group coaching adds three live sessions for the whole team.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -324,7 +374,15 @@
         </div>
 
         <div id="panel-one-timeline" role="tabpanel" aria-labelledby="tab-one-timeline" class="pt-10" hidden>
-          <h3 class="font-display font-bold text-navy text-xl mb-8">Hour by Hour</h3>
+          <h3 class="font-display font-bold text-navy text-xl mb-6">Hour by Hour</h3>
+          <ol class="track track--plain" aria-label="Six one-hour sessions: project selection, then a tollgate review after each DMAIC phase">
+            <li><span class="track__dot"></span><span class="track__name">Start</span><span class="track__meta">1 hour</span></li>
+            <li><span class="track__dot"></span><span class="track__name">Define</span><span class="track__meta">1 hour</span></li>
+            <li><span class="track__dot"></span><span class="track__name">Measure</span><span class="track__meta">1 hour</span></li>
+            <li><span class="track__dot"></span><span class="track__name">Analyze</span><span class="track__meta">1 hour</span></li>
+            <li><span class="track__dot"></span><span class="track__name">Improve</span><span class="track__meta">1 hour</span></li>
+            <li class="is-end"><span class="track__dot"></span><span class="track__name">Control</span><span class="track__meta">1 hour</span></li>
+          </ol>
           <ol class="space-y-6">
             <li class="flex gap-5">
               <div class="shrink-0 flex flex-col items-center">
@@ -440,7 +498,14 @@
         </div>
 
         <div id="panel-group-timeline" role="tabpanel" aria-labelledby="tab-group-timeline" class="pt-10" hidden>
-          <h3 class="font-display font-bold text-navy text-xl mb-8">Session by Session</h3>
+          <h3 class="font-display font-bold text-navy text-xl mb-6">Session by Session</h3>
+          <ol class="track" aria-label="Three live sessions 4 to 5 weeks apart, then 4 to 6 weeks to finish before the Black Belt review">
+            <li><span class="track__dot"></span><span class="track__name">Session 1</span><span class="track__meta">Orientation</span></li>
+            <li><span class="track__gap">4 to 5 weeks</span><span class="track__dot"></span><span class="track__name">Session 2</span><span class="track__meta">Define and Measure</span></li>
+            <li><span class="track__gap">4 to 5 weeks</span><span class="track__dot"></span><span class="track__name">Session 3</span><span class="track__meta">Analyze and Improve</span></li>
+            <li class="is-end"><span class="track__gap">4 to 6 weeks to finish</span><span class="track__dot"></span><span class="track__name">Black Belt review</span></li>
+          </ol>
+          <p class="text-[0.8rem] text-slate -mt-5 mb-8">Not to scale.</p>
           <ol class="space-y-6">
             <li class="flex gap-5">
               <div class="shrink-0 flex flex-col items-center">
