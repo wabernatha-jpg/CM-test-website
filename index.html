@@ -300,23 +300,10 @@
         </button>
         <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
           <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-2 w-[320px]">
-            <a href="services/strategic-planning.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
-              <span class="block text-sm font-medium text-navy">Strategic Planning</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You know where you are, and where you're going.</span>
+            <a href="services/bridging-the-gap.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Bridging the Gap</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">All four phases on one page.</span>
             </a>
-            <a href="services/building-capability.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
-              <span class="block text-sm font-medium text-navy">Building Capability</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You have the ability to get there.</span>
-            </a>
-            <a href="services/building-capacity.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
-              <span class="block text-sm font-medium text-navy">Building Capacity</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You have the platform to cross it.</span>
-            </a>
-            <a href="services/sustaining-the-change.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
-              <span class="block text-sm font-medium text-navy">Sustaining the Change</span>
-              <span class="block text-[0.78rem] text-navy/55 mt-0.5">You keep driving forward.</span>
-            </a>
-            <div class="my-1.5 mx-4 border-t border-navy/10" role="separator"></div>
             <a href="services/training.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
               <span class="block text-sm font-medium text-navy">Training &amp; Facilitation</span>
               <span class="block text-[0.78rem] text-navy/55 mt-0.5">Workshops, Kaizen, seminars, and retreats.</span>
@@ -325,7 +312,24 @@
         </div>
       </div>
       <a href="resources/index.html" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">Resources</a>
-      <a href="#about" class="py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">About</a>
+      <div class="relative group">
+        <button class="flex items-center gap-1 py-2 hover:text-gold focus-visible:text-gold transition-colors duration-200">
+          About
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block">
+          <div class="bg-white border border-navy/10 shadow-card-hover rounded-sm py-2 w-[300px]">
+            <a href="#about" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">About</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">Who we are and how we work.</span>
+            </a>
+            <a href="capabilities/index.html" class="block px-4 py-2.5 hover:bg-cream focus-visible:bg-cream transition-colors duration-200">
+              <span class="block text-sm font-medium text-navy">Capability Statement</span>
+              <span class="block text-[0.78rem] text-navy/55 mt-0.5">UEI, CAGE, NAICS, and a PDF to download.</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </nav>
     <div class="flex items-center gap-3">
       <button class="hidden sm:flex p-2 text-navy/70 hover:text-gold focus-visible:text-gold transition-colors duration-200" aria-label="Search">
@@ -343,6 +347,7 @@
     <a href="#services" class="py-2.5 border-b border-navy/10 text-navy">Services</a>
     <a href="resources/index.html" class="py-2.5 border-b border-navy/10 text-navy">Resources</a>
     <a href="#about" class="py-2.5 border-b border-navy/10 text-navy">About</a>
+    <a href="capabilities/index.html" class="py-2.5 border-b border-navy/10 text-navy">Capability Statement</a>
     <a href="https://calendly.com/change_maven/new-meeting?month=2026-09" class="mt-3 inline-block w-fit border border-gold text-gold font-semibold text-sm px-5 py-2.5 rounded-sm" onclick="Calendly.initPopupWidget({url:'https://calendly.com/change_maven/new-meeting?month=2026-09'});return false;">Start a Conversation</a>
   </nav>
 </header>
@@ -373,7 +378,7 @@
         <!-- Right: image accordion -->
         <div class="w-full lg:w-3/5">
           <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-start lg:justify-end gap-4 lg:gap-3 sm:lg:gap-4 lg:overflow-x-auto p-2">
-            <a href="services/strategic-planning.html" class="accordion-item is-active" data-index="0">
+            <a href="services/bridging-the-gap.html#strategic-planning" class="accordion-item is-active" data-index="0">
               <img src="brand_assets/Strategicplan.jpg" alt="Strategic Planning">
               <div class="accordion-scrim"></div>
               <span class="accordion-caption-collapsed">Strategic Planning</span>
@@ -387,7 +392,7 @@
                 </ul>
               </div>
             </a>
-            <a href="services/building-capability.html" class="accordion-item" data-index="1">
+            <a href="services/bridging-the-gap.html#building-capability" class="accordion-item" data-index="1">
               <img src="brand_assets/Buildthecabability.jpg" alt="Building Capability">
               <div class="accordion-scrim"></div>
               <span class="accordion-caption-collapsed">Building Capability</span>
@@ -401,7 +406,7 @@
                 </ul>
               </div>
             </a>
-            <a href="services/building-capacity.html" class="accordion-item" data-index="2">
+            <a href="services/bridging-the-gap.html#building-capacity" class="accordion-item" data-index="2">
               <img src="brand_assets/Buildthecapacity.jpg" alt="Building Capacity">
               <div class="accordion-scrim"></div>
               <span class="accordion-caption-collapsed">Building Capacity</span>
@@ -415,7 +420,7 @@
                 </ul>
               </div>
             </a>
-            <a href="services/sustaining-the-change.html" class="accordion-item" data-index="3">
+            <a href="services/bridging-the-gap.html#sustaining-the-change" class="accordion-item" data-index="3">
               <img src="brand_assets/Sustain.jpg" alt="Sustaining the Change">
               <div class="accordion-scrim"></div>
               <span class="accordion-caption-collapsed">Sustaining the Change</span>
@@ -439,29 +444,48 @@
   <!-- Approach / Where We Help -->
   <section id="approach" class="bg-cream border-t border-navy/10">
     <div class="max-w-[1240px] mx-auto px-5 sm:px-8 py-20 lg:py-24">
-      <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl text-center mb-12">Where We Help</h2>
-      <div class="grid sm:grid-cols-2 gap-x-10">
-        <a href="services/strategic-planning.html" data-modal="strategic-planning" class="group border-t border-navy/10 py-5 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Define the Destination</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Strategic Planning <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">You know where you are, and where you're going.</span>
-        </a>
-        <a href="services/building-capability.html" data-modal="building-capability" class="group border-t border-navy/10 py-5 block sm:border-l sm:pl-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Build the Team There</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capability <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">You have the ability to get there.</span>
-        </a>
-        <a href="services/building-capacity.html" data-modal="building-capacity" class="group border-t border-b border-navy/10 py-5 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Create the Tools Needed</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Building Capacity <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">You have the platform to cross it.</span>
-        </a>
-        <a href="services/sustaining-the-change.html" data-modal="sustaining-the-change" class="group border-t border-b border-navy/10 py-5 block sm:border-l sm:pl-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-sm">
-          <p class="text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45 mb-1.5">We Make the Change Stick</p>
-          <span class="flex items-center justify-between text-navy font-display font-semibold text-lg group-hover:text-gold focus-visible:text-gold transition-colors duration-200">Sustaining the Change <span class="text-gold text-3xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
-          <span class="block text-sm text-navy/60 mt-1">You keep driving forward.</span>
-        </a>
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="font-display font-bold text-navy text-3xl sm:text-4xl tracking-[-0.03em]">Where We Help</h2>
+        <p class="mt-4 text-slate text-lg leading-relaxed">Every change we guide crosses the same four phases, from setting the destination to keeping it standing.</p>
       </div>
+      <ol class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-0 sm:gap-x-8 lg:gap-x-0 gap-y-8 lg:gap-y-0" aria-label="The four phases">
+        <li class="border-t-2 border-gold">
+          <a href="services/bridging-the-gap.html#strategic-planning" data-modal="strategic-planning" class="group relative block h-full pt-5 pb-6 pr-4 lg:pr-8 rounded-sm hover:bg-navy/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:opacity-80 transition-colors duration-200">
+            <span class="absolute -top-[9px] left-0 w-4 h-4 rounded-full bg-cream border-2 border-gold group-hover:bg-gold transition-colors duration-200" aria-hidden="true"></span>
+            <span class="block font-display text-gold text-sm">01</span>
+            <span class="mt-2 block text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">We Define the Destination</span>
+            <span class="mt-1.5 flex items-center gap-2 font-display font-bold text-navy text-xl leading-snug group-hover:text-gold transition-colors duration-200">Strategic Planning <span class="text-gold text-2xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+            <span class="mt-1.5 block text-slate text-[0.92rem] leading-relaxed">You know where you are, and where you're going.</span>
+          </a>
+        </li>
+        <li class="border-t-2 border-gold">
+          <a href="services/bridging-the-gap.html#building-capability" data-modal="building-capability" class="group relative block h-full pt-5 pb-6 pr-4 lg:pr-8 rounded-sm hover:bg-navy/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:opacity-80 transition-colors duration-200">
+            <span class="absolute -top-[9px] left-0 w-4 h-4 rounded-full bg-cream border-2 border-gold group-hover:bg-gold transition-colors duration-200" aria-hidden="true"></span>
+            <span class="block font-display text-gold text-sm">02</span>
+            <span class="mt-2 block text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">We Build the Team There</span>
+            <span class="mt-1.5 flex items-center gap-2 font-display font-bold text-navy text-xl leading-snug group-hover:text-gold transition-colors duration-200">Building Capability <span class="text-gold text-2xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+            <span class="mt-1.5 block text-slate text-[0.92rem] leading-relaxed">You have the ability to get there.</span>
+          </a>
+        </li>
+        <li class="border-t-2 border-gold">
+          <a href="services/bridging-the-gap.html#building-capacity" data-modal="building-capacity" class="group relative block h-full pt-5 pb-6 pr-4 lg:pr-8 rounded-sm hover:bg-navy/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:opacity-80 transition-colors duration-200">
+            <span class="absolute -top-[9px] left-0 w-4 h-4 rounded-full bg-cream border-2 border-gold group-hover:bg-gold transition-colors duration-200" aria-hidden="true"></span>
+            <span class="block font-display text-gold text-sm">03</span>
+            <span class="mt-2 block text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">We Create the Tools Needed</span>
+            <span class="mt-1.5 flex items-center gap-2 font-display font-bold text-navy text-xl leading-snug group-hover:text-gold transition-colors duration-200">Building Capacity <span class="text-gold text-2xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+            <span class="mt-1.5 block text-slate text-[0.92rem] leading-relaxed">You have the platform to cross it.</span>
+          </a>
+        </li>
+        <li class="border-t-2 border-gold">
+          <a href="services/bridging-the-gap.html#sustaining-the-change" data-modal="sustaining-the-change" class="group relative block h-full pt-5 pb-6 pr-4 lg:pr-8 rounded-sm hover:bg-navy/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 active:opacity-80 transition-colors duration-200">
+            <span class="absolute -top-[9px] left-0 w-4 h-4 rounded-full bg-cream border-2 border-gold group-hover:bg-gold transition-colors duration-200" aria-hidden="true"></span>
+            <span class="block font-display text-gold text-sm">04</span>
+            <span class="mt-2 block text-[0.68rem] font-semibold tracking-[0.1em] uppercase text-navy/45">We Make the Change Stick</span>
+            <span class="mt-1.5 flex items-center gap-2 font-display font-bold text-navy text-xl leading-snug group-hover:text-gold transition-colors duration-200">Sustaining the Change <span class="text-gold text-2xl leading-none group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">›</span></span>
+            <span class="mt-1.5 block text-slate text-[0.92rem] leading-relaxed">You keep driving forward.</span>
+          </a>
+        </li>
+      </ol>
 
       <a href="partners/predixxa.html" class="group mt-10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 rounded-sm border border-navy/10 bg-white px-6 py-5 hover:border-predixxa/40 focus-visible:border-predixxa/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-predixxa/30 transition-colors duration-200">
         <span class="inline-flex items-center gap-2 shrink-0 text-predixxa text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
@@ -676,7 +700,7 @@
         { heading: "Organizational Assessment", description: "A structured look at how the organization is actually built to operate today, so the plan accounts for real constraints instead of assumed ones." },
         { heading: "Executive & Board-Level Vision Setting", description: "Working sessions with leadership to define what “better” actually looks like, in specific enough terms that the rest of the engagement has something to aim at." }
       ],
-      href: "services/strategic-planning.html"
+      href: "services/bridging-the-gap.html#strategic-planning"
     },
     "building-capability": {
       eyebrow: "We Build the Team There",
@@ -687,7 +711,7 @@
         { heading: "Six Sigma Training & Certification", description: "Certified methodology your team can apply immediately, not just a credential to file away." },
         { heading: "Skill-Building Workshops", description: "Focused sessions built around your team's specific gap, with a workbook and action-plan guide so it doesn't evaporate after the session ends." }
       ],
-      href: "services/building-capability.html"
+      href: "services/bridging-the-gap.html#building-capability"
     },
     "building-capacity": {
       eyebrow: "We Create the Tools Needed",
@@ -698,7 +722,7 @@
         { heading: "Workshop Facilitation", description: "Structured facilitation that keeps cross-functional groups moving toward a decision, not stuck circling the same conversation." },
         { heading: "Operational Efficiency Implementation", description: "Getting process and system improvements installed and running, not just documented in a report." }
       ],
-      href: "services/building-capacity.html"
+      href: "services/bridging-the-gap.html#building-capacity"
     },
     "sustaining-the-change": {
       eyebrow: "We Make the Change Stick",
@@ -709,7 +733,7 @@
         { heading: "Organizational Alignment", description: "Keeping teams, incentives, and priorities pointed at the same outcome, so the change doesn't get quietly undone by conflicting goals." },
         { heading: "Succession Planning & Team Engagement", description: "Making sure the change doesn't depend on any one person staying in their seat, and that the team stays invested in it." }
       ],
-      href: "services/sustaining-the-change.html"
+      href: "services/bridging-the-gap.html#sustaining-the-change"
     }
   };
 
